@@ -1,0 +1,1063 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>FTA Candle Guide</title></head><body>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* One-column reference tool. Setup → search → start-here → term accordions → suggest.
+   FTA brand = the FLOW STACK desk: deep green, mint light, beams running through it. */
+:root{
+  color-scheme:dark;
+  --bg:#081d19; --panel:#0c2722; --panel2:#0f2e28; --card:rgba(255,255,255,.04); --card2:rgba(255,255,255,.065);
+  --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.17);
+  --fg:#eaf5f1; --muted:#8fb8ac; --dim:#628f82;
+  --mint:#3fdc9a; --mintdim:rgba(63,220,154,.14); --mintglow:rgba(63,220,154,.35);
+  --gold:#e8c468; --golddim:rgba(232,196,104,.13);
+  --coral:#f0736b;
+  --sans:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:17px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 72px;
+  position:relative;min-height:100vh}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:var(--mint)}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--mint);outline-offset:2px;border-radius:8px}
+
+/* ---------- background: glow, dot grid, light streaks ---------- */
+.fx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.fx .glow{position:absolute;inset:0;background:radial-gradient(900px 520px at 50% -6%,#13402f 0%,transparent 64%),radial-gradient(700px 500px at 100% 100%,rgba(63,220,154,.06),transparent 70%)}
+.fx .grid{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.055) 1px,transparent 1.2px);background-size:24px 24px;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.35) 60%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.35) 60%,transparent 100%)}
+.fx .track{position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,rgba(63,220,154,.07) 20%,rgba(63,220,154,.07) 80%,transparent)}
+.fx .track i{position:absolute;left:-1px;width:3px;height:200px;top:-220px;border-radius:3px;
+  background:linear-gradient(to bottom,transparent,rgba(63,220,154,.15) 30%,var(--mint) 85%,#fff 100%);
+  box-shadow:0 0 12px var(--mint),0 0 26px var(--mintglow);animation:fall var(--d,7s) linear infinite;animation-delay:var(--w,0s)}
+@keyframes fall{from{transform:translateY(0)}to{transform:translateY(calc(100vh + 440px))}}
+.wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+
+/* ---------- beams (FLOW STACK) ---------- */
+@property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes spin{to{--ang:360deg}}
+@keyframes breathe{0%,100%{box-shadow:0 0 0 1px rgba(63,220,154,.05),0 0 22px -6px var(--mintglow)}50%{box-shadow:0 0 0 1px rgba(63,220,154,.08),0 0 38px -4px var(--mintglow)}}
+.beam{border:1.5px solid transparent;
+  background:linear-gradient(var(--panel),var(--panel)) padding-box,
+    conic-gradient(from var(--ang),rgba(63,220,154,.16) 0 58%,var(--mint) 76%,#ffffff 80%,var(--mint) 84%,rgba(63,220,154,.16) 97%) border-box;
+  animation:spin 4.2s linear infinite,breathe 3.4s ease-in-out infinite;animation-delay:var(--delay,0s)}
+.beam.gold{background:linear-gradient(var(--panel),var(--panel)) padding-box,
+    conic-gradient(from var(--ang),rgba(232,196,104,.16) 0 58%,var(--gold) 76%,#fff 80%,var(--gold) 84%,rgba(232,196,104,.16) 97%) border-box}
+.rail{height:2px;border-radius:2px;background:linear-gradient(90deg,transparent 0%,rgba(63,220,154,.12) 20%,rgba(63,220,154,.12) 80%,transparent 100%);position:relative;overflow:hidden}
+.rail::after{content:"";position:absolute;top:0;bottom:0;width:22%;left:-22%;background:linear-gradient(90deg,transparent,var(--mint),#fff,var(--mint),transparent);
+  box-shadow:0 0 14px var(--mint);animation:run 3.6s cubic-bezier(.6,0,.4,1) infinite}
+@keyframes run{to{left:100%}}
+
+/* ---------- header ---------- */
+.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.mark{width:44px;height:44px;border-radius:13px;background:var(--mint);display:grid;place-items:center;flex:none;box-shadow:0 0 0 4px rgba(63,220,154,.12),0 0 28px var(--mintglow)}
+.mark svg{width:22px;height:22px}
+.brand{font-weight:800;font-size:25px;letter-spacing:-.025em;line-height:1.1}
+.brand span{color:var(--mint);text-shadow:0 0 22px var(--mintglow)}
+.brand small{display:block;font-size:13.5px;font-weight:600;color:var(--muted);letter-spacing:.02em;margin-top:3px}
+.count{margin-left:auto;font-family:var(--mono);font-size:13px;color:var(--mint);border:1px solid rgba(63,220,154,.35);border-radius:999px;padding:5px 12px;background:var(--mintdim)}
+
+/* ---------- setup ---------- */
+.setup{border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:22px}
+.setup h1{margin:0;font-size:clamp(27px,6vw,36px);font-weight:800;letter-spacing:-.03em;line-height:1.15;text-wrap:balance}
+.setup h1 em{font-style:normal;color:var(--mint);text-shadow:0 0 24px var(--mintglow)}
+.setup p{margin:0;color:var(--muted);max-width:58ch;font-size:17px}
+.q{display:flex;flex-direction:column;gap:10px}
+.qlab{font-size:12.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mint)}
+.opts{display:flex;flex-wrap:wrap;gap:10px}
+.opt{appearance:none;cursor:pointer;border:1px solid var(--line2);background:var(--card);color:var(--fg);border-radius:16px;padding:14px 18px;text-align:left;min-width:160px;flex:1 1 160px;transition:border-color .15s,background .15s,box-shadow .15s}
+.opt b{display:block;font-size:18px}
+.opt i{display:block;font-style:normal;font-size:14px;color:var(--muted);margin-top:3px}
+.opt:hover{border-color:rgba(63,220,154,.5)}
+.opt[aria-pressed="true"]{background:var(--mintdim);border-color:var(--mint);box-shadow:0 0 22px -6px var(--mintglow)}
+.opt[aria-pressed="true"] b{color:var(--mint)}
+.go{appearance:none;border:0;cursor:pointer;background:var(--mint);color:#06211a;font-weight:800;font-size:17px;padding:14px 26px;border-radius:999px;align-self:flex-start;box-shadow:0 0 26px -4px var(--mintglow)}
+.go:disabled{opacity:.35;cursor:default;box-shadow:none}
+
+/* ---------- profile, search ---------- */
+.profile{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:15px;color:var(--muted)}
+.pchip{font-weight:700;color:var(--fg);background:var(--card2);border:1px solid var(--line2);border-radius:999px;padding:5px 13px}
+.link{appearance:none;background:none;border:0;color:var(--mint);cursor:pointer;font-size:15px;font-weight:700;padding:4px 2px}
+.searchbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;padding-block:10px;display:flex;flex-direction:column;gap:12px;
+  background:var(--bg);box-shadow:0 14px 18px -6px var(--bg)}
+.search{display:flex;align-items:center;gap:12px;border-radius:16px;padding:0 16px}
+.search svg{width:20px;height:20px;color:var(--mint);flex:none}
+.search input{flex:1;min-width:0;background:transparent;border:0;color:var(--fg);font:inherit;font-size:18px;padding:15px 0}
+.search input::placeholder{color:var(--dim)}
+.search input:focus{outline:none}
+.cats{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.cats::-webkit-scrollbar{display:none}
+.cat{appearance:none;cursor:pointer;white-space:nowrap;border:1px solid var(--line2);background:rgba(8,29,25,.7);color:var(--muted);border-radius:999px;padding:8px 15px;font-size:14.5px;font-weight:600}
+.cat[aria-pressed="true"]{background:var(--mintdim);color:var(--mint);border-color:var(--mint);box-shadow:0 0 16px -4px var(--mintglow)}
+.prog{display:flex;align-items:center;gap:12px}
+.pbar{flex:1;height:7px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
+.pbar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#1fa673,var(--mint),#b9ffe0);border-radius:999px;box-shadow:0 0 12px var(--mint);transition:width .5s}
+.pnum{font-family:var(--mono);font-size:13.5px;color:var(--muted);white-space:nowrap}
+
+/* ---------- start here ---------- */
+.start{border-radius:20px;padding:20px;--delay:-1.4s}
+/* ---------- path + walk-through ---------- */
+.browse{display:flex;flex-direction:column;gap:20px}
+.path{border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:16px;--delay:-1.4s}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mint)}
+.path h2{margin:0;font-size:clamp(24px,5.5vw,30px);font-weight:800;letter-spacing:-.025em;line-height:1.2;text-wrap:balance}
+.path .sub{margin:0;color:var(--muted);font-size:16px}
+.cont{appearance:none;cursor:pointer;text-align:left;display:flex;align-items:center;gap:14px;width:100%;border:1px solid var(--mint);background:linear-gradient(135deg,rgba(63,220,154,.22),rgba(63,220,154,.07));color:var(--fg);border-radius:18px;padding:16px 18px;box-shadow:0 0 30px -8px var(--mintglow)}
+.cont .ci{flex:1;min-width:0}
+.cont small{display:block;font-size:13.5px;color:var(--mint);font-weight:700;letter-spacing:.04em}
+.cont b{display:block;font-size:20px;font-weight:800;letter-spacing:-.015em;margin-top:2px}
+.cont .arrow{width:44px;height:44px;border-radius:50%;background:var(--mint);display:grid;place-items:center;flex:none;box-shadow:0 0 18px var(--mintglow)}
+.cont .arrow svg{width:20px;height:20px}
+.stages{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.stage{appearance:none;width:100%;text-align:left;cursor:pointer;display:flex;align-items:center;gap:14px;border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--fg);border-radius:15px;padding:12px 14px}
+.stage:hover:not(:disabled){border-color:rgba(63,220,154,.5)}
+.stage:disabled{cursor:default;opacity:.55}
+.snum{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:14px;background:rgba(255,255,255,.07);color:var(--muted);border:1px solid var(--line2)}
+.stage.done .snum{background:var(--mint);color:#06211a;border-color:var(--mint);box-shadow:0 0 12px var(--mintglow)}
+.stage.cur .snum{border-color:var(--mint);color:var(--mint);box-shadow:0 0 0 3px var(--mintdim)}
+.sinfo{flex:1;min-width:0}
+.sinfo b{display:block;font-size:17px;font-weight:700}
+.sinfo span{display:block;font-size:13.5px;color:var(--muted)}
+.sbar2{height:4px;border-radius:4px;background:rgba(255,255,255,.08);margin-top:6px;overflow:hidden}
+.sbar2 i{display:block;height:100%;background:var(--mint);box-shadow:0 0 8px var(--mint)}
+.lock{width:18px;height:18px;color:var(--dim);flex:none}
+.divider{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;margin:8px 2px 2px}
+.divider::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(232,196,104,.4),transparent)}
+.lookup{margin:6px 0 0;font-size:20px;font-weight:800;letter-spacing:-.015em}
+.lookup span{display:block;font-size:14.5px;font-weight:500;color:var(--muted);letter-spacing:0;margin-top:2px}
+.walk{border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:18px}
+.wtop{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.wtop .link{font-size:15px}
+.wstage{margin-left:auto;font-size:13.5px;color:var(--muted);font-weight:600}
+.dots{display:flex;gap:5px}
+.dots i{flex:1;height:6px;border-radius:6px;background:rgba(255,255,255,.1)}
+.dots i.ok{background:var(--mint);box-shadow:0 0 8px var(--mintglow)}
+.dots i.now{background:rgba(63,220,154,.45)}
+.wstep{font-family:var(--mono);font-size:13.5px;color:var(--mint);letter-spacing:.06em}
+.walk h2{margin:-8px 0 0;font-size:clamp(28px,7vw,38px);font-weight:800;letter-spacing:-.03em;line-height:1.12;text-wrap:balance}
+.check{border:1px solid rgba(232,196,104,.4);border-radius:16px;padding:16px;background:rgba(232,196,104,.05);display:flex;flex-direction:column;gap:10px}
+.check .blab{margin:0}
+.check .cq{margin:0;font-size:18px;font-weight:700;line-height:1.45}
+.ans{appearance:none;cursor:pointer;text-align:left;border:1px solid var(--line2);background:rgba(0,0,0,.2);color:var(--fg);border-radius:13px;padding:13px 15px;font-size:16.5px;font-weight:600;display:flex;gap:10px;align-items:center}
+.ans:hover:not(:disabled){border-color:rgba(232,196,104,.6)}
+.ans:disabled{cursor:default}
+.ans .k{font-family:var(--mono);font-size:13px;color:var(--muted);width:24px;height:24px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;flex:none}
+.ans.right{border-color:var(--mint);background:var(--mintdim);color:var(--mint)}
+.ans.right .k{background:var(--mint);color:#06211a;border-color:var(--mint)}
+.ans.wrong{border-color:rgba(240,115,107,.6);background:rgba(240,115,107,.08);color:var(--coral)}
+.fb{font-size:15.5px;min-height:1.2em;margin:0}
+.fb.ok{color:var(--mint)} .fb.no{color:var(--coral)}
+.wnav{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.next{appearance:none;border:0;cursor:pointer;background:var(--mint);color:#06211a;font-weight:800;font-size:17px;padding:14px 26px;border-radius:999px;box-shadow:0 0 26px -4px var(--mintglow);margin-left:auto}
+.next:disabled{opacity:.3;cursor:default;box-shadow:none}
+.prev{appearance:none;cursor:pointer;background:none;border:1px solid var(--line2);color:var(--fg);border-radius:999px;padding:12px 20px;font-weight:700;font-size:15px}
+.done-card{text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center;padding:12px 4px}
+.done-card .big{width:72px;height:72px;border-radius:50%;background:var(--mint);display:grid;place-items:center;box-shadow:0 0 0 8px var(--mintdim),0 0 40px var(--mintglow)}
+.done-card .big svg{width:34px;height:34px}
+.done-card h2{margin:6px 0 0}
+.done-card p{margin:0;color:var(--muted);max-width:44ch}
+.shead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.shead b{font-size:19px;font-weight:800}
+.shead span{font-size:14.5px;color:var(--muted)}
+.steps{display:flex;flex-wrap:wrap;gap:9px;margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s}
+.step{appearance:none;cursor:pointer;display:flex;align-items:center;gap:9px;border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--fg);border-radius:999px;padding:7px 15px 7px 7px;font-size:15px;font-weight:600}
+.step:hover{border-color:rgba(63,220,154,.5)}
+.step::before{content:counter(s);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.step.done::before{content:"\2713";background:var(--mint);color:#06211a;box-shadow:0 0 10px var(--mintglow)}
+
+/* ---------- list ---------- */
+.group{display:flex;flex-direction:column;gap:10px}
+.ghead{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mint);margin:14px 2px 2px}
+.ghead::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(63,220,154,.35),transparent)}
+details.term{border:1.5px solid var(--line);border-radius:16px;background:rgba(12,39,34,.72);transition:border-color .15s;scroll-margin-top:170px}
+details.term:hover{border-color:rgba(63,220,154,.3)}
+details.term[open]{border-color:transparent;
+  background:linear-gradient(var(--panel),var(--panel)) padding-box,
+    conic-gradient(from var(--ang),rgba(63,220,154,.18) 0 58%,var(--mint) 76%,#fff 80%,var(--mint) 84%,rgba(63,220,154,.18) 97%) border-box;
+  animation:spin 4.2s linear infinite,breathe 3.4s ease-in-out infinite}
+details.term summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:16px 16px}
+details.term summary::-webkit-details-marker{display:none}
+.tname{font-weight:700;font-size:18.5px;min-width:0;letter-spacing:-.01em}
+.tname mark{background:var(--golddim);color:var(--gold);border-radius:3px;padding:0 1px}
+.tags{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
+.tag{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 9px;border:1px solid var(--line2);color:var(--muted);white-space:nowrap}
+.tag.lv{color:var(--mint);border-color:rgba(63,220,154,.35)}
+.tag.cf{color:var(--gold);border-color:rgba(232,196,104,.45)}
+@media (max-width:560px){.tag.mk{display:none}}
+.tick{width:11px;height:11px;border-radius:50%;flex:none;border:1.5px solid var(--dim)}
+.tick.on{background:var(--mint);border-color:var(--mint);box-shadow:0 0 10px var(--mint)}
+.chev{width:18px;height:18px;color:var(--muted);flex:none;transition:transform .2s}
+details.term[open] .chev{transform:rotate(180deg);color:var(--mint)}
+.body{padding:0 16px 18px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.def{margin:0;font-size:20px;font-weight:600;line-height:1.5;max-width:62ch;letter-spacing:-.01em}
+.box{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:rgba(0,0,0,.2);min-width:0}
+.blab{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+.box p{margin:0;max-width:64ch;font-size:16.5px}
+.box p+p{margin-top:9px;padding-top:9px;border-top:1px dashed var(--line)}
+.box p b{color:var(--gold);font-weight:700;font-family:var(--mono);font-size:.88em;letter-spacing:.02em;margin-right:4px}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.cmp{grid-template-columns:1fr}}
+.cmp .box .blab{color:var(--mint)}
+.calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end}
+.calc label{display:flex;flex-direction:column;gap:5px;font-size:13.5px;color:var(--muted);font-weight:600}
+.calc input,.calc select{background:var(--bg);border:1px solid var(--line2);color:var(--fg);border-radius:11px;padding:11px 12px;font:inherit;font-family:var(--mono);font-size:16px;min-width:0;width:100%}
+.calc input:focus,.calc select:focus{outline:none;border-color:var(--mint);box-shadow:0 0 0 3px var(--mintdim)}
+.out{grid-column:1/-1;font-family:var(--mono);font-size:16px;color:var(--mint);background:var(--mintdim);border:1px solid rgba(63,220,154,.3);border-radius:12px;padding:12px 14px;text-shadow:0 0 14px var(--mintglow)}
+.calcbox{border-color:rgba(63,220,154,.25)}
+.calcbox .blab{color:var(--mint)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.vid{display:inline-flex;align-items:center;gap:11px;text-decoration:none;border:1px solid rgba(63,220,154,.5);background:var(--mintdim);color:var(--fg);border-radius:14px;padding:10px 16px 10px 10px;font-weight:600;font-size:15.5px}
+.vid:hover{box-shadow:0 0 20px -4px var(--mintglow)}
+.vid .play{width:30px;height:30px;border-radius:50%;background:var(--mint);display:grid;place-items:center;flex:none;box-shadow:0 0 12px var(--mintglow)}
+.vid .play svg{width:12px;height:12px}
+.vid small{color:var(--muted);font-weight:500}
+.soon{font-size:15px;color:var(--muted);border:1px dashed var(--line2);border-radius:14px;padding:10px 16px}
+.mod{font-size:15px;color:var(--fg);border:1px solid var(--line2);border-radius:14px;padding:10px 16px;background:var(--card)}
+.mod b{color:var(--mint)}
+.rel{display:flex;flex-wrap:wrap;gap:7px;align-items:center;font-size:14px;color:var(--muted)}
+.rel button{appearance:none;cursor:pointer;border:1px solid var(--line2);background:transparent;color:var(--fg);border-radius:999px;padding:5px 12px;font-size:14px;font-weight:600}
+.rel button:hover{border-color:rgba(63,220,154,.5)}
+.rel button.cf{border-color:rgba(232,196,104,.55);color:var(--gold)}
+.learn{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--muted);cursor:pointer;width:fit-content}
+.learn input{width:19px;height:19px;accent-color:var(--mint)}
+.empty{color:var(--muted);text-align:center;padding:28px 12px;border:1px dashed var(--line2);border-radius:16px;font-size:16px}
+.all{appearance:none;cursor:pointer;background:rgba(8,29,25,.7);border:1px solid var(--line2);color:var(--fg);border-radius:999px;padding:10px 18px;font-weight:700;font-size:15px;align-self:center}
+
+.candlelink{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--fg);border-radius:18px;padding:16px 18px;--delay:-2s}
+.cl-ico{width:42px;height:42px;border-radius:12px;background:var(--gold);display:grid;place-items:center;flex:none}
+.cl-ico svg{width:20px;height:20px}
+.cl-txt{flex:1;min-width:0}.cl-txt b{display:block;font-size:18px}.cl-txt span{display:block;font-size:14.5px;color:var(--muted)}
+.cl-go{font-size:22px;color:var(--gold)}
+/* ---------- suggest ---------- */
+.suggest{border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:12px;--delay:-2.6s}
+.suggest b{font-size:20px}
+.suggest p{margin:0;color:var(--muted);font-size:16px}
+.sform{display:flex;gap:10px;flex-wrap:wrap}
+.sform input{flex:1 1 230px;min-width:0;background:var(--bg);border:1px solid var(--line2);color:var(--fg);border-radius:13px;padding:13px 14px;font:inherit;font-size:16.5px}
+.sform input:focus{outline:none;border-color:var(--mint)}
+.sform button{appearance:none;border:0;cursor:pointer;background:var(--mint);color:#06211a;font-weight:800;font-size:16px;border-radius:13px;padding:13px 22px;box-shadow:0 0 22px -6px var(--mintglow)}
+.sform button:disabled{opacity:.45;cursor:default}
+.smsg{font-size:15px;color:var(--mint);min-height:1em}
+.foot{text-align:center;color:var(--dim);font-size:13.5px;max-width:62ch;margin:0 auto}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important}
+  .beam,.walk,details.term[open],.rail::after,.fx .track i{animation:none!important}
+  .fx .track i{display:none}
+}
+
+.sway{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--fg);border:1px solid rgba(244,196,88,.55);background:linear-gradient(135deg,rgba(244,196,88,.14),rgba(244,196,88,.04));border-radius:16px;padding:12px 14px;margin:14px 0}
+.sway .play{width:34px;height:34px;border-radius:50%;background:var(--gold);display:grid;place-items:center;flex:none;box-shadow:0 0 14px rgba(244,196,88,.45)}
+.sway .play svg{width:13px;height:13px}
+.sway>span:nth-child(2){display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.sway b{font-size:15.5px}.sway small{color:var(--muted);font-size:13.5px}
+.sway .sgo{color:var(--gold);font-weight:700;font-size:14px;white-space:nowrap}
+.sway.soonw{border-style:dashed;opacity:.85}.sway.soonw .play{background:var(--line2);box-shadow:none}
+/* ===== candle guide additions ===== */
+.home{display:flex;flex-direction:column;gap:20px}
+.card{border:1px solid var(--line);border-radius:20px;padding:20px;background:rgba(12,39,34,.72);display:flex;flex-direction:column;gap:12px}
+.card.beam{border:1.5px solid transparent}
+.h2{margin:0;font-size:clamp(22px,5vw,27px);font-weight:800;letter-spacing:-.02em;line-height:1.2;text-wrap:balance}
+.eyebrow.gold{color:var(--gold)}
+.path .prog{margin-top:-4px}
+.figbox{margin:0;border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.22);padding:12px 10px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;overflow-x:auto}
+.figbox figcaption{font-size:14px;color:var(--muted);text-align:center;max-width:60ch}
+svg.fig{width:100%;height:auto;display:block}
+svg.fig text{font-family:var(--sans)}
+svg.fig .nt{font-size:11.5px;fill:#eaf5f1;font-weight:600}
+svg.fig .lvt{font-size:10.5px;fill:var(--gold);font-weight:700}
+svg.fig .tg{font-size:10.5px;fill:var(--muted);font-family:var(--mono)}
+svg.fig .glowc{filter:drop-shadow(0 0 6px rgba(63,220,154,.45))}
+.walk .para{margin:0;font-size:16.5px;color:#cfe3dc;max-width:64ch}
+.builder{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center}
+@media (max-width:620px){.builder{grid-template-columns:1fr}}
+.sliders{display:flex;flex-direction:column;gap:12px}
+.sliders label{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;font-size:14px;font-weight:700;color:var(--muted)}
+.sliders .sv{margin-left:auto;font-family:var(--mono);color:var(--fg);font-weight:600}
+.sliders input{width:100%;accent-color:var(--mint)}
+.read{border:1px solid rgba(63,220,154,.35);background:var(--mintdim);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.read b{color:var(--mint);font-size:16px}
+.read span{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.presets{display:flex;flex-wrap:wrap;gap:7px;align-items:center;font-size:14px;color:var(--muted)}
+.presets button,.btn{appearance:none;cursor:pointer;border:1px solid var(--line2);background:transparent;color:var(--fg);border-radius:999px;padding:7px 13px;font-size:14px;font-weight:600}
+.presets button:hover,.btn:hover{border-color:rgba(63,220,154,.5)}
+.btn{align-self:center;padding:11px 20px;font-size:15px;font-weight:700;background:var(--mintdim);border-color:rgba(63,220,154,.5)}
+.libwrap{display:flex;flex-direction:column;gap:12px}
+.lib{display:flex;flex-direction:column;gap:10px}
+details.pat{border:1.5px solid var(--line);border-radius:16px;background:rgba(12,39,34,.72)}
+details.pat[open]{border-color:transparent;background:linear-gradient(var(--panel),var(--panel)) padding-box,conic-gradient(from var(--ang),rgba(63,220,154,.18) 0 58%,var(--mint) 76%,#fff 80%,var(--mint) 84%,rgba(63,220,154,.18) 97%) border-box;animation:spin 4.2s linear infinite,breathe 3.4s ease-in-out infinite}
+details.pat summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:10px 14px}
+details.pat summary::-webkit-details-marker{display:none}
+.pmini{width:62px;flex:none}
+.pmini{display:flex;justify-content:center}
+.pmini svg{height:52px!important;width:auto!important;max-width:none!important}
+.pinfo{flex:1;min-width:0}
+.pinfo b{display:block;font-size:17.5px}
+.pinfo span{display:block;font-size:13.5px;color:var(--muted)}
+details.pat .chev{width:18px;height:18px;color:var(--muted);flex:none;transition:transform .2s}
+details.pat[open] .chev{transform:rotate(180deg);color:var(--mint)}
+.pbody{padding:0 14px 16px;display:flex;flex-direction:column;gap:12px}
+.pdl{margin:0;display:grid;grid-template-columns:150px minmax(0,1fr);gap:8px 14px;font-size:15.5px}
+@media (max-width:560px){.pdl{grid-template-columns:1fr;gap:2px}.pdl dd{margin-bottom:8px}}
+.pdl dt{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mint);padding-top:3px}
+.pdl dt.trap{color:var(--coral)}
+.pdl dd{margin:0}
+.gl{align-items:flex-start}
+.gl b{font-size:18px}
+.glink{font-weight:700;text-decoration:none;border:1px solid rgba(63,220,154,.5);background:var(--mintdim);border-radius:999px;padding:9px 16px}
+@media (prefers-reduced-motion:reduce){details.pat[open]{animation:none}}
+svg.fig .nb{font-size:10px;font-weight:800;fill:#06211a;font-family:var(--mono)}
+ol.leg{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;font-size:14.5px;font-weight:600}
+ol.leg li{display:flex;align-items:center;gap:7px}
+ol.leg li span{width:20px;height:20px;border-radius:50%;background:#eaf5f1;color:#06211a;font-family:var(--mono);font-size:11px;font-weight:800;display:grid;place-items:center;flex:none}
+ol.leg li.lvl span{width:20px;height:0;border-radius:0;border-top:2px dashed var(--gold);background:none}
+ol.leg li.lvl{color:var(--gold)}
+svg.fig{max-height:300px}
+
+.sway{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--fg);border:1px solid rgba(244,196,88,.55);background:linear-gradient(135deg,rgba(244,196,88,.14),rgba(244,196,88,.04));border-radius:16px;padding:12px 14px;margin:14px 0}
+.sway .play{width:34px;height:34px;border-radius:50%;background:var(--gold);display:grid;place-items:center;flex:none;box-shadow:0 0 14px rgba(244,196,88,.45)}
+.sway .play svg{width:13px;height:13px}
+.sway>span:nth-child(2){display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.sway b{font-size:15.5px}.sway small{color:var(--muted);font-size:13.5px}
+.sway .sgo{color:var(--gold);font-weight:700;font-size:14px;white-space:nowrap}
+.sway.soonw{border-style:dashed;opacity:.85}.sway.soonw .play{background:var(--line2);box-shadow:none}
+</style>
+<div class="fx" aria-hidden="true">
+  <div class="glow"></div><div class="grid"></div>
+  <span class="track" style="left:7%"><i style="--d:8.5s;--w:-1s"></i></span>
+  <span class="track" style="left:23%"><i style="--d:11s;--w:-6s"></i></span>
+  <span class="track" style="left:41%"><i style="--d:9.5s;--w:-3.5s"></i></span>
+  <span class="track" style="left:62%"><i style="--d:12s;--w:-8s"></i></span>
+  <span class="track" style="left:80%"><i style="--d:7.5s;--w:-2.5s"></i></span>
+  <span class="track" style="left:94%"><i style="--d:10.5s;--w:-5s"></i></span>
+</div>
+
+<div class="wrap">
+  <header class="top">
+    <span class="mark" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M5 2v12M11 3v10" stroke="#06211a" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="5" width="4" height="5" rx="1" fill="#06211a"/><rect x="9" y="6" width="4" height="4" rx="1" fill="none" stroke="#06211a" stroke-width="1.4"/></svg></span>
+    <span class="brand">FTA <span>Candle Guide</span><small>Flow Trading Academy · Module 4</small></span>
+    <span class="count" id="count"></span>
+  </header>
+  <div class="rail" aria-hidden="true"></div>
+
+  <section class="walk beam" id="walk" hidden aria-live="polite"></section>
+
+  <div class="home" id="home">
+    <section class="path beam" id="start">
+      <span class="eyebrow">Start here</span>
+      <h2 id="pathtitle">Learn candles step by step</h2>
+      <p class="sub">Everything you need to read a candle, from the very first one to the mistakes that cost traders money. One question at a time: read it, look at the drawing, answer the quick check, and the next step unlocks.</p>
+      <div class="prog"><span class="pbar"><span id="pfill"></span></span><span class="pnum" id="pnum"></span></div>
+      <button type="button" class="cont" id="cont"></button>
+      <ol class="stages" id="stages"></ol>
+    </section>
+
+    <section class="card beam gold" style="--delay:-1.2s">
+      <span class="eyebrow gold">Try it</span>
+      <h2 class="h2">Build a candle</h2>
+      <p class="sub">Drag the four prices and watch the candle change. It tells you what you built.</p>
+      <div class="builder">
+        <figure class="figbox" id="b_fig"></figure>
+        <div class="sliders">
+          <label for="b_o">Open <span class="sv" id="b_ov"></span><input type="range" id="b_o" min="4100" max="4140" step="0.5" value="4120"></label>
+          <label for="b_h">High <span class="sv" id="b_hv"></span><input type="range" id="b_h" min="4100" max="4140" step="0.5" value="4134"></label>
+          <label for="b_l">Low <span class="sv" id="b_lv"></span><input type="range" id="b_l" min="4100" max="4140" step="0.5" value="4112"></label>
+          <label for="b_c">Close <span class="sv" id="b_cv"></span><input type="range" id="b_c" min="4100" max="4140" step="0.5" value="4130"></label>
+        </div>
+      </div>
+      <div class="read" id="b_read" aria-live="polite"></div>
+      <div class="presets" id="b_presets"><span>Try:</span>
+        <button type="button" data-p="hammer">Hammer</button><button type="button" data-p="star">Shooting star</button><button type="button" data-p="doji">Doji</button><button type="button" data-p="marubozu">Marubozu</button><button type="button" data-p="spin">Spinning top</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <span class="eyebrow">Timeframes</span>
+      <h2 class="h2">Twelve 5-minute candles = one 1-hour candle</h2>
+      <p class="sub" id="m_txt"></p>
+      <figure class="figbox" id="m_fig"></figure>
+      <button type="button" class="btn" id="m_btn"></button>
+    </section>
+
+    <section class="libwrap">
+      <h2 class="lookup">Candle pattern library<span>Every common pattern with a drawing, what it means, where it matters and the trap to avoid.</span></h2>
+      <div class="cats" id="lfilt" role="group" aria-label="Filter patterns">
+        <button type="button" class="cat" data-f="all" aria-pressed="true">All</button>
+        <button type="button" class="cat" data-f="Single" aria-pressed="false">Single candle</button>
+        <button type="button" class="cat" data-f="Two candles" aria-pressed="false">Two candles</button>
+        <button type="button" class="cat" data-f="Three candles" aria-pressed="false">Three candles</button>
+      </div>
+      <div class="lib" id="lib"></div>
+    </section>
+
+    <section class="card gl">
+      <b>Next up: market structure</b>
+      <p class="sub">Once you can read a candle, learn to read the swings they make. Terms like pip or drawdown live in the glossary.</p>
+      <div class="row"><a class="glink" href="../structure/" target="_blank" rel="noopener">FTA Structure Guide →</a><a class="glink" href="../glossary/" target="_blank" rel="noopener">FTA Glossary →</a><a class="glink" href="../tools/" target="_blank" rel="noopener">FTA Tools Guide →</a></div>
+    </section>
+
+    <p class="foot">Drawings use gold prices for illustration. In this course 1 pip = $0.10 on gold. Candles describe what happened; they never guarantee what happens next.</p>
+  </div>
+</div>
+<script>
+/* ================= FTA CANDLE GUIDE — CONTENT =================
+   Figures: c = candles [open, high, low, close] in gold prices.
+   lv = levels {v, t}, notes = {i (candle), on: o|c|h|l|body|uw|lw, t}, tags = label under each candle,
+   hl = candles to highlight (others dim), zone = {a, b, t} shaded price band.
+   Quick check q = [question, [answers], index of the right one, why]. */
+
+var VIDEOS={
+  tv:{u:"https://www.youtube.com/shorts/s8Bh8q2Ll54",t:"Candlestick charts explained in 60 seconds",src:"TradingView"},
+  oct:{u:"https://www.youtube.com/watch?v=pmrfys4oX3U",t:"Candlestick chart patterns: basic introduction",src:"The Organic Chemistry Tutor"},
+  brisk:{u:"https://www.youtube.com/watch?v=tkVJNd5uoTg",t:"How to read candlestick charts",src:"BrightRisk Trading"},
+  dojispin:{u:"https://www.youtube.com/shorts/Ooz1s27quGI",t:"Doji vs spinning top: what's the difference?",src:"FinGrad"},
+  hammer:{u:"https://www.youtube.com/watch?v=pSM_kCky8KU",t:"Hammer and shooting star patterns",src:"Mind Math Money"},
+  top5:{u:"https://www.youtube.com/watch?v=qunnM_aQWQk",t:"Top 5 candlestick patterns for beginners",src:"Capital.com"},
+  sr:{u:"https://www.youtube.com/watch?v=nbhd3p_0qeE",t:"What are support and resistance?",src:"trading.com"},
+  topdown:{u:"https://www.youtube.com/watch?v=qvV-Abvk59s",t:"Top-down trading explained",src:"Smart Risk"},
+  mistakes:{u:"https://www.youtube.com/watch?v=-zJKDr69P0o",t:"How to avoid common trading mistakes",src:"trading.com"}
+};
+
+var STAGES=[
+/* ---------------------------------------------------------------- 1 */
+{t:"Candle Basics",mod:"Module 4 · Lesson 1",v:"tv",steps:[
+ {t:"What is a candlestick?",
+  p:["A candlestick is one bar on your chart. It shows everything price did during one slice of time: where it started, where it finished, and how far it stretched up and down in between.",
+     "Put hundreds of them side by side and you get a candlestick chart, which is how almost every trader looks at gold, forex and futures."],
+  fig:{c:[[4120,4128,4116,4126],[4126,4131,4121,4123],[4123,4125,4114,4116],[4116,4124,4113,4122],[4122,4134,4120,4133]],tags:["9:00","9:05","9:10","9:15","9:20"]},
+  cap:"Five 5-minute candles on gold. Each one is five minutes of trading squeezed into a single shape.",
+  ex:"On a 5-minute chart, the candle stamped 9:15 holds every trade from 9:15:00 to 9:19:59.",
+  q:["What does one candlestick show?",["Exactly where price will go next","What price did during one period of time","How many traders are buying"],1,"A candle is a record of the past period. It never predicts on its own."]},
+ {t:"What does one candle tell you?",
+  p:["Every candle answers four questions: Where did price open? Where did it close? How high did it go? How low did it go? Traders call these the OHLC: open, high, low, close.",
+     "From those four numbers you can tell who won the period (buyers or sellers), by how much, and whether one side tried and failed."],
+  fig:{c:[[4120,4134,4114,4130]],notes:[{i:0,on:"h",t:"High 4,134"},{i:0,on:"c",t:"Close 4,130"},{i:0,on:"o",t:"Open 4,120"},{i:0,on:"l",t:"Low 4,114"}]},
+  cap:"One candle, four prices.",
+  ex:"This candle opened at 4,120 and closed at 4,130, so buyers won by $10, which is 100 pips in this course.",
+  q:["Which four prices make up every candle?",["Open, high, low, close","Bid, ask, spread, volume","Entry, stop, target, size"],0,"OHLC: open, high, low, close."]},
+ {t:"Why candles instead of a line chart?",
+  p:["A line chart only connects the closing prices. It hides everything that happened in between: the spikes, the rejections, the fights.",
+     "A candle keeps all of it. You can see that price shot up and got slammed back down, and that is often the most important clue on the chart."],
+  fig:{c:[[4120,4122,4118,4121],[4121,4140,4119,4123],[4123,4125,4117,4119]],notes:[{i:1,on:"uw",t:"A line chart never shows this spike"}],hl:[1]},
+  cap:"The middle candle ran $17 above where it closed. A line chart would show a flat little bump.",
+  ex:"Gold spikes to 4,140 on a headline, then closes the 5-minute candle at 4,123. The candle shows sellers slammed it. The line chart barely moves.",
+  q:["What does a line chart hide that a candle shows?",["The closing price","The highs and lows inside each period","The time of day"],1,"A line chart connects closes only, so the highs and lows disappear."]},
+ {t:"Each candle is one period of time",
+  p:["The time each candle covers is the timeframe. On a 5-minute chart every candle is 5 minutes. On a 1-hour chart every candle is 1 hour. Same market, same price, just zoomed in or out.",
+     "A new candle starts the moment the last one closes. While a candle is still forming, its close is just the current price, and it can still change shape completely."],
+  fig:{c:[[4120,4126,4117,4124],[4124,4129,4122,4127],[4127,4131,4126,4128]],tags:["closed","closed","still forming"],hl:[2]},
+  cap:"Only the last candle can still change. The others are history.",
+  ex:"At 9:17, the 9:15 candle on a 5-minute chart is only 2 minutes old. It still has 3 minutes to change shape before it closes at 9:20.",
+  q:["When is a candle's shape final?",["As soon as it turns green","When its period ends and it closes","After the next candle closes"],1,"Until the period ends, the close is just the live price and the shape can still change."]}
+]},
+/* ---------------------------------------------------------------- 2 */
+{t:"Candle Anatomy",mod:"Module 4 · Lesson 2",v:"oct",steps:[
+ {t:"What is the open?",
+  p:["The open is the first price of the period, where the candle started. On a bullish (green) candle it sits at the bottom of the body. On a bearish (red) candle it sits at the top.",
+     "On gold, which trades almost around the clock, each candle usually opens right where the last one closed."],
+  fig:{c:[[4120,4130,4116,4128],[4128,4132,4118,4121]],notes:[{i:0,on:"o",t:"Open (bottom of green)"},{i:1,on:"o",t:"Open (top of red)"}]},
+  cap:"Where the open sits depends on the candle's color.",
+  ex:"The green candle opened at 4,120. The red one opened at 4,128, exactly where the green one closed.",
+  q:["On a red (bearish) candle, where is the open?",["At the bottom of the body","At the top of the body","At the tip of the lower wick"],1,"Red means it closed lower than it opened, so the open is the top of the body."]},
+ {t:"What is the close?",
+  p:["The close is the last price of the period. It is the most important of the four, because it is where buyers and sellers finally agreed when time ran out.",
+     "Most rules in this course are based on closes, not on wicks, because a wick can poke through a level for a few seconds while a close tells you where price actually settled."],
+  fig:{c:[[4120,4131,4117,4129]],notes:[{i:0,on:"c",t:"Close: where it settled"}]},
+  cap:"The close is the final word on the period.",
+  ex:"Price tagged 4,131 during the candle but closed at 4,129. The close is what counts.",
+  q:["Why do traders care most about the close?",["It is always the highest price","It shows where price settled when the period ended","It is the price your broker charges"],1,"The close is where the fight ended. Wicks show where it went, the close shows where it stayed."]},
+ {t:"What are the high and the low?",
+  p:["The high is the highest price traded during the period. The low is the lowest. Together they give the candle's range.",
+     "Range in this course is measured in pips, where 1 pip = $0.10 on gold. A candle from 4,114 to 4,134 has a $20 range: 200 pips."],
+  fig:{c:[[4120,4134,4114,4130]],notes:[{i:0,on:"h",t:"High 4,134"},{i:0,on:"l",t:"Low 4,114"}]},
+  cap:"High minus low is the candle's range.",
+  ex:"4,134 − 4,114 = $20 = 200 pips of range.",
+  q:["A gold candle has a high of 4,150 and a low of 4,135. What is its range in this course?",["15 pips","150 pips","1,500 pips"],1,"$15 of price ÷ $0.10 per pip = 150 pips."]},
+ {t:"What is the body?",
+  p:["The body is the thick part between the open and the close. It shows how far price actually traveled from start to finish of the period.",
+     "A big body means one side pushed hard and held it. A small body means price went nowhere overall, even if it moved a lot along the way."],
+  fig:{c:[[4110,4136,4108,4134],[4120,4130,4110,4121]],notes:[{i:0,on:"body",t:"Big body"},{i:1,on:"body",t:"Tiny body"}]},
+  cap:"Same range, very different bodies.",
+  ex:"The first candle's body is $24 (240 pips). The second's is $1 (10 pips), even though both candles traveled about $20 top to bottom.",
+  q:["What does the body measure?",["The distance from open to close","The distance from high to low","The number of trades"],0,"Body = open to close. Range = high to low."]},
+ {t:"What are the wicks?",
+  p:["Wicks (also called shadows or tails) are the thin lines above and below the body. The upper wick runs from the top of the body to the high. The lower wick runs from the bottom of the body to the low.",
+     "A wick is price that was reached and then rejected. Something pushed price there, and the other side pushed it back before the candle closed."],
+  fig:{c:[[4122,4136,4112,4126]],notes:[{i:0,on:"uw",t:"Upper wick: rejected above"},{i:0,on:"lw",t:"Lower wick: rejected below"}]},
+  cap:"Wicks are the prices price couldn't hold.",
+  ex:"Gold traded up to 4,136 and down to 4,112, but only held between 4,122 and 4,126 by the close.",
+  q:["What does a wick show?",["Prices that were reached but not held","The average price","Where the next candle will open"],0,"A wick is a visit, not a stay."]},
+ {t:"Read the full candle",
+  p:["Put it together and you can read any candle in one glance: color tells you who won, body size tells you by how much, and wicks tell you where someone tried and failed.",
+     "Try it on the candle below before you answer."],
+  fig:{c:[[4130,4133,4111,4114]],notes:[{i:0,on:"o",t:"Open 4,130"},{i:0,on:"c",t:"Close 4,114"},{i:0,on:"l",t:"Low 4,111"}]},
+  cap:"Red, big body, small wicks.",
+  ex:"Sellers took gold from 4,130 to 4,114 (160 pips) and held almost all of it. Buyers barely fought back: only a 30-pip lower wick.",
+  q:["This candle opened at 4,130 and closed at 4,114. Who won the period?",["Buyers","Sellers","Nobody, it's a doji"],1,"It closed below where it opened, so sellers won by 160 pips."]}
+]},
+/* ---------------------------------------------------------------- 3 */
+{t:"Bullish vs Bearish",mod:"Module 4 · Lesson 3",v:"brisk",steps:[
+ {t:"What makes a candle bullish?",
+  p:["A bullish candle closed higher than it opened. Buyers won the period. Most platforms color it green (some use white or hollow).",
+     "Bullish just describes what already happened in that candle. It is not a signal by itself."],
+  fig:{c:[[4120,4132,4118,4130]],notes:[{i:0,on:"c",t:"Close above open"}]},
+  cap:"Close above open = bullish.",
+  ex:"Opened 4,120, closed 4,130: a 100-pip bullish candle.",
+  q:["A candle opens at 4,140 and closes at 4,146. It is…",["Bullish","Bearish","A doji"],0,"It closed above the open."]},
+ {t:"What makes a candle bearish?",
+  p:["A bearish candle closed lower than it opened. Sellers won the period. Most platforms color it red (some use black or filled)."],
+  fig:{c:[[4130,4132,4117,4119]],notes:[{i:0,on:"c",t:"Close below open"}]},
+  cap:"Close below open = bearish.",
+  ex:"Opened 4,130, closed 4,119: a 110-pip bearish candle.",
+  q:["A candle opens at 4,150 and closes at 4,141. It is…",["Bullish","Bearish","A doji"],1,"It closed below the open."]},
+ {t:"Color tells you who won, not what's next",
+  p:["New traders see a green candle and buy. But one green candle in a downtrend is just a pause. What matters is where it formed and what the candles around it are doing.",
+     "Read color as \"who won this round\", not \"who wins the fight\"."],
+  fig:{c:[[4150,4152,4138,4140],[4140,4142,4128,4130],[4130,4136,4129,4135],[4135,4136,4120,4122],[4122,4124,4110,4112]],hl:[2],notes:[{i:2,on:"h",t:"One green in a downtrend"}]},
+  cap:"The green candle didn't change the trend.",
+  ex:"Gold dropped from 4,150 to 4,112. The single green candle at 4,135 was a breather, not a reversal.",
+  q:["A single green candle appears in a strong downtrend. What does it tell you?",["The trend has reversed, buy now","Buyers won that one period, nothing more yet","Sellers are trapped"],1,"One candle is one round. Context decides what it means."]},
+ {t:"Measuring how strong a candle is",
+  p:["Compare the candle to its neighbours. A candle with a body two or three times bigger than the recent average shows real conviction. A candle the same size as the ones around it is just normal noise.",
+     "Strength also shows in where it closed: a green candle closing right at its high is stronger than one that closed halfway back down."],
+  fig:{c:[[4120,4124,4118,4122],[4122,4125,4120,4121],[4121,4124,4119,4123],[4123,4144,4122,4143]],hl:[3],notes:[{i:3,on:"body",t:"10× the recent bodies"}]},
+  cap:"The last candle stands out against its neighbours.",
+  ex:"The earlier candles had bodies of 10 to 20 pips. The last one moved 200 pips and closed at its high: buyers in full control.",
+  q:["Which green candle shows the most buying strength?",["A big body that closes at its high","A big body with a long upper wick","A small body the same size as its neighbours"],0,"Big body plus a close at the high means buyers pushed and held."]}
+]},
+/* ---------------------------------------------------------------- 4 */
+{t:"Body Size",mod:"Module 4 · Lesson 4",v:"dojispin",steps:[
+ {t:"What does a big body mean?",
+  p:["A big body means one side controlled almost the whole period and price traveled a long way from open to close. It shows conviction and momentum.",
+     "After a big-bodied candle, price often keeps going, pauses, or pulls back part of the move. It rarely flips straight back."],
+  fig:{c:[[4110,4134,4109,4133]],notes:[{i:0,on:"body",t:"Body is most of the range"}]},
+  cap:"Body takes up most of the candle.",
+  ex:"230-pip body inside a 250-pip range: buyers owned this period.",
+  q:["A candle's body takes up 90% of its range. That shows…",["Indecision","Strong control by one side","A reversal for sure"],1,"Almost no wicks means almost no pushback."]},
+ {t:"What is a marubozu?",
+  p:["A marubozu is a candle with a full body and little or no wick on either end. It opened at one extreme and closed at the other.",
+     "A green marubozu means buyers ran it from the open to the close with no real pushback. A red marubozu is the same for sellers."],
+  fig:{c:[[4110,4130,4110,4130],[4130,4130,4112,4112]],tags:["green marubozu","red marubozu"]},
+  cap:"Open and close at the extremes, no wicks.",
+  ex:"Gold opens 4,110 and closes 4,130 at the high, never trading below the open: a 200-pip green marubozu.",
+  q:["What does a marubozu look like?",["All body, almost no wicks","All wick, almost no body","Two equal wicks with a tiny body"],0,"Maru-bozu roughly means \"bald\": no wicks."]},
+ {t:"What is a spinning top?",
+  p:["A spinning top has a small body in the middle with upper and lower wicks that are both longer than the body.",
+     "Both sides pushed hard, neither won. It signals indecision. After a long run, it can be the first sign the move is running out of steam."],
+  fig:{c:[[4121,4130,4112,4123]],notes:[{i:0,on:"body",t:"Small body in the middle"}]},
+  cap:"Wicks both ways, small body: indecision.",
+  ex:"Gold swung 180 pips (4,112 to 4,130) but only closed 20 pips above where it opened.",
+  q:["A spinning top usually signals…",["Strong buying","Indecision","Strong selling"],1,"Both sides were active and neither won."]},
+ {t:"What is a doji?",
+  p:["A doji is a candle where the open and close are the same or almost the same, so the body is just a line.",
+     "It means a perfect stalemate. The wicks tell you more: a long-legged doji has long wicks both ways (big fight, no winner), a dragonfly doji has a long lower wick (sellers pushed down and got rejected), and a gravestone doji has a long upper wick (buyers pushed up and got rejected)."],
+  fig:{c:[[4120,4128,4112,4120],[4130,4130,4116,4130],[4110,4124,4110,4110]],tags:["long-legged","dragonfly","gravestone"]},
+  cap:"Three kinds of doji. The body is a line in each.",
+  ex:"A dragonfly doji after a drop to support means sellers pushed hard and buyers erased all of it before the close.",
+  q:["What makes a candle a doji?",["Open and close are almost the same","It has no wicks","It is the biggest candle of the day"],0,"Equal open and close, so the body is a line."]},
+ {t:"Small bodies in a trend",
+  p:["When a strong move starts printing smaller and smaller bodies, momentum is fading. It doesn't mean reverse yet. It means the side in control is pushing with less force.",
+     "This is often where the pullback starts, and where late traders buy the top."],
+  fig:{c:[[4100,4116,4099,4115],[4115,4127,4114,4126],[4126,4132,4124,4130],[4130,4134,4128,4131],[4131,4134,4129,4130]],notes:[{i:4,on:"h",t:"Bodies shrinking"}],tags:["150","110","40","10","-10"]},
+  cap:"Body sizes in pips under each candle: 150 → 110 → 40 → 10.",
+  ex:"Gold's 5-minute candles shrink from 150-pip bodies to 10-pip bodies near 4,130. Buyers are running out of fuel.",
+  q:["Bodies get smaller and smaller as a move goes up. That tells you…",["Momentum is fading","The move is speeding up","You must sell immediately"],0,"Shrinking bodies = less force. It's a warning, not a signal on its own."]}
+]},
+/* ---------------------------------------------------------------- 5 */
+{t:"Wicks",mod:"Module 4 · Lesson 5",v:"hammer",steps:[
+ {t:"What does a long wick mean?",
+  p:["A long wick means price traveled far in one direction and was pushed back hard before the close. It is rejection: one side tried, the other side answered.",
+     "A useful rule: a wick at least twice the size of the body is \"long\" and worth paying attention to."],
+  fig:{c:[[4126,4128,4106,4125]],notes:[{i:0,on:"lw",t:"Wick is 19× the body"}]},
+  cap:"Sellers pushed $20 lower. Buyers took it all back.",
+  ex:"Gold dropped to 4,106 and closed at 4,125. That 190-pip lower wick against a 10-pip body is a loud rejection of lower prices.",
+  q:["A candle has a 10-pip body and a 60-pip lower wick. What happened?",["Price was rejected from lower prices","Sellers held control","Nothing important"],0,"Price went down and buyers pushed it back up."]},
+ {t:"Lower wick vs upper wick",
+  p:["A long lower wick means lower prices were rejected. Buyers stepped in. A long upper wick means higher prices were rejected. Sellers stepped in.",
+     "The wick points to where the rejected prices were, not to where price is going. It's the opposite way round from what many beginners assume."],
+  fig:{c:[[4120,4122,4104,4121],[4120,4138,4119,4121]],tags:["buyers defended","sellers defended"],notes:[{i:0,on:"lw",t:"Rejected below"},{i:1,on:"uw",t:"Rejected above"}]},
+  cap:"The wick points at the prices that got rejected.",
+  ex:"A long upper wick at 4,138 means sellers didn't let gold hold above 4,130.",
+  q:["A long UPPER wick usually means…",["Higher prices were rejected","Price is about to go higher","Buyers are in control"],0,"Price went up and sellers pushed it back down."]},
+ {t:"What is a hammer?",
+  p:["A hammer has a small body near the top of the candle, a lower wick at least twice the body, and little or no upper wick.",
+     "It only counts as a hammer after a move down. There it shows sellers pushed to new lows and buyers took the lows back. The same shape after a move up is called a hanging man, a warning that buyers may be tiring."],
+  fig:{c:[[4140,4142,4130,4131],[4131,4133,4120,4122],[4122,4124,4112,4114],[4114,4118,4100,4117]],hl:[3],notes:[{i:3,on:"lw",t:"Hammer after the drop"}]},
+  cap:"Hammer at the bottom of a decline.",
+  ex:"After falling from 4,140, gold dips to 4,100 then closes at 4,117. Body 30 pips, lower wick 140 pips.",
+  q:["Where does a hammer need to appear to count?",["After a move down","After a move up","Anywhere"],0,"After a move up, the same shape is a hanging man."]},
+ {t:"What is a shooting star?",
+  p:["A shooting star is the hammer flipped: small body near the bottom, a long upper wick at least twice the body, little or no lower wick.",
+     "It appears after a move up and shows buyers pushed to new highs and got rejected. The same shape after a move down is an inverted hammer, which can hint at buyers starting to test higher."],
+  fig:{c:[[4100,4111,4099,4110],[4110,4120,4109,4118],[4118,4129,4117,4127],[4127,4146,4125,4128]],hl:[3],notes:[{i:3,on:"uw",t:"Shooting star at the top"}]},
+  cap:"Shooting star at the top of a rally.",
+  ex:"After rising from 4,100, gold spikes to 4,146 and closes at 4,128. Upper wick 180 pips, body 10 pips.",
+  q:["A shooting star after a rally suggests…",["Buyers got rejected at the highs","Buyers are getting stronger","The trend will definitely reverse"],0,"It's a warning of rejection, not a guarantee."]},
+ {t:"What is a pin bar?",
+  p:["Pin bar is the trader's name for any candle with one very long wick (about two thirds of the whole candle or more) and a small body at the other end. Hammers and shooting stars are both pin bars.",
+     "The wick is the \"pin\" poking through a level. Pin bars matter most when the wick pokes through a key level and the body closes back on the right side of it."],
+  fig:{c:[[4118,4120,4112,4114],[4114,4116,4098,4115]],lv:[{v:4105,t:"Support 4,105"}],hl:[1],notes:[{i:1,on:"lw",t:"Pin through support"}]},
+  cap:"The wick stabs through support. The body closes back above.",
+  ex:"Gold wicks to 4,098 under 4,105 support, then closes at 4,115. The level held on a closing basis.",
+  q:["When is a pin bar most meaningful?",["When its wick pokes through a key level and it closes back","In the middle of a range","When it is the smallest candle on the chart"],0,"Location makes the pin. The same shape in the middle of nowhere means little."]},
+ {t:"Wicks vs bodies",
+  p:["A wick through a level is not a break. A body closing through a level is.",
+     "This one idea keeps you from buying fake breakouts and from panic-selling stop hunts. Watch where the body closes, not how far the wick reaches."],
+  fig:{c:[[4130,4136,4128,4134],[4134,4144,4132,4136],[4136,4147,4135,4146]],lv:[{v:4140,t:"Resistance 4,140"}],tags:["","wick only","body closes above"],notes:[{i:1,on:"uw",t:"Not a break"},{i:2,on:"c",t:"A real break"}]},
+  cap:"Same level, two very different candles.",
+  ex:"Candle 2 only wicked above 4,140. Candle 3 closed at 4,146, so the level actually broke.",
+  q:["Gold wicks above 4,140 resistance but closes at 4,136. Did it break?",["Yes","No, it only wicked through","Only if volume was high"],1,"It never closed above, so the level held."]}
+]},
+/* ---------------------------------------------------------------- 6 */
+{t:"Candle Patterns",mod:"Module 4 · Lesson 6",v:"top5",steps:[
+ {t:"Why one candle isn't enough",
+  p:["A single candle is one round of the fight. Groups of two or three candles show how the fight is turning: whether one side is taking over, running out of fuel, or getting trapped.",
+     "Always read the last few candles as a sentence, not as separate words."],
+  fig:{c:[[4140,4141,4126,4128],[4128,4130,4118,4120],[4120,4123,4114,4121],[4121,4134,4120,4133]],tags:["","","pause","takeover"]},
+  cap:"Selling, more selling, a stall, then buyers take over.",
+  ex:"Read left to right: sellers drove it from 4,140 to 4,120, stalled at 4,114, then a big green candle took back 4,133.",
+  q:["Why read candles in groups?",["Groups show how control is shifting","Single candles are always wrong","Groups are easier to see"],0,"The story is in the sequence."]},
+ {t:"What is an engulfing pattern?",
+  p:["A bullish engulfing is a red candle followed by a green candle whose body completely covers the red body. A bearish engulfing is the mirror: green, then a bigger red that swallows it.",
+     "It shows a full takeover: the second side erased the first side's entire period and then some. It matters most at a key level or after a clear move."],
+  fig:{c:[[4130,4131,4120,4122],[4122,4124,4114,4116],[4116,4130,4114,4128]],hl:[1,2],notes:[{i:2,on:"body",t:"Swallows the red body"}],tags:["","",""]},
+  cap:"Bullish engulfing: the green body covers the red one.",
+  ex:"The red candle ran 4,122 → 4,116. The next green candle ran 4,116 → 4,128, wiping it out and closing 120 pips higher.",
+  q:["In a bullish engulfing, the green candle's body…",["Is inside the red candle's body","Completely covers the red candle's body","Has no wicks"],1,"Engulf = swallow whole."]},
+ {t:"What is an inside bar?",
+  p:["An inside bar is a candle whose high and low are both inside the previous candle's range. A harami is the body-only version: the second body sits inside the first body.",
+     "It means the market is pausing and compressing. The break of the inside bar's high or low often starts the next move."],
+  fig:{c:[[4110,4136,4108,4132],[4130,4133,4122,4125]],lv:[{v:4136,t:"Mother bar high"},{v:4108,t:"Mother bar low"}],hl:[1],notes:[{i:1,on:"body",t:"Inside bar"}]},
+  cap:"The second candle stays inside the first one's range.",
+  ex:"A 280-pip candle, then a candle that stays between 4,122 and 4,133. Traders watch for a close above 4,136 or below 4,108.",
+  q:["An inside bar shows…",["Compression: the market pausing","A guaranteed reversal","Very high volatility"],0,"Smaller range inside the last one: energy building."]},
+ {t:"What are tweezer tops and bottoms?",
+  p:["Tweezers are two candles in a row with matching highs (tweezer top) or matching lows (tweezer bottom).",
+     "Price hit the same price twice and got rejected both times. That level now matters."],
+  fig:{c:[[4120,4124,4108,4110],[4110,4118,4108,4116]],lv:[{v:4108,t:"Same low twice"}],tags:["",""]},
+  cap:"Tweezer bottom: two lows at 4,108.",
+  ex:"Gold puts in back-to-back lows at 4,108 and the second candle closes green at 4,116.",
+  q:["A tweezer bottom is…",["Two candles with matching lows","Two candles with matching closes","Two doji in a row"],0,"Same low twice = a defended price."]},
+ {t:"What are morning and evening stars?",
+  p:["A morning star is three candles: a big red candle, a small-bodied candle (the star), then a big green candle that closes well into the red candle's body. It shows selling exhausting and buying taking over. An evening star is the mirror at a top.",
+     "The middle candle is the hesitation; the third candle is the confirmation."],
+  fig:{c:[[4136,4138,4116,4118],[4118,4120,4110,4116],[4116,4134,4115,4132]],tags:["big red","star","big green"]},
+  cap:"Morning star: drop, hesitate, reverse.",
+  ex:"Gold falls 180 pips, prints a small candle around 4,116, then rallies to close at 4,132, past the middle of the first candle.",
+  q:["In a morning star, what does the third candle do?",["Closes well into the first candle's body","Makes a new low","Has the smallest body"],0,"The third candle confirms the turn."]},
+ {t:"Three soldiers and three crows",
+  p:["Three white soldiers are three strong green candles in a row, each closing higher, with small upper wicks. Three black crows are three strong red candles in a row, each closing lower.",
+     "They show steady, controlled pressure, not a single spike. After a long move, though, they can also mean the move is stretched."],
+  fig:{c:[[4100,4113,4099,4112],[4111,4124,4110,4123],[4122,4136,4121,4135]],tags:["1","2","3"]},
+  cap:"Three white soldiers: three higher closes in a row.",
+  ex:"Gold closes at 4,112, then 4,123, then 4,135, each candle opening inside the last one's body.",
+  q:["Three black crows are…",["Three strong red candles closing lower each time","Three doji","Three candles with long upper wicks"],0,"Steady selling, three candles running."]},
+ {t:"Momentum vs exhaustion",
+  p:["Momentum looks like big bodies, closes near the extremes, and small wicks against the move. Exhaustion looks like shrinking bodies, longer wicks against the move, and closes pulling away from the extremes.",
+     "The question to ask is: are the candles getting easier or harder for the side in control?"],
+  fig:{c:[[4100,4114,4099,4113],[4113,4126,4112,4125],[4125,4134,4122,4128],[4128,4138,4124,4126],[4126,4136,4118,4120]],tags:["easy","easy","harder","harder","failed"]},
+  cap:"The same rally, getting harder candle by candle.",
+  ex:"The first two candles closed at their highs. Then upper wicks grew and closes slipped. By the fifth, sellers closed it near the low.",
+  q:["Which is a sign of exhaustion in an uptrend?",["Longer upper wicks and shrinking bodies","Bigger bodies closing at the highs","No wicks at all"],0,"Harder candles mean the buyers are struggling."]}
+]},
+/* ---------------------------------------------------------------- 7 */
+{t:"Candles at Levels",mod:"Module 4 · Lesson 7",v:"sr",steps:[
+ {t:"Why location matters more than shape",
+  p:["A perfect hammer in the middle of nowhere means very little. A messy hammer right on yesterday's low, a round number, or a level that has held three times means a lot.",
+     "First find the level. Then read the candle at the level. Never the other way around."],
+  fig:{c:[[4130,4132,4122,4124],[4124,4126,4108,4122],[4122,4124,4116,4118],[4118,4120,4101,4116]],lv:[{v:4100,t:"Key level 4,100"}],tags:["","middle","","at the level"],hl:[1,3]},
+  cap:"Two hammers. Only one is at a level.",
+  ex:"The hammer at 4,108 is in no-man's land. The hammer whose wick tags 4,101 is right on the 4,100 level, and that's the one that counts.",
+  q:["What should you find first?",["The level","The pattern","The candle color"],0,"Level first, candle second."]},
+ {t:"Rejection at support",
+  p:["When price drops into support and prints long lower wicks, hammers, or a bullish engulfing, buyers are defending the level.",
+     "The more clearly the candles reject the level, and the more often it has held before, the stronger it is."],
+  fig:{c:[[4130,4132,4118,4120],[4120,4122,4104,4116],[4116,4118,4103,4117],[4117,4128,4116,4127]],lv:[{v:4105,t:"Support 4,105"}],notes:[{i:1,on:"lw",t:"Rejected"},{i:2,on:"lw",t:"Rejected again"}]},
+  cap:"Two wicks under 4,105, both rejected, then buyers push.",
+  ex:"Gold wicks to 4,104 and 4,103, closes back above 4,105 both times, then rallies to 4,127.",
+  q:["Price keeps wicking below support but closing above it. That means…",["Buyers are defending the level","The level has broken","Sellers are in control"],0,"Closes above the level = it's holding."]},
+ {t:"A real break: closing through",
+  p:["A level breaks when a candle body closes through it, ideally with a strong body. A close through resistance turns that resistance into potential support.",
+     "One close is the start. Follow-through on the next candles is what confirms it."],
+  fig:{c:[[4126,4134,4124,4132],[4132,4139,4130,4137],[4137,4152,4136,4150],[4150,4156,4147,4154]],lv:[{v:4140,t:"Resistance 4,140"}],notes:[{i:2,on:"c",t:"Closes through"}]},
+  cap:"A strong body closes through 4,140 and keeps going.",
+  ex:"Gold closes at 4,150, 100 pips above 4,140, and the next candle holds above it.",
+  q:["What confirms a break of resistance?",["A body closing above it, with follow-through","A wick poking above it","Touching it three times"],0,"Closes, not wicks."]},
+ {t:"Sweep: a fake break",
+  p:["A sweep (or stop hunt) is when price pushes through an obvious level, triggers the stops sitting there, then closes back on the other side. The wick does the damage; the close tells the truth.",
+     "Traders who sold the break are now trapped, and their exits fuel the move the other way."],
+  fig:{c:[[4118,4121,4110,4112],[4112,4114,4096,4113],[4113,4126,4112,4125]],lv:[{v:4106,t:"Yesterday's low 4,106"}],notes:[{i:1,on:"lw",t:"Sweeps below"},{i:2,on:"c",t:"Rips back"}]},
+  cap:"Wick takes the stops under 4,106, close lands back above.",
+  ex:"Gold dips to 4,096 under yesterday's 4,106 low, closes back at 4,113, then rallies to 4,125.",
+  q:["Price wicks below yesterday's low and closes back above it. That's usually…",["A sweep","A confirmed breakdown","A doji"],0,"Broke with a wick, failed on the close."]},
+ {t:"The retest",
+  p:["After a real break, price often comes back to test the level from the other side. Old resistance acting as support (or old support acting as resistance) is called a retest or flip.",
+     "Candles on the retest tell you whether the flip is holding: rejection wicks good, bodies closing back through bad."],
+  fig:{c:[[4132,4152,4131,4150],[4150,4155,4146,4148],[4148,4149,4139,4144],[4144,4158,4143,4157]],lv:[{v:4140,t:"Old resistance → support"}],notes:[{i:2,on:"lw",t:"Retest holds"}]},
+  cap:"Break, pull back to the level, hold, continue.",
+  ex:"Gold breaks 4,140, pulls back to 4,139, closes at 4,144 above the level, then runs to 4,157.",
+  q:["On a retest of broken resistance, which candle is a good sign for buyers?",["A rejection wick that closes back above the level","A big red body closing below the level","A doji far above the level"],0,"Wick into the level, close above it: the flip holds."]}
+]},
+/* ---------------------------------------------------------------- 8 */
+{t:"Timeframes",mod:"Module 4 · Lesson 8",v:"topdown",steps:[
+ {t:"What is a timeframe?",
+  p:["The timeframe is how much time each candle covers: 1 minute, 5 minutes, 1 hour, 4 hours, a day. Changing the timeframe doesn't change the market. It just changes how much detail you see.",
+     "In this course, the 1-hour chart sets the direction and the 3- to 5-minute chart times the entry."],
+  fig:{c:[[4110,4142,4106,4138]],tags:["1 hour"]},
+  cap:"One 1-hour candle.",
+  ex:"On the 1-hour chart, 9:00 to 10:00 is this single candle.",
+  q:["In this course, which chart sets direction?",["1-minute","1-hour","Monthly"],1,"1-hour for direction, 3–5 minute for entries."]},
+ {t:"How smaller candles build a bigger one",
+  p:["A 1-hour candle is made of twelve 5-minute candles. Its open is the first 5-minute open, its close is the last 5-minute close, its high is the highest high of all twelve, and its low is the lowest low.",
+     "Use the tool further down the page to merge them yourself."],
+  fig:{c:[[4110,4114,4106,4113],[4113,4118,4111,4116],[4116,4117,4109,4110],[4110,4121,4110,4120],[4120,4126,4119,4125],[4125,4128,4121,4122],[4122,4130,4121,4129],[4129,4136,4128,4134],[4134,4135,4127,4129],[4129,4139,4128,4137],[4137,4142,4133,4135],[4135,4140,4133,4138]],notes:[{i:0,on:"o",t:"Open 4,110"},{i:10,on:"h",t:"High 4,142"},{i:0,on:"l",t:"Low 4,106"},{i:11,on:"c",t:"Close 4,138"}]},
+  cap:"Twelve 5-minute candles = the 1-hour candle in the last step (4,110 / 4,142 / 4,106 / 4,138).",
+  ex:"Even though some 5-minute candles were red, the hour as a whole closed 280 pips higher.",
+  q:["A 1-hour candle's high is…",["The high of the first 5-minute candle","The highest high of all twelve 5-minute candles","The average of the highs"],1,"The hour's high is the highest price traded in that hour."]},
+ {t:"One chart can hide another",
+  p:["A big red candle on the 5-minute chart can be a tiny pullback inside a green 1-hour candle. A hammer on the 1-hour chart might look like a crash and recovery on the 5-minute.",
+     "That's why you check the higher timeframe first: it tells you which 5-minute candles to care about."],
+  fig:{c:[[4116,4117,4109,4110]],tags:["5-min red"]},
+  cap:"This red 5-minute candle is the third candle of the green hour in the last step.",
+  ex:"9:10–9:15 dropped 60 pips, but the 9:00 hour still closed +280 pips.",
+  q:["A red 5-minute candle forms while the 1-hour candle is strongly green. What is it most likely?",["A pullback inside the bigger move","A reversal of the hour","A sign to sell short"],0,"Check the higher timeframe before reacting to a lower one."]},
+ {t:"Wait for the candle to close",
+  p:["A candle isn't finished until its time is up. A 5-minute hammer at 9:13 can turn into a big red candle by 9:15.",
+     "Act on closed candles. On the 3- to 5-minute chart that's a short wait; on the 1-hour chart it can mean waiting until the top of the hour."],
+  fig:{c:[[4120,4122,4108,4119],[4120,4122,4104,4106]],tags:["at 9:13","at 9:15 close"]},
+  cap:"Same candle, two minutes apart.",
+  ex:"At 9:13 it looked like a hammer at 4,119. By the close at 9:15 sellers had it at 4,106.",
+  q:["When should you act on a candle signal?",["As soon as it starts to look right","After the candle closes","Halfway through the candle"],1,"Until it closes, it can still change shape."]}
+]},
+/* ---------------------------------------------------------------- 9 */
+{t:"Common Mistakes",mod:"Module 4 · Lesson 9",v:"mistakes",steps:[
+ {t:"Mistake: trading patterns with no level",
+  p:["The most common mistake is trading a pattern because it looks like the picture in a book, with no level behind it. Patterns only carry weight at a key level or after a clear move."],
+  fig:{c:[[4120,4124,4118,4122],[4122,4124,4114,4123],[4123,4126,4121,4124],[4124,4126,4119,4121]],hl:[1],notes:[{i:1,on:"lw",t:"Hammer… at nothing"}]},
+  cap:"A hammer in the middle of a sideways chop.",
+  ex:"A hammer at 4,114 with no support near it is just a candle.",
+  q:["A perfect-looking hammer appears in the middle of a choppy range, at no level. Best move?",["Buy it","Ignore it","Double your size"],1,"No level, no trade."]},
+ {t:"Mistake: acting before the close",
+  p:["Jumping in while a candle is still forming feels early and smart. Often it's just early and wrong. Let the candle close."],
+  fig:{c:[[4130,4141,4129,4140],[4130,4141,4126,4128]],tags:["at :03","at :05 close"]},
+  cap:"The breakout candle that wasn't.",
+  ex:"At 9:03 gold was above 4,140. At the 9:05 close it was back at 4,128.",
+  q:["Why wait for the close?",["Because the shape can still change","Because brokers require it","Because closes are always green"],0,"An unfinished candle can flip completely."]},
+ {t:"Mistake: fighting the higher timeframe",
+  p:["Buying a 5-minute hammer while the 1-hour chart is falling hard is fighting the tide. The lower timeframe signal has to agree with the higher timeframe direction."],
+  fig:{c:[[4160,4161,4146,4148],[4148,4150,4134,4136],[4136,4138,4122,4124]],tags:["1H","1H","1H"]},
+  cap:"The 1-hour chart is falling. 5-minute buy signals are swimming upstream.",
+  ex:"Three red 1-hour candles from 4,160 to 4,124. A 5-minute hammer here is a pullback at best.",
+  q:["The 1-hour chart is in a clear downtrend. A 5-minute bullish engulfing appears. In this course you…",["Buy it","Skip it: it's against the 1-hour direction","Sell it"],1,"5-minute trades go with the 1-hour, never against it."]},
+ {t:"Mistake: reading every candle",
+  p:["Not every candle means something. Most are noise. If you try to read a story into each one, you'll overtrade.",
+     "Focus on candles at your levels, at the times you trade, in the direction of the 1-hour. Ignore the rest."],
+  fig:{c:[[4120,4123,4118,4121],[4121,4124,4119,4120],[4120,4122,4117,4121],[4121,4125,4120,4123],[4123,4124,4119,4120],[4120,4123,4118,4122]],tags:["noise","noise","noise","noise","noise","noise"]},
+  cap:"Small, overlapping candles: there's nothing to read here.",
+  ex:"Gold drifting between 4,117 and 4,125 for half an hour is chop. The best trade is no trade.",
+  q:["What should you do with candles in a tight, choppy range?",["Read each one for a signal","Mostly ignore them and wait","Trade every breakout"],1,"Chop is noise. Wait for price to reach a level."]},
+ {t:"Mistake: forgetting the news candle",
+  p:["Around big news (CPI, NFP, FOMC), candles go wild: huge bodies, huge wicks both ways. Those shapes don't mean what they mean on a normal candle.",
+     "This course's rule: no new entries 15 minutes either side of a high-impact release."],
+  fig:{c:[[4120,4122,4118,4121],[4121,4152,4098,4140],[4140,4146,4122,4126]],tags:["8:25","8:30 NFP","8:35"],hl:[1]},
+  cap:"A news candle: $54 of range in five minutes.",
+  ex:"NFP at 8:30 throws gold from 4,098 to 4,152 in one candle. Its \"hammer\" shape is noise, not a signal.",
+  q:["A huge pin bar forms right on an NFP release. What do you do?",["Treat it like a normal signal","Stand aside until the 15-minute window passes","Buy because the wick is long"],1,"News candles break the normal rules."]},
+ {t:"Mistake: sizing off the candle, not the stop",
+  p:["Big candles make big stops. If you place your stop under a 300-pip candle without lowering your size, one loss can be three times your usual risk.",
+     "Size from your stop distance every time. The calculator in the FTA Glossary does it for you."],
+  fig:{c:[[4110,4140,4108,4138]],notes:[{i:0,on:"l",t:"Stop under the low = 300+ pips"}]},
+  cap:"Stop below this candle's low is more than 300 pips away.",
+  ex:"Risking $100 with a $10 stop is 0.10 lot of XAUUSD. With this $30 stop (4,138 entry, stop under 4,108), the same $100 is only 0.03 lot.",
+  q:["Your stop is twice as far as usual. To keep the same dollar risk you…",["Keep the same size","Cut your size in half","Double your size"],1,"Twice the stop, half the size, same risk."]}
+]}
+];
+
+/* ================= PATTERN LIBRARY ================= */
+var LIB=[
+ {id:"marubozu",n:"Marubozu",k:"Single",b:"Strength",fig:{c:[[4110,4130,4110,4130],[4130,4130,4112,4112]]},
+  what:"All body, no wicks. Opened at one end, closed at the other.",means:"One side controlled the whole period.",where:"Starting a breakout or a push away from a level.",confirm:"Next candle holds most of the body.",trap:"After a long run it can mark the final blow-off."},
+ {id:"spinning",n:"Spinning top",k:"Single",b:"Indecision",fig:{c:[[4121,4130,4112,4123]]},
+  what:"Small body in the middle, wicks both ways longer than the body.",means:"Both sides fought, nobody won.",where:"After a strong move, as a sign of tiring.",confirm:"The next candle breaks its high or low with a body.",trap:"In chop, spinning tops are everywhere and mean nothing."},
+ {id:"doji",n:"Doji",k:"Single",b:"Indecision",fig:{c:[[4120,4128,4112,4120]]},
+  what:"Open and close almost equal: the body is a line.",means:"A stalemate.",where:"At a level or after a long run.",confirm:"A strong candle the next period in one direction.",trap:"A doji on its own is never a trade."},
+ {id:"dragonfly",n:"Dragonfly doji",k:"Single",b:"Bullish at support",fig:{c:[[4130,4130,4116,4130]]},
+  what:"Doji with a long lower wick and no upper wick.",means:"Sellers pushed down, buyers erased it all.",where:"At support or after a drop.",confirm:"Next candle closes higher.",trap:"After a rally it's closer to a hanging man warning."},
+ {id:"gravestone",n:"Gravestone doji",k:"Single",b:"Bearish at resistance",fig:{c:[[4110,4124,4110,4110]]},
+  what:"Doji with a long upper wick and no lower wick.",means:"Buyers pushed up, sellers erased it all.",where:"At resistance or after a rally.",confirm:"Next candle closes lower.",trap:"In the middle of a range it carries little weight."},
+ {id:"hammer",n:"Hammer",k:"Single",b:"Bullish reversal",fig:{c:[[4130,4132,4120,4121],[4121,4123,4105,4122]],hl:[1]},
+  what:"Small body near the top, lower wick 2×+ the body, tiny upper wick.",means:"New lows rejected by buyers.",where:"After a decline, at support.",confirm:"Next candle closes above the hammer's high.",trap:"Same shape after a rally = hanging man."},
+ {id:"hanging",n:"Hanging man",k:"Single",b:"Bearish warning",fig:{c:[[4110,4122,4109,4121],[4121,4124,4106,4122]],hl:[1]},
+  what:"Hammer shape, but after a rally.",means:"Sellers were able to push it down hard during the period.",where:"Near the top of a move.",confirm:"Next candle closes below its body.",trap:"Weak on its own; needs confirmation."},
+ {id:"invhammer",n:"Inverted hammer",k:"Single",b:"Bullish hint",fig:{c:[[4130,4132,4118,4120],[4120,4136,4118,4121]],hl:[1]},
+  what:"Small body near the bottom, long upper wick, after a decline.",means:"Buyers started testing higher.",where:"After a drop, at support.",confirm:"Next candle closes above its body.",trap:"Same shape after a rally = shooting star."},
+ {id:"star",n:"Shooting star",k:"Single",b:"Bearish reversal",fig:{c:[[4110,4122,4109,4120],[4120,4138,4119,4121]],hl:[1]},
+  what:"Small body near the bottom, upper wick 2×+ the body, after a rally.",means:"New highs rejected by sellers.",where:"After a rally, at resistance.",confirm:"Next candle closes below its low.",trap:"After a drop, it's an inverted hammer instead."},
+ {id:"pin",n:"Pin bar",k:"Single",b:"Rejection",fig:{c:[[4114,4116,4098,4115]],lv:[{v:4105,t:"Level"}]},
+  what:"One wick about 2/3 of the candle or more, small body at the other end.",means:"A level was poked and rejected.",where:"Wick through a key level, close back.",confirm:"Price moves away from the wick.",trap:"Without a level, a pin is just a candle."},
+ {id:"bullengulf",n:"Bullish engulfing",k:"Two candles",b:"Bullish reversal",fig:{c:[[4122,4124,4114,4116],[4116,4130,4114,4128]]},
+  what:"Red candle, then a green body that fully covers it.",means:"Buyers erased the sellers' whole period.",where:"At support or after a decline.",confirm:"Follow-through above the engulfing high.",trap:"Mid-range, it's often just noise."},
+ {id:"bearengulf",n:"Bearish engulfing",k:"Two candles",b:"Bearish reversal",fig:{c:[[4120,4128,4118,4126],[4126,4128,4112,4114]]},
+  what:"Green candle, then a red body that fully covers it.",means:"Sellers erased the buyers' whole period.",where:"At resistance or after a rally.",confirm:"Follow-through below the engulfing low.",trap:"In a strong uptrend it's often a pullback."},
+ {id:"inside",n:"Inside bar",k:"Two candles",b:"Compression",fig:{c:[[4110,4136,4108,4132],[4130,4133,4122,4125]]},
+  what:"Second candle's high and low inside the first candle's range.",means:"The market is pausing and coiling.",where:"After a big candle, or at a level.",confirm:"A close beyond the first candle's high or low.",trap:"Breaks can fake out. Wait for the close."},
+ {id:"harami",n:"Harami",k:"Two candles",b:"Slowing",fig:{c:[[4136,4138,4114,4116],[4120,4128,4118,4124]]},
+  what:"Second body sits inside the first body.",means:"The strong move has stalled.",where:"After a long candle in a trend.",confirm:"Next candle moves against the first candle.",trap:"Often just a pause before continuation."},
+ {id:"tweezerb",n:"Tweezer bottom",k:"Two candles",b:"Bullish at support",fig:{c:[[4120,4124,4108,4110],[4110,4118,4108,4116]],lv:[{v:4108,t:"Same low"}]},
+  what:"Two candles with matching lows.",means:"The same price was defended twice.",where:"At support.",confirm:"A close above the pair's highs.",trap:"A third test often breaks it."},
+ {id:"tweezert",n:"Tweezer top",k:"Two candles",b:"Bearish at resistance",fig:{c:[[4120,4134,4118,4132],[4132,4134,4122,4124]],lv:[{v:4134,t:"Same high"}]},
+  what:"Two candles with matching highs.",means:"The same price was rejected twice.",where:"At resistance.",confirm:"A close below the pair's lows.",trap:"In a strong uptrend, highs often get taken next."},
+ {id:"piercing",n:"Piercing line",k:"Two candles",b:"Bullish reversal",fig:{c:[[4134,4135,4116,4118],[4116,4130,4114,4128]]},
+  what:"Big red candle, then a green candle that opens at or below the red close and closes above the red body's midpoint.",means:"Buyers took back more than half of the drop.",where:"After a decline.",confirm:"Next candle continues higher.",trap:"On gold, candles usually open at the prior close, so the classic gap-down version is rare."},
+ {id:"darkcloud",n:"Dark cloud cover",k:"Two candles",b:"Bearish reversal",fig:{c:[[4110,4130,4109,4128],[4130,4132,4116,4118]]},
+  what:"Big green candle, then a red candle that opens at or above the green close and closes below the green body's midpoint.",means:"Sellers took back more than half of the rally.",where:"After a rally.",confirm:"Next candle continues lower.",trap:"Same gap caveat as the piercing line on gold."},
+ {id:"morning",n:"Morning star",k:"Three candles",b:"Bullish reversal",fig:{c:[[4136,4138,4116,4118],[4118,4120,4110,4116],[4116,4134,4115,4132]]},
+  what:"Big red, small-bodied star, big green closing well into the red body.",means:"Selling exhausted, buying took over.",where:"After a decline, at support.",confirm:"The third candle itself, plus follow-through.",trap:"If the third candle is weak, it's just a bounce."},
+ {id:"evening",n:"Evening star",k:"Three candles",b:"Bearish reversal",fig:{c:[[4110,4132,4109,4130],[4130,4138,4128,4132],[4132,4133,4113,4115]]},
+  what:"Big green, small-bodied star, big red closing well into the green body.",means:"Buying exhausted, selling took over.",where:"After a rally, at resistance.",confirm:"The third candle itself, plus follow-through.",trap:"Mid-trend, it's often just a pullback."},
+ {id:"soldiers",n:"Three white soldiers",k:"Three candles",b:"Bullish strength",fig:{c:[[4100,4113,4099,4112],[4111,4124,4110,4123],[4122,4136,4121,4135]]},
+  what:"Three strong green candles, each closing higher, small upper wicks.",means:"Steady, controlled buying.",where:"Leaving a base or a level.",confirm:"Pullbacks stay shallow.",trap:"After a long rally, it can mean stretched, not strong."},
+ {id:"crows",n:"Three black crows",k:"Three candles",b:"Bearish strength",fig:{c:[[4136,4137,4123,4124],[4125,4126,4112,4113],[4114,4115,4100,4101]]},
+  what:"Three strong red candles, each closing lower, small lower wicks.",means:"Steady, controlled selling.",where:"Breaking down from a top or level.",confirm:"Bounces stay shallow.",trap:"After a long drop, it can mean stretched, not strong."}
+];
+
+var SWAY=[{r:"",w:""},{r:"",w:""},{r:"",w:""},{r:"",w:""},{r:"",w:""},{r:"",w:""},{r:"",w:""},{r:"",w:""},{r:"",w:""}];
+
+(function(){
+"use strict";
+function $(id){return document.getElementById(id);}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function fmt(v){return Number(v).toLocaleString("en-US",{minimumFractionDigits:0,maximumFractionDigits:2});}
+
+/* ---------- drawing candles ---------- */
+var MINT="#3fdc9a", CORAL="#f0736b", MUTE="#9db8b0", GOLD="#e8c468";
+function draw(f,opt){
+  opt=opt||{};
+  var C=f.c, n=C.length, notes=f.notes||[], lv=f.lv||[], tags=f.tags||[], hl=f.hl||null;
+  var vals=[]; C.forEach(function(c){vals.push(c[1],c[2]);}); lv.forEach(function(l){vals.push(l.v);});
+  var mx=Math.max.apply(null,vals), mn=Math.min.apply(null,vals), pad=(mx-mn)*0.12||2; mx+=pad; mn-=pad;
+  var hasN=notes.length>0, small=opt.small;
+  var slot=small?30:(n>8?26:Math.max(40,Math.min(70,300/n)));
+  var left=small?10:16, plotW=slot*n, right=hasN?40:16;
+  var W=left+plotW+right, top=small?8:16, bottom=(tags.length&&!small)?28:10, H=small?120:(f.h||210);
+  var ph=H-top-bottom;
+  function y(v){return top+(mx-v)/(mx-mn)*ph;}
+  var bw=Math.max(6,Math.min(22,slot*0.56));
+  var o=['<svg class="fig" viewBox="0 0 '+W.toFixed(0)+' '+H+'" role="img" aria-label="'+esc(opt.label||"Candlestick diagram")+'" style="max-width:'+Math.round(W*1.7)+'px">'];
+  if(f.zone){ o.push('<rect x="'+left+'" y="'+y(f.zone.a)+'" width="'+plotW+'" height="'+(y(f.zone.b)-y(f.zone.a))+'" fill="rgba(232,196,104,.10)"/>'); }
+  lv.forEach(function(l){ var yy=y(l.v);
+    o.push('<line x1="'+(left-6)+'" x2="'+(left+plotW+right-6)+'" y1="'+yy+'" y2="'+yy+'" stroke="'+GOLD+'" stroke-width="1.2" stroke-dasharray="5 4" opacity=".85"/>');
+  });
+  var xs=[];
+  C.forEach(function(c,i){
+    var x=left+slot*i+slot/2; xs.push(x);
+    var col=c[3]>c[0]?MINT:(c[3]<c[0]?CORAL:MUTE), dim=hl&&hl.indexOf(i)<0;
+    var bt=y(Math.max(c[0],c[3])), bb=y(Math.min(c[0],c[3])), bh=Math.max(1.6,bb-bt);
+    o.push('<g opacity="'+(dim?0.32:1)+'"'+(hl&&!dim?' class="glowc"':'')+'>');
+    o.push('<line x1="'+x+'" x2="'+x+'" y1="'+y(c[1])+'" y2="'+y(c[2])+'" stroke="'+col+'" stroke-width="'+(small?1.4:1.8)+'" stroke-linecap="round"/>');
+    o.push('<rect x="'+(x-bw/2)+'" y="'+(bh<=1.6?bt-0.8:bt)+'" width="'+bw+'" height="'+bh+'" rx="2" fill="'+col+'"/>');
+    o.push('</g>');
+    if(tags[i]&&!small) o.push('<text x="'+x+'" y="'+(H-8)+'" class="tg" text-anchor="middle">'+esc(tags[i])+'</text>');
+  });
+  var legend=[];
+  if(hasN&&!small){
+    var pts=notes.map(function(nt,ix){
+      var c=C[nt.i], v;
+      switch(nt.on){case "o":v=c[0];break;case "c":v=c[3];break;case "h":v=c[1];break;case "l":v=c[2];break;
+        case "body":v=(c[0]+c[3])/2;break;case "uw":v=(c[1]+Math.max(c[0],c[3]))/2;break;case "lw":v=(c[2]+Math.min(c[0],c[3]))/2;break;default:v=c[3];}
+      var wick=(nt.on==="h"||nt.on==="l"||nt.on==="uw"||nt.on==="lw");
+      return {ax:xs[nt.i]+(wick?1:bw/2),ay:y(v),ly:y(v),bx:xs[nt.i]+bw/2+16,t:nt.t,num:ix+1};
+    });
+    var byY=pts.slice().sort(function(a,b){return a.ly-b.ly;});
+    for(var k=1;k<byY.length;k++){ if(Math.abs(byY[k].bx-byY[k-1].bx)<20&&byY[k].ly-byY[k-1].ly<18) byY[k].ly=byY[k-1].ly+18; }
+    pts.forEach(function(p){
+      p.ly=Math.max(top+8,Math.min(H-bottom-6,p.ly));
+      o.push('<path d="M'+(p.ax+2)+' '+p.ay+' L'+(p.bx-8)+' '+p.ly+'" stroke="rgba(234,245,241,.45)" stroke-width="1" fill="none"/>');
+      o.push('<circle cx="'+p.bx+'" cy="'+p.ly+'" r="8" fill="#eaf5f1"/><text x="'+p.bx+'" y="'+(p.ly+3.6)+'" class="nb" text-anchor="middle">'+p.num+'</text>');
+      legend.push('<li><span>'+p.num+'</span>'+esc(p.t)+'</li>');
+    });
+  }
+  if(lv.length&&!small) lv.forEach(function(l){ legend.push('<li class="lvl"><span></span>'+esc(l.t)+'</li>'); });
+  o.push('</svg>');
+  return o.join("")+(legend.length?'<ol class="leg">'+legend.join("")+'</ol>':"");
+}
+
+/* ---------- state ---------- */
+var K="fta.candles.v1", S={passed:{}};
+try{var raw=localStorage.getItem(K); if(raw){var ob=JSON.parse(raw); if(ob&&ob.passed) S.passed=ob.passed;}}catch(e){}
+function save(){try{localStorage.setItem(K,JSON.stringify(S));}catch(e){}}
+function sid(s,k){return s+"."+k;}
+function stageDone(s){return STAGES[s].steps.every(function(_,k){return S.passed[sid(s,k)];});}
+function stageOpen(s){return s===0||stageDone(s-1);}
+function nextStep(){for(var s=0;s<STAGES.length;s++)for(var k=0;k<STAGES[s].steps.length;k++)if(!S.passed[sid(s,k)])return {s:s,k:k};return null;}
+var TOTAL=0; STAGES.forEach(function(st){TOTAL+=st.steps.length;});
+
+var LOCK='<svg class="lock" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>';
+var ARROW='<svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#06211a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+var CHECK='<svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#06211a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function paintPath(){
+  var nx=nextStep(), done=Object.keys(S.passed).length;
+  $("pfill").style.width=(done/TOTAL*100)+"%";
+  $("pnum").textContent=done+" of "+TOTAL+" steps";
+  if(nx){
+    var st=STAGES[nx.s].steps[nx.k];
+    $("cont").innerHTML='<span class="ci"><small>'+(done?'Stage '+(nx.s+1)+' · Step '+(nx.k+1)+' of '+STAGES[nx.s].steps.length:'Step 1 · Stage 1 of '+STAGES.length)+'</small><b>'+esc(st.t)+'</b></span><span class="arrow">'+ARROW+'</span>';
+    $("cont").setAttribute("data-s",nx.s); $("cont").setAttribute("data-k",nx.k); $("cont").hidden=false;
+    $("pathtitle").textContent=done?"Pick up where you left off":"Learn candles step by step";
+  } else { $("cont").hidden=true; $("pathtitle").textContent="Guide complete. You can read a candle."; }
+  $("stages").innerHTML=STAGES.map(function(st,i){
+    var n=st.steps.filter(function(_,k){return S.passed[sid(i,k)];}).length, open=stageOpen(i), dn=n===st.steps.length, cur=nx&&nx.s===i;
+    return '<li><button type="button" class="stage'+(dn?' done':'')+(cur?' cur':'')+'" data-stage="'+i+'"'+(open?'':' disabled')+'>'+
+      '<span class="snum">'+(dn?'✓':(i+1))+'</span><span class="sinfo"><b>'+esc(st.t)+'</b><span>'+esc(st.mod)+' · '+
+      (open?(dn?'Done · tap to review':n+' of '+st.steps.length+' steps'):'Finish stage '+i+' to unlock')+'</span>'+
+      (open?'<span class="sbar2"><i style="width:'+(n/st.steps.length*100)+'%"></i></span>':'')+'</span>'+(open?'':LOCK)+'</button></li>';
+  }).join("");
+}
+
+/* ---------- walk-through ---------- */
+var W={s:0,k:0,wrong:0};
+function shuffled(n,seed){var a=[];for(var i=0;i<n;i++)a.push(i);var x=seed;for(var j=n-1;j>0;j--){x=(x*9301+49297)%233280;var r=Math.floor(x/233280*(j+1));var t=a[j];a[j]=a[r];a[r]=t;}return a;}
+function vidHTML(key){
+  var keys=Array.isArray(key)?key:(key?[key]:[]), vs=keys.map(function(k){return VIDEOS[k];}).filter(Boolean);
+  if(!vs.length) return '<span class="soon">Sway\'s walkthrough clip for this lesson is coming soon</span>';
+  return vs.map(function(v){ return '<a class="vid" href="'+v.u+'" target="_blank" rel="noopener"><span class="play"><svg viewBox="0 0 12 12"><path d="M3 1.8v8.4L10 6z" fill="#06211a"/></svg></span><span>Watch: '+esc(v.t)+' <small>· '+esc(v.src)+'</small></span></a>'; }).join("");
+}
+/* ---------- Sway's two videos per section (Whop course). Paste each Whop lesson link into r (rundown) or w (walkthrough). ---------- */
+function swayHTML(i,kind){
+  var v=(SWAY[i]||{})[kind], r=kind==="r";
+  var lab=r?"Video 1 · Quick rundown":"Video 2 · Full walkthrough", sub=r?"Sway explains what you'll learn in this section":"Watch Sway do it start to finish";
+  var ico='<span class="play"><svg viewBox="0 0 12 12"><path d="M3 1.8v8.4L10 6z" fill="#1a1405"/></svg></span>';
+  return v?'<a class="sway" href="'+v+'" target="_blank" rel="noopener">'+ico+'<span><b>'+lab+'</b><small>'+sub+'</small></span><span class="sgo">Watch on Whop →</span></a>'
+          :'<div class="sway soonw">'+ico+'<span><b>'+lab+'</b><small>'+sub+' · in the Whop course soon</small></span></div>';
+}
+function openWalk(s,k){W.s=s;W.k=k;W.wrong=0;$("home").hidden=true;$("walk").hidden=false;paintWalk();window.scrollTo({top:0});}
+function closeWalk(){$("walk").hidden=true;$("home").hidden=false;paintPath();window.scrollTo({top:0});}
+function paintWalk(){
+  var stg=STAGES[W.s], st=stg.steps[W.k], id=sid(W.s,W.k), passed=!!S.passed[id], q=st.q;
+  var seed=0; for(var c=0;c<st.t.length;c++) seed+=st.t.charCodeAt(c)*(c+1);
+  var order=shuffled(q[1].length,seed);
+  var dots=stg.steps.map(function(_,i){return '<i class="'+(S.passed[sid(W.s,i)]?'ok':(i===W.k?'now':''))+'"></i>';}).join("");
+  $("walk").innerHTML=
+    '<div class="wtop"><button type="button" class="link" id="wback">← Back to the guide</button><span class="wstage">Stage '+(W.s+1)+' · '+esc(stg.t)+'</span></div>'+
+    '<div class="dots" aria-hidden="true">'+dots+'</div>'+
+    '<span class="wstep">STEP '+(W.k+1)+' OF '+stg.steps.length+'</span>'+
+    '<h2>'+esc(st.t)+'</h2>'+
+    st.p.map(function(p,i){return '<p class="'+(i===0?'def':'para')+'">'+esc(p)+'</p>';}).join("")+
+    '<figure class="figbox">'+draw(st.fig,{label:st.cap})+'<figcaption>'+esc(st.cap)+'</figcaption></figure>'+
+    '<div class="box"><div class="blab">On gold</div><p>'+esc(st.ex)+'</p></div>'+
+    (W.k===0?'<div class="row">'+vidHTML(stg.v)+'<span class="mod">Replaces <b>'+esc(stg.mod)+'</b></span></div>':'')+
+    '<div class="check"><div class="blab">Quick check</div><p class="cq">'+esc(q[0])+'</p>'+
+      order.map(function(oi,pos){return '<button type="button" class="ans'+(passed&&oi===q[2]?' right':'')+'" data-a="'+oi+'"'+(passed?' disabled':'')+'><span class="k">'+"ABCD"[pos]+'</span>'+esc(q[1][oi])+'</button>';}).join("")+
+      '<p class="fb'+(passed?' ok':'')+'" id="fb">'+(passed?esc(q[3]):'')+'</p></div>'+
+    '<div class="wnav">'+(W.k>0?'<button type="button" class="prev" id="wprev">Back</button>':'')+
+      '<button type="button" class="next" id="wnext"'+(passed?'':' disabled')+'>'+(W.k===stg.steps.length-1?'Finish stage':'Next step')+' →</button></div>';
+}
+function paintDone(){
+  var nxt=W.s+1<STAGES.length?W.s+1:null;
+  $("walk").innerHTML='<div class="done-card"><span class="big">'+CHECK+'</span><span class="eyebrow">Stage '+(W.s+1)+' complete</span><h2>'+esc(STAGES[W.s].t)+'</h2>'+
+    '<p>'+(nxt===null?'That\'s the whole guide. You can now read any candle on any chart. The pattern library below is always there when you need a refresher.':'Next up: '+esc(STAGES[nxt].t)+'.')+'</p>'+
+    (nxt!==null?'<button type="button" class="next" id="wnextstage" style="margin:6px auto 0">Start stage '+(nxt+1)+' →</button>':'')+
+    '<button type="button" class="link" id="wback">Back to the guide</button></div>';
+}
+$("walk").addEventListener("click",function(e){
+  var t=e.target.closest("button"); if(!t) return;
+  if(t.id==="wback"){closeWalk();return;}
+  if(t.id==="wprev"){W.k--;W.wrong=0;paintWalk();window.scrollTo({top:0});return;}
+  if(t.id==="wnext"){ if(W.k<STAGES[W.s].steps.length-1){W.k++;W.wrong=0;paintWalk();}else paintDone(); window.scrollTo({top:0}); return; }
+  if(t.id==="wnextstage"){openWalk(W.s+1,0);return;}
+  if(t.classList.contains("ans")){
+    var q=STAGES[W.s].steps[W.k].q, a=+t.getAttribute("data-a"), fb=$("fb");
+    if(a===q[2]){
+      Array.prototype.forEach.call($("walk").querySelectorAll(".ans"),function(b){b.disabled=true;});
+      t.classList.add("right"); fb.className="fb ok"; fb.textContent="Right. "+q[3];
+      S.passed[sid(W.s,W.k)]=1; save(); $("wnext").disabled=false;
+      var d=$("walk").querySelectorAll(".dots i"); if(d[W.k]) d[W.k].className="ok";
+    } else {
+      W.wrong++; t.classList.add("wrong"); t.disabled=true; fb.className="fb no";
+      fb.textContent=W.wrong>1?"Not quite. Look at the drawing again and reread the first paragraph.":"Not quite. Try again.";
+    }
+  }
+});
+$("cont").addEventListener("click",function(){openWalk(+this.getAttribute("data-s"),+this.getAttribute("data-k"));});
+$("stages").addEventListener("click",function(e){
+  var b=e.target.closest(".stage"); if(!b||b.disabled) return;
+  var i=+b.getAttribute("data-stage"), k=0;
+  for(var j=0;j<STAGES[i].steps.length;j++){ if(!S.passed[sid(i,j)]){k=j;break;} }
+  openWalk(i,k);
+});
+
+/* ---------- candle builder ---------- */
+var B={o:4120,h:4134,l:4112,c:4130};
+function classify(o,h,l,c){
+  var rng=h-l, body=Math.abs(c-o), up=h-Math.max(o,c), lo=Math.min(o,c)-l;
+  if(rng<=0) return "No range yet: move the sliders apart.";
+  var r=body/rng;
+  if(r<=0.08){ if(lo>=rng*0.65) return "Dragonfly doji: sellers pushed down, buyers erased it."; if(up>=rng*0.65) return "Gravestone doji: buyers pushed up, sellers erased it."; return "Doji: open and close almost equal. A stalemate."; }
+  if(r>=0.9) return (c>o?"Green":"Red")+" marubozu: one side owned the whole period.";
+  if(lo>=2*body&&up<=body) return "Hammer shape (after a drop) or hanging man (after a rally): lower prices rejected.";
+  if(up>=2*body&&lo<=body) return "Shooting star shape (after a rally) or inverted hammer (after a drop): higher prices rejected.";
+  if(r<=0.35&&up>body&&lo>body) return "Spinning top: both sides fought, nobody won.";
+  return (c>o?"Bullish":"Bearish")+" candle: "+(r>=0.6?"strong body, one side in control.":"medium body, some pushback.");
+}
+function paintBuilder(){
+  var o=+$("b_o").value, h=+$("b_h").value, l=+$("b_l").value, c=+$("b_c").value;
+  h=Math.max(h,o,c); l=Math.min(l,o,c);
+  $("b_h").value=h; $("b_l").value=l;
+  ["o","h","l","c"].forEach(function(k){ $("b_"+k+"v").textContent=fmt(+$("b_"+k).value); });
+  $("b_fig").innerHTML=draw({c:[[o,h,l,c]],notes:[{i:0,on:"h",t:"High "+fmt(h)},{i:0,on:(c>=o?"c":"o"),t:(c>=o?"Close ":"Open ")+fmt(c>=o?c:o)},{i:0,on:(c>=o?"o":"c"),t:(c>=o?"Open ":"Close ")+fmt(c>=o?o:c)},{i:0,on:"l",t:"Low "+fmt(l)}],h:240},{label:"Your candle"});
+  var body=Math.abs(c-o), up=h-Math.max(o,c), lo=Math.min(o,c)-l, rng=h-l;
+  $("b_read").innerHTML='<b>'+esc(classify(o,h,l,c))+'</b><span>Body '+Math.round(body*10)+' pips · upper wick '+Math.round(up*10)+' · lower wick '+Math.round(lo*10)+' · range '+Math.round(rng*10)+' pips</span>';
+}
+["o","h","l","c"].forEach(function(k){ $("b_"+k).addEventListener("input",paintBuilder); });
+var PRESETS={hammer:[4128,4130,4110,4129],star:[4112,4130,4110,4111],doji:[4120,4128,4112,4120],marubozu:[4110,4130,4110,4130],spin:[4119,4128,4110,4121]};
+$("b_presets").addEventListener("click",function(e){
+  var b=e.target.closest("button"); if(!b) return; var p=PRESETS[b.getAttribute("data-p")]; if(!p) return;
+  $("b_o").value=p[0];$("b_h").value=p[1];$("b_l").value=p[2];$("b_c").value=p[3]; paintBuilder();
+});
+
+/* ---------- timeframe merger ---------- */
+var FIVE=STAGES[7].steps[1].fig.c, merged=false;
+function paintMerge(){
+  var o=FIVE[0][0], c=FIVE[FIVE.length-1][3], h=Math.max.apply(null,FIVE.map(function(x){return x[1];})), l=Math.min.apply(null,FIVE.map(function(x){return x[2];}));
+  $("m_fig").innerHTML=merged?draw({c:[[o,h,l,c]],tags:["9:00 hour"],notes:[{i:0,on:"h",t:"High "+fmt(h)+" (highest of 12)"},{i:0,on:"c",t:"Close "+fmt(c)+" (last close)"},{i:0,on:"o",t:"Open "+fmt(o)+" (first open)"},{i:0,on:"l",t:"Low "+fmt(l)+" (lowest of 12)"}],h:240},{label:"Merged 1-hour candle"})
+    :draw({c:FIVE,tags:["9:00","","","9:15","","","9:30","","","9:45","",""],h:240},{label:"Twelve 5-minute candles"});
+  $("m_btn").textContent=merged?"Split back into 5-minute candles":"Merge into one 1-hour candle";
+  $("m_txt").textContent=merged?"One candle: up "+Math.round((c-o)*10)+" pips for the hour, with a "+Math.round((h-l)*10)+"-pip range.":"Twelve 5-minute candles from 9:00 to 10:00. Some are red, some green.";
+}
+$("m_btn").addEventListener("click",function(){merged=!merged;paintMerge();});
+
+/* ---------- pattern library ---------- */
+var LF="all";
+function paintLib(){
+  var list=LIB.filter(function(p){return LF==="all"||p.k===LF;});
+  $("lib").innerHTML=list.map(function(p){
+    return '<details class="pat" id="p-'+p.id+'"><summary><span class="pmini">'+draw(p.fig,{small:true,label:p.n})+'</span><span class="pinfo"><b>'+esc(p.n)+'</b><span>'+esc(p.k)+' · '+esc(p.b)+'</span></span>'+
+      '<svg class="chev" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>'+
+      '<div class="pbody"><figure class="figbox">'+draw(p.fig,{label:p.n})+'</figure>'+
+      '<dl class="pdl"><dt>What it looks like</dt><dd>'+esc(p.what)+'</dd><dt>What it means</dt><dd>'+esc(p.means)+'</dd><dt>Where it matters</dt><dd>'+esc(p.where)+'</dd><dt>Confirmation</dt><dd>'+esc(p.confirm)+'</dd><dt class="trap">The trap</dt><dd>'+esc(p.trap)+'</dd></dl></div></details>';
+  }).join("");
+}
+$("lfilt").addEventListener("click",function(e){
+  var b=e.target.closest(".cat"); if(!b) return; LF=b.getAttribute("data-f");
+  Array.prototype.forEach.call($("lfilt").querySelectorAll(".cat"),function(x){x.setAttribute("aria-pressed",x===b?"true":"false");});
+  paintLib();
+});
+
+$("count").textContent=TOTAL+" steps · "+LIB.length+" patterns";
+paintPath(); paintBuilder(); paintMerge(); paintLib();
+
+/* ---------- deep link: #stage-N opens that stage (used by the Whop lessons) ---------- */
+function stageFromHash(){var m=/^#stage-(\d+)$/.exec(location.hash||"");if(!m)return -1;var i=+m[1]-1;return (i>=0&&i<STAGES.length)?i:-1;}
+function openStageHash(){var i=stageFromHash();if(i<0)return;var k=0;for(var j=0;j<STAGES[i].steps.length;j++){if(!S.passed[sid(i,j)]){k=j;break;}}openWalk(i,k);}
+openStageHash();window.addEventListener("hashchange",openStageHash);
+})();
+
+</script>
+
+</body></html>

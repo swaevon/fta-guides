@@ -1,0 +1,1049 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>FTA Tools Guide</title></head><body>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* One-column reference tool. Setup → search → start-here → term accordions → suggest.
+   FTA brand = the FLOW STACK desk: deep green, mint light, beams running through it. */
+:root{
+  color-scheme:dark;
+  --bg:#081d19; --panel:#0c2722; --panel2:#0f2e28; --card:rgba(255,255,255,.04); --card2:rgba(255,255,255,.065);
+  --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.17);
+  --fg:#eaf5f1; --muted:#8fb8ac; --dim:#628f82;
+  --mint:#3fdc9a; --mintdim:rgba(63,220,154,.14); --mintglow:rgba(63,220,154,.35);
+  --gold:#e8c468; --golddim:rgba(232,196,104,.13);
+  --coral:#f0736b;
+  --sans:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:17px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 72px;
+  position:relative;min-height:100vh}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:var(--mint)}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--mint);outline-offset:2px;border-radius:8px}
+
+/* ---------- background: glow, dot grid, light streaks ---------- */
+.fx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.fx .glow{position:absolute;inset:0;background:radial-gradient(900px 520px at 50% -6%,#13402f 0%,transparent 64%),radial-gradient(700px 500px at 100% 100%,rgba(63,220,154,.06),transparent 70%)}
+.fx .grid{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.055) 1px,transparent 1.2px);background-size:24px 24px;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.35) 60%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.35) 60%,transparent 100%)}
+.fx .track{position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,rgba(63,220,154,.07) 20%,rgba(63,220,154,.07) 80%,transparent)}
+.fx .track i{position:absolute;left:-1px;width:3px;height:200px;top:-220px;border-radius:3px;
+  background:linear-gradient(to bottom,transparent,rgba(63,220,154,.15) 30%,var(--mint) 85%,#fff 100%);
+  box-shadow:0 0 12px var(--mint),0 0 26px var(--mintglow);animation:fall var(--d,7s) linear infinite;animation-delay:var(--w,0s)}
+@keyframes fall{from{transform:translateY(0)}to{transform:translateY(calc(100vh + 440px))}}
+.wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+
+/* ---------- beams (FLOW STACK) ---------- */
+@property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes spin{to{--ang:360deg}}
+@keyframes breathe{0%,100%{box-shadow:0 0 0 1px rgba(63,220,154,.05),0 0 22px -6px var(--mintglow)}50%{box-shadow:0 0 0 1px rgba(63,220,154,.08),0 0 38px -4px var(--mintglow)}}
+.beam{border:1.5px solid transparent;
+  background:linear-gradient(var(--panel),var(--panel)) padding-box,
+    conic-gradient(from var(--ang),rgba(63,220,154,.16) 0 58%,var(--mint) 76%,#ffffff 80%,var(--mint) 84%,rgba(63,220,154,.16) 97%) border-box;
+  animation:spin 4.2s linear infinite,breathe 3.4s ease-in-out infinite;animation-delay:var(--delay,0s)}
+.beam.gold{background:linear-gradient(var(--panel),var(--panel)) padding-box,
+    conic-gradient(from var(--ang),rgba(232,196,104,.16) 0 58%,var(--gold) 76%,#fff 80%,var(--gold) 84%,rgba(232,196,104,.16) 97%) border-box}
+.rail{height:2px;border-radius:2px;background:linear-gradient(90deg,transparent 0%,rgba(63,220,154,.12) 20%,rgba(63,220,154,.12) 80%,transparent 100%);position:relative;overflow:hidden}
+.rail::after{content:"";position:absolute;top:0;bottom:0;width:22%;left:-22%;background:linear-gradient(90deg,transparent,var(--mint),#fff,var(--mint),transparent);
+  box-shadow:0 0 14px var(--mint);animation:run 3.6s cubic-bezier(.6,0,.4,1) infinite}
+@keyframes run{to{left:100%}}
+
+/* ---------- header ---------- */
+.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.mark{width:44px;height:44px;border-radius:13px;background:var(--mint);display:grid;place-items:center;flex:none;box-shadow:0 0 0 4px rgba(63,220,154,.12),0 0 28px var(--mintglow)}
+.mark svg{width:22px;height:22px}
+.brand{font-weight:800;font-size:25px;letter-spacing:-.025em;line-height:1.1}
+.brand span{color:var(--mint);text-shadow:0 0 22px var(--mintglow)}
+.brand small{display:block;font-size:13.5px;font-weight:600;color:var(--muted);letter-spacing:.02em;margin-top:3px}
+.count{margin-left:auto;font-family:var(--mono);font-size:13px;color:var(--mint);border:1px solid rgba(63,220,154,.35);border-radius:999px;padding:5px 12px;background:var(--mintdim)}
+
+/* ---------- setup ---------- */
+.setup{border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:22px}
+.setup h1{margin:0;font-size:clamp(27px,6vw,36px);font-weight:800;letter-spacing:-.03em;line-height:1.15;text-wrap:balance}
+.setup h1 em{font-style:normal;color:var(--mint);text-shadow:0 0 24px var(--mintglow)}
+.setup p{margin:0;color:var(--muted);max-width:58ch;font-size:17px}
+.q{display:flex;flex-direction:column;gap:10px}
+.qlab{font-size:12.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mint)}
+.opts{display:flex;flex-wrap:wrap;gap:10px}
+.opt{appearance:none;cursor:pointer;border:1px solid var(--line2);background:var(--card);color:var(--fg);border-radius:16px;padding:14px 18px;text-align:left;min-width:160px;flex:1 1 160px;transition:border-color .15s,background .15s,box-shadow .15s}
+.opt b{display:block;font-size:18px}
+.opt i{display:block;font-style:normal;font-size:14px;color:var(--muted);margin-top:3px}
+.opt:hover{border-color:rgba(63,220,154,.5)}
+.opt[aria-pressed="true"]{background:var(--mintdim);border-color:var(--mint);box-shadow:0 0 22px -6px var(--mintglow)}
+.opt[aria-pressed="true"] b{color:var(--mint)}
+.go{appearance:none;border:0;cursor:pointer;background:var(--mint);color:#06211a;font-weight:800;font-size:17px;padding:14px 26px;border-radius:999px;align-self:flex-start;box-shadow:0 0 26px -4px var(--mintglow)}
+.go:disabled{opacity:.35;cursor:default;box-shadow:none}
+
+/* ---------- profile, search ---------- */
+.profile{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:15px;color:var(--muted)}
+.pchip{font-weight:700;color:var(--fg);background:var(--card2);border:1px solid var(--line2);border-radius:999px;padding:5px 13px}
+.link{appearance:none;background:none;border:0;color:var(--mint);cursor:pointer;font-size:15px;font-weight:700;padding:4px 2px}
+.searchbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;padding-block:10px;display:flex;flex-direction:column;gap:12px;
+  background:var(--bg);box-shadow:0 14px 18px -6px var(--bg)}
+.search{display:flex;align-items:center;gap:12px;border-radius:16px;padding:0 16px}
+.search svg{width:20px;height:20px;color:var(--mint);flex:none}
+.search input{flex:1;min-width:0;background:transparent;border:0;color:var(--fg);font:inherit;font-size:18px;padding:15px 0}
+.search input::placeholder{color:var(--dim)}
+.search input:focus{outline:none}
+.cats{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.cats::-webkit-scrollbar{display:none}
+.cat{appearance:none;cursor:pointer;white-space:nowrap;border:1px solid var(--line2);background:rgba(8,29,25,.7);color:var(--muted);border-radius:999px;padding:8px 15px;font-size:14.5px;font-weight:600}
+.cat[aria-pressed="true"]{background:var(--mintdim);color:var(--mint);border-color:var(--mint);box-shadow:0 0 16px -4px var(--mintglow)}
+.prog{display:flex;align-items:center;gap:12px}
+.pbar{flex:1;height:7px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
+.pbar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#1fa673,var(--mint),#b9ffe0);border-radius:999px;box-shadow:0 0 12px var(--mint);transition:width .5s}
+.pnum{font-family:var(--mono);font-size:13.5px;color:var(--muted);white-space:nowrap}
+
+/* ---------- start here ---------- */
+.start{border-radius:20px;padding:20px;--delay:-1.4s}
+/* ---------- path + walk-through ---------- */
+.browse{display:flex;flex-direction:column;gap:20px}
+.path{border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:16px;--delay:-1.4s}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mint)}
+.path h2{margin:0;font-size:clamp(24px,5.5vw,30px);font-weight:800;letter-spacing:-.025em;line-height:1.2;text-wrap:balance}
+.path .sub{margin:0;color:var(--muted);font-size:16px}
+.cont{appearance:none;cursor:pointer;text-align:left;display:flex;align-items:center;gap:14px;width:100%;border:1px solid var(--mint);background:linear-gradient(135deg,rgba(63,220,154,.22),rgba(63,220,154,.07));color:var(--fg);border-radius:18px;padding:16px 18px;box-shadow:0 0 30px -8px var(--mintglow)}
+.cont .ci{flex:1;min-width:0}
+.cont small{display:block;font-size:13.5px;color:var(--mint);font-weight:700;letter-spacing:.04em}
+.cont b{display:block;font-size:20px;font-weight:800;letter-spacing:-.015em;margin-top:2px}
+.cont .arrow{width:44px;height:44px;border-radius:50%;background:var(--mint);display:grid;place-items:center;flex:none;box-shadow:0 0 18px var(--mintglow)}
+.cont .arrow svg{width:20px;height:20px}
+.stages{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.stage{appearance:none;width:100%;text-align:left;cursor:pointer;display:flex;align-items:center;gap:14px;border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--fg);border-radius:15px;padding:12px 14px}
+.stage:hover:not(:disabled){border-color:rgba(63,220,154,.5)}
+.stage:disabled{cursor:default;opacity:.55}
+.snum{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:14px;background:rgba(255,255,255,.07);color:var(--muted);border:1px solid var(--line2)}
+.stage.done .snum{background:var(--mint);color:#06211a;border-color:var(--mint);box-shadow:0 0 12px var(--mintglow)}
+.stage.cur .snum{border-color:var(--mint);color:var(--mint);box-shadow:0 0 0 3px var(--mintdim)}
+.sinfo{flex:1;min-width:0}
+.sinfo b{display:block;font-size:17px;font-weight:700}
+.sinfo span{display:block;font-size:13.5px;color:var(--muted)}
+.sbar2{height:4px;border-radius:4px;background:rgba(255,255,255,.08);margin-top:6px;overflow:hidden}
+.sbar2 i{display:block;height:100%;background:var(--mint);box-shadow:0 0 8px var(--mint)}
+.lock{width:18px;height:18px;color:var(--dim);flex:none}
+.divider{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;margin:8px 2px 2px}
+.divider::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(232,196,104,.4),transparent)}
+.lookup{margin:6px 0 0;font-size:20px;font-weight:800;letter-spacing:-.015em}
+.lookup span{display:block;font-size:14.5px;font-weight:500;color:var(--muted);letter-spacing:0;margin-top:2px}
+.walk{border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:18px}
+.wtop{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.wtop .link{font-size:15px}
+.wstage{margin-left:auto;font-size:13.5px;color:var(--muted);font-weight:600}
+.dots{display:flex;gap:5px}
+.dots i{flex:1;height:6px;border-radius:6px;background:rgba(255,255,255,.1)}
+.dots i.ok{background:var(--mint);box-shadow:0 0 8px var(--mintglow)}
+.dots i.now{background:rgba(63,220,154,.45)}
+.wstep{font-family:var(--mono);font-size:13.5px;color:var(--mint);letter-spacing:.06em}
+.walk h2{margin:-8px 0 0;font-size:clamp(28px,7vw,38px);font-weight:800;letter-spacing:-.03em;line-height:1.12;text-wrap:balance}
+.check{border:1px solid rgba(232,196,104,.4);border-radius:16px;padding:16px;background:rgba(232,196,104,.05);display:flex;flex-direction:column;gap:10px}
+.check .blab{margin:0}
+.check .cq{margin:0;font-size:18px;font-weight:700;line-height:1.45}
+.ans{appearance:none;cursor:pointer;text-align:left;border:1px solid var(--line2);background:rgba(0,0,0,.2);color:var(--fg);border-radius:13px;padding:13px 15px;font-size:16.5px;font-weight:600;display:flex;gap:10px;align-items:center}
+.ans:hover:not(:disabled){border-color:rgba(232,196,104,.6)}
+.ans:disabled{cursor:default}
+.ans .k{font-family:var(--mono);font-size:13px;color:var(--muted);width:24px;height:24px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;flex:none}
+.ans.right{border-color:var(--mint);background:var(--mintdim);color:var(--mint)}
+.ans.right .k{background:var(--mint);color:#06211a;border-color:var(--mint)}
+.ans.wrong{border-color:rgba(240,115,107,.6);background:rgba(240,115,107,.08);color:var(--coral)}
+.fb{font-size:15.5px;min-height:1.2em;margin:0}
+.fb.ok{color:var(--mint)} .fb.no{color:var(--coral)}
+.wnav{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.next{appearance:none;border:0;cursor:pointer;background:var(--mint);color:#06211a;font-weight:800;font-size:17px;padding:14px 26px;border-radius:999px;box-shadow:0 0 26px -4px var(--mintglow);margin-left:auto}
+.next:disabled{opacity:.3;cursor:default;box-shadow:none}
+.prev{appearance:none;cursor:pointer;background:none;border:1px solid var(--line2);color:var(--fg);border-radius:999px;padding:12px 20px;font-weight:700;font-size:15px}
+.done-card{text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center;padding:12px 4px}
+.done-card .big{width:72px;height:72px;border-radius:50%;background:var(--mint);display:grid;place-items:center;box-shadow:0 0 0 8px var(--mintdim),0 0 40px var(--mintglow)}
+.done-card .big svg{width:34px;height:34px}
+.done-card h2{margin:6px 0 0}
+.done-card p{margin:0;color:var(--muted);max-width:44ch}
+.shead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.shead b{font-size:19px;font-weight:800}
+.shead span{font-size:14.5px;color:var(--muted)}
+.steps{display:flex;flex-wrap:wrap;gap:9px;margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s}
+.step{appearance:none;cursor:pointer;display:flex;align-items:center;gap:9px;border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--fg);border-radius:999px;padding:7px 15px 7px 7px;font-size:15px;font-weight:600}
+.step:hover{border-color:rgba(63,220,154,.5)}
+.step::before{content:counter(s);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.step.done::before{content:"\2713";background:var(--mint);color:#06211a;box-shadow:0 0 10px var(--mintglow)}
+
+/* ---------- list ---------- */
+.group{display:flex;flex-direction:column;gap:10px}
+.ghead{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mint);margin:14px 2px 2px}
+.ghead::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(63,220,154,.35),transparent)}
+details.term{border:1.5px solid var(--line);border-radius:16px;background:rgba(12,39,34,.72);transition:border-color .15s;scroll-margin-top:170px}
+details.term:hover{border-color:rgba(63,220,154,.3)}
+details.term[open]{border-color:transparent;
+  background:linear-gradient(var(--panel),var(--panel)) padding-box,
+    conic-gradient(from var(--ang),rgba(63,220,154,.18) 0 58%,var(--mint) 76%,#fff 80%,var(--mint) 84%,rgba(63,220,154,.18) 97%) border-box;
+  animation:spin 4.2s linear infinite,breathe 3.4s ease-in-out infinite}
+details.term summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:16px 16px}
+details.term summary::-webkit-details-marker{display:none}
+.tname{font-weight:700;font-size:18.5px;min-width:0;letter-spacing:-.01em}
+.tname mark{background:var(--golddim);color:var(--gold);border-radius:3px;padding:0 1px}
+.tags{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
+.tag{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 9px;border:1px solid var(--line2);color:var(--muted);white-space:nowrap}
+.tag.lv{color:var(--mint);border-color:rgba(63,220,154,.35)}
+.tag.cf{color:var(--gold);border-color:rgba(232,196,104,.45)}
+@media (max-width:560px){.tag.mk{display:none}}
+.tick{width:11px;height:11px;border-radius:50%;flex:none;border:1.5px solid var(--dim)}
+.tick.on{background:var(--mint);border-color:var(--mint);box-shadow:0 0 10px var(--mint)}
+.chev{width:18px;height:18px;color:var(--muted);flex:none;transition:transform .2s}
+details.term[open] .chev{transform:rotate(180deg);color:var(--mint)}
+.body{padding:0 16px 18px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.def{margin:0;font-size:20px;font-weight:600;line-height:1.5;max-width:62ch;letter-spacing:-.01em}
+.box{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:rgba(0,0,0,.2);min-width:0}
+.blab{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+.box p{margin:0;max-width:64ch;font-size:16.5px}
+.box p+p{margin-top:9px;padding-top:9px;border-top:1px dashed var(--line)}
+.box p b{color:var(--gold);font-weight:700;font-family:var(--mono);font-size:.88em;letter-spacing:.02em;margin-right:4px}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.cmp{grid-template-columns:1fr}}
+.cmp .box .blab{color:var(--mint)}
+.calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end}
+.calc label{display:flex;flex-direction:column;gap:5px;font-size:13.5px;color:var(--muted);font-weight:600}
+.calc input,.calc select{background:var(--bg);border:1px solid var(--line2);color:var(--fg);border-radius:11px;padding:11px 12px;font:inherit;font-family:var(--mono);font-size:16px;min-width:0;width:100%}
+.calc input:focus,.calc select:focus{outline:none;border-color:var(--mint);box-shadow:0 0 0 3px var(--mintdim)}
+.out{grid-column:1/-1;font-family:var(--mono);font-size:16px;color:var(--mint);background:var(--mintdim);border:1px solid rgba(63,220,154,.3);border-radius:12px;padding:12px 14px;text-shadow:0 0 14px var(--mintglow)}
+.calcbox{border-color:rgba(63,220,154,.25)}
+.calcbox .blab{color:var(--mint)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.vid{display:inline-flex;align-items:center;gap:11px;text-decoration:none;border:1px solid rgba(63,220,154,.5);background:var(--mintdim);color:var(--fg);border-radius:14px;padding:10px 16px 10px 10px;font-weight:600;font-size:15.5px}
+.vid:hover{box-shadow:0 0 20px -4px var(--mintglow)}
+.vid .play{width:30px;height:30px;border-radius:50%;background:var(--mint);display:grid;place-items:center;flex:none;box-shadow:0 0 12px var(--mintglow)}
+.vid .play svg{width:12px;height:12px}
+.vid small{color:var(--muted);font-weight:500}
+.soon{font-size:15px;color:var(--muted);border:1px dashed var(--line2);border-radius:14px;padding:10px 16px}
+.mod{font-size:15px;color:var(--fg);border:1px solid var(--line2);border-radius:14px;padding:10px 16px;background:var(--card)}
+.mod b{color:var(--mint)}
+.rel{display:flex;flex-wrap:wrap;gap:7px;align-items:center;font-size:14px;color:var(--muted)}
+.rel button{appearance:none;cursor:pointer;border:1px solid var(--line2);background:transparent;color:var(--fg);border-radius:999px;padding:5px 12px;font-size:14px;font-weight:600}
+.rel button:hover{border-color:rgba(63,220,154,.5)}
+.rel button.cf{border-color:rgba(232,196,104,.55);color:var(--gold)}
+.learn{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--muted);cursor:pointer;width:fit-content}
+.learn input{width:19px;height:19px;accent-color:var(--mint)}
+.empty{color:var(--muted);text-align:center;padding:28px 12px;border:1px dashed var(--line2);border-radius:16px;font-size:16px}
+.all{appearance:none;cursor:pointer;background:rgba(8,29,25,.7);border:1px solid var(--line2);color:var(--fg);border-radius:999px;padding:10px 18px;font-weight:700;font-size:15px;align-self:center}
+
+.candlelink{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--fg);border-radius:18px;padding:16px 18px;--delay:-2s}
+.cl-ico{width:42px;height:42px;border-radius:12px;background:var(--gold);display:grid;place-items:center;flex:none}
+.cl-ico svg{width:20px;height:20px}
+.cl-txt{flex:1;min-width:0}.cl-txt b{display:block;font-size:18px}.cl-txt span{display:block;font-size:14.5px;color:var(--muted)}
+.cl-go{font-size:22px;color:var(--gold)}
+/* ---------- suggest ---------- */
+.suggest{border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:12px;--delay:-2.6s}
+.suggest b{font-size:20px}
+.suggest p{margin:0;color:var(--muted);font-size:16px}
+.sform{display:flex;gap:10px;flex-wrap:wrap}
+.sform input{flex:1 1 230px;min-width:0;background:var(--bg);border:1px solid var(--line2);color:var(--fg);border-radius:13px;padding:13px 14px;font:inherit;font-size:16.5px}
+.sform input:focus{outline:none;border-color:var(--mint)}
+.sform button{appearance:none;border:0;cursor:pointer;background:var(--mint);color:#06211a;font-weight:800;font-size:16px;border-radius:13px;padding:13px 22px;box-shadow:0 0 22px -6px var(--mintglow)}
+.sform button:disabled{opacity:.45;cursor:default}
+.smsg{font-size:15px;color:var(--mint);min-height:1em}
+.foot{text-align:center;color:var(--dim);font-size:13.5px;max-width:62ch;margin:0 auto}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important}
+  .beam,.walk,details.term[open],.rail::after,.fx .track i{animation:none!important}
+  .fx .track i{display:none}
+}
+
+.sway{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--fg);border:1px solid rgba(244,196,88,.55);background:linear-gradient(135deg,rgba(244,196,88,.14),rgba(244,196,88,.04));border-radius:16px;padding:12px 14px;margin:14px 0}
+.sway .play{width:34px;height:34px;border-radius:50%;background:var(--gold);display:grid;place-items:center;flex:none;box-shadow:0 0 14px rgba(244,196,88,.45)}
+.sway .play svg{width:13px;height:13px}
+.sway>span:nth-child(2){display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.sway b{font-size:15.5px}.sway small{color:var(--muted);font-size:13.5px}
+.sway .sgo{color:var(--gold);font-weight:700;font-size:14px;white-space:nowrap}
+.sway.soonw{border-style:dashed;opacity:.85}.sway.soonw .play{background:var(--line2);box-shadow:none}
+/* ===== candle guide additions ===== */
+.home{display:flex;flex-direction:column;gap:20px}
+.card{border:1px solid var(--line);border-radius:20px;padding:20px;background:rgba(12,39,34,.72);display:flex;flex-direction:column;gap:12px}
+.card.beam{border:1.5px solid transparent}
+.h2{margin:0;font-size:clamp(22px,5vw,27px);font-weight:800;letter-spacing:-.02em;line-height:1.2;text-wrap:balance}
+.eyebrow.gold{color:var(--gold)}
+.path .prog{margin-top:-4px}
+.figbox{margin:0;border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.22);padding:12px 10px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;overflow-x:auto}
+.figbox figcaption{font-size:14px;color:var(--muted);text-align:center;max-width:60ch}
+svg.fig{width:100%;height:auto;display:block}
+svg.fig text{font-family:var(--sans)}
+svg.fig .nt{font-size:11.5px;fill:#eaf5f1;font-weight:600}
+svg.fig .lvt{font-size:10.5px;fill:var(--gold);font-weight:700}
+svg.fig .tg{font-size:10.5px;fill:var(--muted);font-family:var(--mono)}
+svg.fig .glowc{filter:drop-shadow(0 0 6px rgba(63,220,154,.45))}
+.walk .para{margin:0;font-size:16.5px;color:#cfe3dc;max-width:64ch}
+.builder{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center}
+@media (max-width:620px){.builder{grid-template-columns:1fr}}
+.sliders{display:flex;flex-direction:column;gap:12px}
+.sliders label{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;font-size:14px;font-weight:700;color:var(--muted)}
+.sliders .sv{margin-left:auto;font-family:var(--mono);color:var(--fg);font-weight:600}
+.sliders input{width:100%;accent-color:var(--mint)}
+.read{border:1px solid rgba(63,220,154,.35);background:var(--mintdim);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.read b{color:var(--mint);font-size:16px}
+.read span{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.presets{display:flex;flex-wrap:wrap;gap:7px;align-items:center;font-size:14px;color:var(--muted)}
+.presets button,.btn{appearance:none;cursor:pointer;border:1px solid var(--line2);background:transparent;color:var(--fg);border-radius:999px;padding:7px 13px;font-size:14px;font-weight:600}
+.presets button:hover,.btn:hover{border-color:rgba(63,220,154,.5)}
+.btn{align-self:center;padding:11px 20px;font-size:15px;font-weight:700;background:var(--mintdim);border-color:rgba(63,220,154,.5)}
+.libwrap{display:flex;flex-direction:column;gap:12px}
+.lib{display:flex;flex-direction:column;gap:10px}
+details.pat{border:1.5px solid var(--line);border-radius:16px;background:rgba(12,39,34,.72)}
+details.pat[open]{border-color:transparent;background:linear-gradient(var(--panel),var(--panel)) padding-box,conic-gradient(from var(--ang),rgba(63,220,154,.18) 0 58%,var(--mint) 76%,#fff 80%,var(--mint) 84%,rgba(63,220,154,.18) 97%) border-box;animation:spin 4.2s linear infinite,breathe 3.4s ease-in-out infinite}
+details.pat summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:10px 14px}
+details.pat summary::-webkit-details-marker{display:none}
+.pmini{width:62px;flex:none}
+.pmini{display:flex;justify-content:center}
+.pmini svg{height:52px!important;width:auto!important;max-width:none!important}
+.pinfo{flex:1;min-width:0}
+.pinfo b{display:block;font-size:17.5px}
+.pinfo span{display:block;font-size:13.5px;color:var(--muted)}
+details.pat .chev{width:18px;height:18px;color:var(--muted);flex:none;transition:transform .2s}
+details.pat[open] .chev{transform:rotate(180deg);color:var(--mint)}
+.pbody{padding:0 14px 16px;display:flex;flex-direction:column;gap:12px}
+.pdl{margin:0;display:grid;grid-template-columns:150px minmax(0,1fr);gap:8px 14px;font-size:15.5px}
+@media (max-width:560px){.pdl{grid-template-columns:1fr;gap:2px}.pdl dd{margin-bottom:8px}}
+.pdl dt{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mint);padding-top:3px}
+.pdl dt.trap{color:var(--coral)}
+.pdl dd{margin:0}
+.gl{align-items:flex-start}
+.gl b{font-size:18px}
+.glink{font-weight:700;text-decoration:none;border:1px solid rgba(63,220,154,.5);background:var(--mintdim);border-radius:999px;padding:9px 16px}
+@media (prefers-reduced-motion:reduce){details.pat[open]{animation:none}}
+svg.fig .nb{font-size:10px;font-weight:800;fill:#06211a;font-family:var(--mono)}
+ol.leg{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;font-size:14.5px;font-weight:600}
+ol.leg li{display:flex;align-items:center;gap:7px}
+ol.leg li span{width:20px;height:20px;border-radius:50%;background:#eaf5f1;color:#06211a;font-family:var(--mono);font-size:11px;font-weight:800;display:grid;place-items:center;flex:none}
+ol.leg li.lvl span{width:20px;height:0;border-radius:0;border-top:2px dashed var(--gold);background:none}
+ol.leg li.lvl{color:var(--gold)}
+svg.fig{max-height:300px}
+
+svg.fig .swl{font-size:11px;font-weight:800;font-family:var(--mono)}
+ol.leg li.bos span{background:none;color:var(--gold);font-size:14px}
+ol.leg li.vwl span{width:20px;height:0;border-radius:0;border-top:2px dotted #b9a7ff;background:none}
+ol.leg li.vwl{color:#b9a7ff}
+.dopts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-family:var(--mono);font-size:13.5px;color:var(--muted)}
+.dfoot .btn{align-self:auto}
+
+/* ===== tool mockups ===== */
+.mkbox{padding:12px;align-items:stretch}
+.mk{width:100%;font-size:14px}
+.mcap{font-size:14px;color:var(--muted);text-align:center;margin-top:8px;font-family:var(--sans)}
+.mstack{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.mcard{border:1px solid var(--line2);border-radius:12px;padding:10px 12px;background:rgba(255,255,255,.03);display:flex;flex-direction:column;gap:2px}
+.mcard small{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mint)}
+.mcard b{font-size:16px}.mcard span{font-size:13.5px;color:var(--muted)}
+.mlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.mlist li{display:flex;gap:10px;align-items:flex-start;font-size:15.5px}
+.mlist li i{font-style:normal;width:22px;height:22px;border-radius:6px;background:var(--mintdim);border:1px solid rgba(63,220,154,.5);color:var(--mint);display:grid;place-items:center;flex:none;font-size:13px;font-weight:800}
+.mchart{border:1px solid var(--line2);border-radius:12px;overflow:hidden;background:#0a1f1b}
+.mtop{display:flex;flex-wrap:wrap;gap:6px;padding:8px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.03)}
+.mchip{border:1px solid var(--line2);border-radius:8px;padding:3px 9px;font-size:12.5px;font-weight:700;font-family:var(--mono)}
+.mtfs{display:flex;gap:2px;border:1px solid var(--line2);border-radius:8px;padding:2px}
+.mtfs i{font-style:normal;font-family:var(--mono);font-size:12px;padding:1px 6px;border-radius:5px;color:var(--muted)}
+.mtfs i.on{background:var(--mintdim);color:var(--mint)}
+.mbody{display:flex}
+.mleft{display:flex;flex-direction:column;gap:4px;padding:8px 5px;border-right:1px solid var(--line)}
+.mleft i{font-style:normal;width:26px;height:26px;display:grid;place-items:center;border-radius:6px;color:var(--muted);font-size:14px}
+.mplot{flex:1;min-width:0;padding:6px}
+.mplot svg.fig{max-height:230px}
+.hot,.mleft i.hot{outline:2px solid var(--gold);outline-offset:1px;box-shadow:0 0 16px rgba(232,196,104,.5);color:var(--gold)!important;border-radius:8px;animation:hotp 1.6s ease-in-out infinite}
+.hotbox{outline:2px solid var(--gold);outline-offset:3px;border-radius:14px}
+@keyframes hotp{0%,100%{box-shadow:0 0 6px rgba(232,196,104,.3)}50%{box-shadow:0 0 18px rgba(232,196,104,.7)}}
+.morder{max-width:340px;margin:0 auto;border:1px solid var(--line2);border-radius:14px;background:#0a1f1b;padding:12px;display:flex;flex-direction:column;gap:8px}
+.ohead b{display:block;font-family:var(--mono);font-size:16px}.ohead span{font-size:12.5px;color:var(--muted)}
+.obtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.obtns span{border-radius:10px;padding:8px;text-align:center;font-weight:800;font-size:14px}
+.obtns small{display:block;font-family:var(--mono);font-weight:500;font-size:12.5px}
+.osell{background:rgba(240,115,107,.16);color:var(--coral);border:1px solid rgba(240,115,107,.5)}
+.obuy{background:var(--mintdim);color:var(--mint);border:1px solid rgba(63,220,154,.5)}
+.otabs{display:flex;gap:4px;padding:3px;border:1px solid var(--line2);border-radius:10px}
+.otabs i{flex:1;text-align:center;font-style:normal;font-size:13px;font-weight:700;padding:5px;border-radius:7px;color:var(--muted)}
+.otabs i.on{background:rgba(255,255,255,.08);color:var(--fg)}
+.frow{display:flex;align-items:center;gap:8px;border:1px solid var(--line2);border-radius:10px;padding:7px 10px;flex-wrap:wrap}
+.frow label{font-size:12.5px;color:var(--muted);font-weight:700;min-width:72px}
+.fval{font-family:var(--mono);font-weight:600}
+.funit{margin-left:auto;display:flex;gap:4px;font-size:11.5px;color:var(--muted)}
+.funit em{font-style:normal;border:1px solid var(--line2);border-radius:6px;padding:1px 5px}
+.funit em.on{color:var(--mint);border-color:rgba(63,220,154,.5)}
+.orisk{font-size:13px;color:var(--muted);text-align:center}.orisk b{color:var(--gold);font-family:var(--mono)}
+.ogo{text-align:center;border-radius:10px;padding:9px;background:var(--mint);color:#06211a;font-weight:800;font-size:14px}
+.mcal{display:flex;flex-direction:column;gap:8px}
+.ctop{display:flex;gap:6px;flex-wrap:wrap}
+.ctable{border:1px solid var(--line2);border-radius:10px;overflow-x:auto}
+.crow{display:grid;grid-template-columns:44px 38px 30px minmax(120px,1fr) 52px 52px 52px;gap:4px;padding:7px 8px;border-top:1px solid var(--line);font-size:12.5px;font-family:var(--mono);align-items:center;min-width:420px}
+.crow.chead{border-top:0;color:var(--muted);font-weight:700}
+.cev{font-family:var(--sans);font-weight:600}
+.fold{display:inline-block;width:16px;height:12px;border-radius:2px}
+.fold.red{background:#e2453a}.fold.orange{background:#f19a3a}.fold.yellow{background:#e7d24a}
+.hotc{color:var(--gold);font-weight:800}
+.mfoot{border:1px solid var(--line2);border-radius:12px;padding:8px;font-family:var(--mono);font-size:12.5px;overflow-x:auto}
+.fhead,.frw{display:grid;grid-template-columns:60px 1fr 1fr;gap:5px;align-items:center}
+.fhead{color:var(--muted);font-weight:700;padding-bottom:4px}
+.frw{padding:2px 0}
+.fp{color:var(--muted)}
+.fc{text-align:center;border-radius:6px;padding:4px;background:rgba(255,255,255,.04)}
+.fc.empty{background:none}
+.fc.imbB{background:rgba(63,220,154,.22);color:var(--mint);font-weight:800;box-shadow:inset 0 0 0 1px rgba(63,220,154,.6)}
+.fc.absorb{background:rgba(232,196,104,.2);color:var(--gold);font-weight:800;box-shadow:inset 0 0 0 1px rgba(232,196,104,.6)}
+.fc b.pos{color:var(--mint)}.fc b.neg{color:var(--coral)}
+.flegend{font-size:12px;color:var(--muted);margin-top:6px;font-family:var(--sans)}
+.mdom{max-width:300px;margin:0 auto;border:1px solid var(--line2);border-radius:12px;overflow:hidden;font-family:var(--mono);font-size:13px}
+.drow{display:grid;grid-template-columns:1fr 1fr 1fr;text-align:center;border-top:1px solid var(--line)}
+.drow span{padding:5px}
+.drow.dh{border-top:0;color:var(--muted);font-weight:700;font-family:var(--sans)}
+.db{color:var(--mint);background:rgba(63,220,154,.08)}.da{color:var(--coral);background:rgba(240,115,107,.08)}
+.drow.last .dp{background:var(--gold);color:#06211a;font-weight:800}
+.mcmp .jscroll,.mjour .jscroll{overflow-x:auto;border:1px solid var(--line2);border-radius:10px}
+.mcmp table,.mjour table{border-collapse:collapse;width:100%;min-width:520px;font-size:13px}
+.mcmp th,.mcmp td,.mjour th,.mjour td{padding:7px 9px;border-top:1px solid var(--line);text-align:left;white-space:nowrap}
+.mcmp th,.mjour th{border-top:0;color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.08em}
+.mjour td.pos{color:var(--mint);font-family:var(--mono)}.mjour td.neg{color:var(--coral);font-family:var(--mono)}
+.doc{display:inline-flex;align-items:center;gap:8px;text-decoration:none;border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--fg);border-radius:14px;padding:10px 14px;font-weight:600;font-size:14.5px}
+.doc:hover{border-color:rgba(63,220,154,.5)}
+
+.mcmp{display:flex;flex-direction:column;gap:8px}.mcmp .ctop{display:flex;flex-wrap:wrap;gap:6px;padding:4px;border-radius:10px}.mcmp .hot{outline:2px solid var(--gold);outline-offset:2px;border-radius:10px}
+
+.sway{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--fg);border:1px solid rgba(244,196,88,.55);background:linear-gradient(135deg,rgba(244,196,88,.14),rgba(244,196,88,.04));border-radius:16px;padding:12px 14px;margin:14px 0}
+.sway .play{width:34px;height:34px;border-radius:50%;background:var(--gold);display:grid;place-items:center;flex:none;box-shadow:0 0 14px rgba(244,196,88,.45)}
+.sway .play svg{width:13px;height:13px}
+.sway>span:nth-child(2){display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.sway b{font-size:15.5px}.sway small{color:var(--muted);font-size:13.5px}
+.sway .sgo{color:var(--gold);font-weight:700;font-size:14px;white-space:nowrap}
+.sway.soonw{border-style:dashed;opacity:.85}.sway.soonw .play{background:var(--line2);box-shadow:none}
+</style>
+<div class="fx" aria-hidden="true">
+  <div class="glow"></div><div class="grid"></div>
+  <span class="track" style="left:7%"><i style="--d:8.5s;--w:-1s"></i></span>
+  <span class="track" style="left:23%"><i style="--d:11s;--w:-6s"></i></span>
+  <span class="track" style="left:41%"><i style="--d:9.5s;--w:-3.5s"></i></span>
+  <span class="track" style="left:62%"><i style="--d:12s;--w:-8s"></i></span>
+  <span class="track" style="left:80%"><i style="--d:7.5s;--w:-2.5s"></i></span>
+  <span class="track" style="left:94%"><i style="--d:10.5s;--w:-5s"></i></span>
+</div>
+
+<div class="wrap">
+  <header class="top">
+    <span class="mark" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M9.8 2.2a3.4 3.4 0 0 0-3.9 4.5L2.3 10.3a1.3 1.3 0 0 0 1.9 1.9l3.6-3.6a3.4 3.4 0 0 0 4.5-3.9L10.4 6.6 8.9 6.1 8.4 4.6Z" fill="#06211a"/></svg></span>
+    <span class="brand">FTA <span>Tools Guide</span><small>Flow Trading Academy · Your trading desk</small></span>
+    <span class="count" id="count"></span>
+  </header>
+  <div class="rail" aria-hidden="true"></div>
+
+  <section class="walk beam" id="walk" hidden aria-live="polite"></section>
+
+  <div class="home" id="home">
+    <section class="path beam" id="start">
+      <span class="eyebrow">Start here</span>
+      <h2 id="pathtitle">Set up your trading tools step by step</h2>
+      <p class="sub">Six tools, one section each: what it does, why you need it, how to set it up, and a quick check on every step. One question at a time: read it, look at the drawing, answer the quick check, and the next step unlocks.</p>
+      <div class="prog"><span class="pbar"><span id="pfill"></span></span><span class="pnum" id="pnum"></span></div>
+      <button type="button" class="cont" id="cont"></button>
+      <ol class="stages" id="stages"></ol>
+    </section>
+
+    <section class="card beam gold" style="--delay:-1.2s">
+      <span class="eyebrow gold">Your FTA desk</span>
+      <h2 class="h2">The stack at a glance</h2>
+      <div class="mk mstack">
+        <div class="mcard"><small>1 · Charts</small><b>TradingView</b><span>Structure, levels, VWAP, alerts</span></div>
+        <div class="mcard"><small>2 · News</small><b>Forex Factory</b><span>Red folders and lockout windows</span></div>
+        <div class="mcard"><small>3 · Funding</small><b>Prop Firm Match</b><span>Compare prop firm rules before you buy</span></div>
+        <div class="mcard"><small>4 · Futures</small><b>Tradovate</b><span>Contracts, DOM and ATM brackets</span></div>
+        <div class="mcard"><small>5 · Forex/CFD</small><b>TradeLocker</b><span>Orders with stop, target and correct size</span></div>
+        <div class="mcard"><small>6 · Journal</small><b>TradeZella</b><span>Every trade, tagged and reviewed</span></div>
+      </div>
+      </div>
+      <p class="sub">Menus in these apps change from time to time. If a button has moved, look for the same feature nearby; the steps stay the same.</p>
+    </section>
+
+    <section class="card gl">
+      <b>The other FTA guides</b>
+      <p class="sub">Learn the language, the candles and the structure, then use this guide to set up the desk.</p>
+      <div class="row"><a class="glink" href="../candles/" target="_blank" rel="noopener">FTA Candle Guide →</a><a class="glink" href="../structure/" target="_blank" rel="noopener">FTA Structure Guide →</a><a class="glink" href="../glossary/" target="_blank" rel="noopener">FTA Glossary →</a></div>
+    </section>
+
+    <p class="foot">Screens shown are simplified drawings, not the real apps. In this course 1 pip = $0.10 on gold. Platform menus change over time. Prices and sizes in the examples are illustrations, not trade advice.</p>
+  </div>
+</div>
+<script>
+/* ================= FTA TOOLS GUIDE — CONTENT =================
+   Six tools, each its own stage: what it does, why you need it, setup steps, checklist.
+   m = screen mockup, q = quick check [question, [answers], right index, why]. */
+
+var VIDEOS={
+  tv:{u:"https://www.youtube.com/watch?v=FCQCfIDPE84",t:"TradingView tutorial for beginners (complete walkthrough)",src:"TC Trading"},
+  vwap:{u:"https://www.youtube.com/watch?v=b7w68Dq4s5U",t:"How to use the VWAP indicator",src:"TradingView"},
+  ff:{u:"https://www.youtube.com/watch?v=no_GNIBgvZw",t:"How to use and read the Forex Factory calendar",src:"FxDailyReport.Com"},
+  pfm:{u:"https://www.youtube.com/@propfirmmatch/videos",t:"Prop Firm Match's own video channel",src:"Prop Firm Match"},
+  tdv:{u:"https://www.youtube.com/watch?v=eIOsFO8EMzc",t:"How to place orders on Tradovate",src:"Ninja Guides"},
+  tl:{u:"https://www.youtube.com/watch?v=XYMCAzOlhLk",t:"Complete TradeLocker desktop walkthrough",src:"TC Trading"},
+  tz:{u:"https://www.youtube.com/watch?v=RHtDqejTIvc",t:"TradeZella: set up your trading journal step by step",src:"Stock Tools Guide"}
+};
+var DOCS={
+  tvsite:{u:"https://www.tradingview.com/",t:"Open TradingView"},
+  tvvwap:{u:"https://www.tradingview.com/support/solutions/43000502018-volume-weighted-average-price-vwap/",t:"TradingView help: VWAP settings"},
+  ff:{u:"https://www.forexfactory.com/calendar",t:"Open the Forex Factory calendar"},
+  pfm:{u:"https://propfirmmatch.com/",t:"Open Prop Firm Match"},
+  pfmhow:{u:"https://propfirmmatch.com/blog/how-to-use-the-prop-firm-match-comparison-tool-for-better-decision-making",t:"Prop Firm Match: how to use the comparison tool"},
+  pfmrules:{u:"https://propfirmmatch.com/futures/prop-firm-rules",t:"Prop Firm Match: futures prop firm rules"},
+  atm:{u:"https://support.ninjatrader.com/s/article/ATM-Strategies-Tradovate?language=en_US",t:"Tradovate help: ATM strategies"},
+  tl:{u:"https://tradelocker.com/how-to/place-trade/",t:"TradeLocker: how to place a trade"},
+  tlcalc:{u:"https://tradelocker.com/how-to/sltp-calculator/",t:"TradeLocker: SL/TP calculator"},
+  zella:{u:"https://help.tradezella.com/en/articles/9142898-tradelocker-how-to-sync-your-tradelocker-account-with-tradezella",t:"TradeZella: sync your TradeLocker account"},
+  zbrokers:{u:"https://help.tradezella.com/en/articles/10055421-list-of-supported-brokers-and-platforms",t:"TradeZella: supported brokers and platforms"}
+};
+
+/* home-page cards: one per tool */
+var TOOLS=[
+ {n:"TradingView",k:"Charts",what:"Charting platform where you read structure, mark levels, add VWAP and set alerts.",why:"Every decision starts on the chart. Your levels, your 1-hour direction and your alerts all live here.",open:"tvsite",v:"tv",s:0},
+ {n:"Forex Factory",k:"News",what:"Economic calendar of every scheduled release, with impact ratings and the numbers.",why:"News is where accounts die. It tells you the red-folder times so you stand down 15 minutes either side.",open:"ff",v:"ff",s:1},
+ {n:"Prop Firm Match",k:"Funding",what:"Comparison site for prop firms: filter and compare rules, prices, platforms and reputation side by side.",why:"Firms' rules differ a lot. Picking a firm whose drawdown or news rules don't fit how you trade costs you evals.",open:"pfm",v:"pfm",s:2},
+ {n:"Tradovate",k:"Futures execution",what:"Futures trading platform (web, desktop and mobile) used by many futures prop firms.",why:"It's where your futures orders, brackets and contracts live if you trade gold, ES or NQ futures.",open:"atm",v:"tdv",s:3},
+ {n:"TradeLocker",k:"Forex/CFD execution",what:"Order platform many forex and CFD prop firms give you to place trades on XAUUSD and pairs.",why:"It's where your stop, target and size get set. Mistakes here cost real money.",open:"tl",v:"tl",s:4},
+ {n:"TradeZella",k:"Journal",what:"Trading journal that syncs your trades and shows your stats by setup, time and mistake.",why:"It's the only honest record of what you actually do, and the fastest way to find what to fix.",open:"zella",v:"tz",s:5}
+];
+
+var STAGES=[
+/* ---------------------------------------------------------------- 1 TradingView */
+{t:"TradingView",mod:"Tool 1 · Charts",v:["tv","vwap"],d:["tvsite","tvvwap"],steps:[
+ {t:"What is TradingView?",
+  p:["TradingView is a charting platform that runs in your browser, on desktop and on your phone. It gives you charts for almost every market (gold, forex, futures, indices) with drawing tools, indicators and alerts.",
+     "It doesn't place your trades (your prop firm platform does that). It's where you do your thinking."],
+  m:{k:"chart",tf:"1H",cap:"Charts, drawing tools on the left, timeframes and indicators on top."},
+  ex:"You open the gold 1-hour chart, mark yesterday's high and low, add VWAP and set two alerts. That's TradingView's job.",
+  q:["What is TradingView mainly for?",["Charting: reading structure, levels and setting alerts","Holding your prop firm account","Tracking news releases"],0,"It's your analysis tool. Execution happens on your platform."]},
+ {t:"Why you need it",
+  p:["Every FTA decision starts on the chart: 1-hour structure, key levels, VWAP, the pullback. TradingView makes those quick to mark and saves them, so you open the same prepared chart every day.",
+     "Alerts are the other reason: they watch your levels so you don't have to stare at the screen."],
+  m:{k:"list",items:["Read 1-hour structure","Mark key levels once, see them on every timeframe","VWAP and Fib for pullbacks","Alerts at your levels so you can step away"]},
+  ex:"Set an alert at 4,138. Go eat. When it fires, come back and check if it's A+.",
+  q:["Why do alerts matter?",["They watch your levels so you don't overtrade from boredom","They place trades for you","They predict price"],0,"Less screen-staring, fewer boredom trades."]},
+ {t:"Set up your account and layout",
+  p:["Make a free account so your drawings and settings save. Paid plans add more indicators per chart and more saved layouts, but free is enough to start.",
+     "Build one layout for gold: the 1-hour for structure, plus the 5-minute for entries (side by side if your plan allows, or switch timeframes). Save it so it opens the same way every morning."],
+  m:{k:"chart",tf:"1H",hl:"layout",cap:"Save your layout once. Same setup every day."},
+  ex:"Name it \"FTA Gold\". Every morning, open it and everything is where you left it.",
+  q:["Why save a layout?",["Your charts and drawings open the same way every day","It makes the price move","It's required to trade"],0,"Same setup every day removes friction."]},
+ {t:"Pick the right symbol",
+  p:["Click the symbol at the top left and search. For spot gold use a XAUUSD symbol from a feed close to your broker. For gold futures, GC1! is the front-month continuous contract and MGC1! is micro gold.",
+     "Chart the instrument you actually trade, or one that tracks it closely."],
+  m:{k:"chart",tf:"1H",hl:"sym",sym:"XAUUSD",cap:"Symbol search: top left."},
+  ex:"Trading XAUUSD on TradeLocker? Chart XAUUSD. Trading MGC on Tradovate? Chart MGC1!.",
+  q:["What does GC1! show on TradingView?",["The front-month gold futures contract","Spot gold from your broker","A gold ETF"],0,"1! = continuous front month."]},
+ {t:"Timeframes and levels",
+  p:["Change timeframes from the top toolbar, or type a number and press Enter (60 = 1-hour, 5 = 5-minute). Add 1H, 15m, 5m and 3m to favorites.",
+     "Use the horizontal line tool in the left toolbar to mark yesterday's high and low, session highs and lows, and round numbers. Drawings show on every timeframe, so mark them once on the 1-hour."],
+  m:{k:"chart",tf:"1H",hl:"draw",lv:true,cap:"Mark levels on the 1-hour. They carry to the 5-minute."},
+  ex:"Type 60, press Enter, draw a line at yesterday's high 4,141.82. Type 5: the line is still there.",
+  q:["What do you type on the chart to jump to the 1-hour?",["1H","60","100"],1,"TradingView counts in minutes."]},
+ {t:"Add VWAP and the Fib tool",
+  p:["Indicators → search \"VWAP\" → add Volume Weighted Average Price. In settings set Anchor Period to Session so it resets every trading session.",
+     "Fib Retracement is in the left toolbar's Fibonacci group. Drag from swing low to swing high (reverse in a downtrend) and watch the 0.5 to 0.618 zone."],
+  m:{k:"chart",tf:"5m",hl:"ind",vw:true,cap:"Indicators → VWAP → Anchor Period: Session."},
+  ex:"A push from 4,100 to 4,140 puts the 0.5 at 4,120 and the 0.618 at 4,115.28.",
+  q:["Which VWAP anchor period do you use for day trading?",["Session","Year","Decade"],0,"Resets every trading session."]},
+ {t:"Set price alerts",
+  p:["Click the alarm clock icon (or right-click a line) and create an alert for when price crosses your level. Add a note so you know why it fired.",
+     "An alert means \"go look\", not \"take the trade\"."],
+  m:{k:"chart",tf:"1H",hl:"alert",lv:true,cap:"Alarm clock icon: alert at your level."},
+  ex:"Alert: \"Gold crossing 4,138: check pullback, 5m turn, A+ checklist.\"",
+  q:["An alert fires at your level. What do you do?",["Check if the setup is A+","Buy immediately","Ignore it"],0,"Alerts call you to the chart; the checklist decides."]},
+ {t:"TradingView checklist",
+  p:["Before you call TradingView set up, tick every box."],
+  m:{k:"list",items:["Free account created, layout saved","Correct symbol: XAUUSD or GC1!/MGC1!","1H, 15m, 5m, 3m in favorites","Yesterday's high/low and session levels drawn","VWAP added, anchor = Session","Alerts set at your key levels"]},
+  ex:"Six ticks and your chart prep takes five minutes every morning.",
+  q:["What's the VWAP anchor setting on your checklist?",["Session","Month","Off"],0,"Session, every time."]}
+]},
+/* ---------------------------------------------------------------- 2 Forex Factory */
+{t:"Forex Factory",mod:"Tool 2 · News",v:"ff",d:["ff"],steps:[
+ {t:"What is Forex Factory?",
+  p:["Forex Factory's calendar lists every scheduled economic release for the week: time, currency, impact (red, orange or yellow folder), and the actual, forecast and previous numbers.",
+     "It's free, and a free account saves your time zone and filters."],
+  m:{k:"cal",cap:"Each row: time, currency, impact folder, event, actual, forecast, previous."},
+  ex:"Thursday: USD CPI at 8:30 ET, red folder.",
+  q:["What does a red folder mean on Forex Factory?",["High impact: can move the market fast","Low impact","The event was cancelled"],0,"Red = high impact."]},
+ {t:"Why you need it",
+  p:["News releases make gold move tens of dollars in seconds, with slippage and spreads blowing out. Most blown accounts have a news candle in the story.",
+     "FTA rule: no new entries 15 minutes either side of a red-folder USD release. You can't follow that rule without the calendar."],
+  m:{k:"list",items:["Know the red folders before you trade","Lockout: 15 minutes either side","Avoid slippage on news candles","Many prop firms have their own news rules too"]},
+  ex:"NFP at 8:30: no new entries from 8:15 to 8:45.",
+  q:["A red folder is at 10:00 ET. When can't you enter new trades?",["9:45 to 10:15","All day","Only at exactly 10:00"],0,"15 minutes either side."]},
+ {t:"Set your time zone",
+  p:["Open the calendar's time settings and set your time zone (Eastern for New York hours like FTA). If the zone is wrong, every time on the page is wrong.",
+     "Make a free account so it remembers."],
+  m:{k:"cal",tz:true,cap:"Time zone first. Wrong zone, wrong times."},
+  ex:"Set to Eastern, NFP shows at 8:30. On UTC it shows 12:30 in summer, 13:30 in winter.",
+  q:["Why set the time zone first?",["So every event time is correct for you","It changes the news","It's optional"],0,"Every time on the page depends on it."]},
+ {t:"Filter to what matters",
+  p:["Use the calendar filter to show only the currencies you trade, with high (red) and medium (orange) impact. For gold, USD matters most.",
+     "Red folders are stand-down events. Orange can still move gold, so be careful around them."],
+  m:{k:"cal",filtered:true,cap:"Filtered: USD, high and medium impact."},
+  ex:"Filtered to USD, a busy week drops to a handful of events.",
+  q:["For gold, which currency's events matter most?",["USD","JPY","AUD"],0,"Gold is priced in dollars."]},
+ {t:"Read actual vs forecast",
+  p:["Forecast is what economists expect, Previous is last time, Actual is what just came out. Price moves on the surprise: the gap between actual and forecast.",
+     "A hotter-than-expected inflation number is usually bearish for gold (it lifts rate expectations), but the first minutes whip both ways. That's why you wait."],
+  m:{k:"cal",actual:true,cap:"The surprise is actual vs forecast."},
+  ex:"CPI forecast 0.2%, actual 0.4%: hot. Gold often drops after spiking both ways.",
+  q:["What moves price at a release?",["The surprise vs forecast","The previous number","The time"],0,"The forecast is already priced in."]},
+ {t:"Forex Factory checklist",
+  p:["Your weekly and daily routine."],
+  m:{k:"list",items:["Time zone set to Eastern","Filter: USD (plus pairs you trade), high + medium","Sunday: scan the week for CPI, NFP, FOMC","Each morning: write today's red folders","Write each lockout window (±15 min)","Check your prop firm's own news rule"]},
+  ex:"Monday 8:40: \"No red folders today. Window 9:15–11:00 fully open.\"",
+  q:["When do you scan the whole week?",["Sunday, before the week starts","Friday after close","Never"],0,"Know the big days in advance."]}
+]},
+/* ---------------------------------------------------------------- 3 Prop Firm Match */
+{t:"Prop Firm Match",mod:"Tool 3 · Funding",v:"pfm",d:["pfm","pfmhow","pfmrules"],steps:[
+ {t:"What is Prop Firm Match?",
+  p:["Prop Firm Match is a comparison site for prop firms. You filter firms by type (CFD or futures), asset, account size, evaluation steps, drawdown rules, platform, news and overnight rules, fees, reputation and your country, then compare them side by side.",
+     "It also has rules pages that lay out firms' key rules in one place."],
+  m:{k:"compare",cap:"Filter, then compare firms' rules and costs side by side."},
+  ex:"Filter: futures, 50K, Tradovate, end-of-day drawdown. The list shrinks to the firms that fit.",
+  q:["What does Prop Firm Match do?",["Compares prop firms' rules, costs and platforms side by side","Runs your funded account","Places your trades"],0,"It's a research tool for picking a firm."]},
+ {t:"Why you need it",
+  p:["Prop firms look alike but their rules aren't. One uses an intraday trailing drawdown, another end-of-day. One bans trading around news, another doesn't. One has a consistency rule, another doesn't.",
+     "Buying an eval whose rules fight your style is paying to fail. Compare first, buy second."],
+  m:{k:"list",items:["Drawdown type: trailing, end-of-day or static","Daily loss limit","Consistency rule","News trading rules","Platform (Tradovate, TradeLocker…)","Payout terms and minimum days"]},
+  ex:"You hold trades for a while and price pulls back before running. An intraday trailing drawdown can breach you on open profit. An end-of-day drawdown fits you better.",
+  q:["Why compare before buying an eval?",["Rules differ, and the wrong rules can fail you even when you trade well","All firms are the same","It's cheaper to guess"],0,"Match the rules to your style."]},
+ {t:"Set your filters",
+  p:["Start with the basics: firm type (futures or CFD), the asset you trade, account size, and evaluation steps (1-step, 2-step, instant).",
+     "Then add what matters for FTA: drawdown type, news trading allowed or restricted, and your platform."],
+  m:{k:"compare",hl:"filters",cap:"Filters first: type, asset, size, steps, drawdown, platform."},
+  ex:"Futures · Metals · 50K · 1-step · end-of-day drawdown · Tradovate.",
+  q:["Which filter matters most for how you'd be stopped out?",["Drawdown type","Logo color","Year founded"],0,"Drawdown type decides when you breach."]},
+ {t:"Compare the rules that matter",
+  p:["For each firm still on the list, compare: drawdown type and size, daily loss limit, profit target, consistency rule, news rule, minimum trading days, payout split and timing.",
+     "Write the top three in a note with those rules side by side."],
+  m:{k:"compare",hl:"rules",cap:"Same rules, side by side."},
+  ex:"Firm A: trailing, $2,000, no consistency. Firm B: end-of-day, $2,000, 40% consistency. Firm C: static, $2,500, news restricted.",
+  q:["Firm B has a 40% consistency rule. What does that limit?",["How much of your total profit can come from one day","How many trades per day","Your leverage"],0,"No single day can be too big a share of profit."]},
+ {t:"Check reputation and payouts",
+  p:["Look at how long the firm has been around, its reviews, and recent payout reports. Rule changes happen, so check the firm's rule-change history if it's shown.",
+     "A cheap eval from a firm that doesn't pay isn't cheap."],
+  m:{k:"list",items:["Years in business","Trustpilot or review score","Recent payout reports","Recent rule changes","Support responsiveness"]},
+  ex:"Two firms with similar rules: pick the one with a longer track record of payouts.",
+  q:["Firm X is cheapest but has very few payout reports. What should you do?",["Weigh that risk before buying","Buy it, price is all that matters","Buy five"],0,"Reputation is part of the price."]},
+ {t:"Read the firm's own rules before buying",
+  p:["Prop Firm Match is a guide, not the rulebook. Before you pay, open the firm's own rules page and read the drawdown, daily loss, news and payout rules in full.",
+     "If the firm's page and the comparison disagree, the firm's page wins."],
+  m:{k:"list",items:["Open the firm's official rules page","Read drawdown, daily loss, news, consistency, payouts","Check your country is allowed","Note the platform they use","Then buy"]},
+  ex:"The comparison says news trading is allowed, but the firm updated its rules last week. Its own page is what counts.",
+  q:["The comparison site and the firm's own rules page disagree. Which wins?",["The firm's own rules page","The comparison site","Whichever is easier"],0,"The firm's rules are what you'll be held to."]},
+ {t:"Prop Firm Match checklist",
+  p:["Before you buy any eval."],
+  m:{k:"list",items:["Filters set: type, asset, size, steps, platform","Drawdown type fits your style","News rule fits the FTA 15-minute rule","Consistency and minimum days understood","Reputation and payouts checked","Firm's own rules page read in full"]},
+  ex:"Six ticks, then buy. Not before.",
+  q:["What's the last step before buying an eval?",["Read the firm's own rules page","Ask a friend","Check the price only"],0,"The rulebook comes from the firm."]}
+]},
+/* ---------------------------------------------------------------- 4 Tradovate */
+{t:"Tradovate",mod:"Tool 4 · Futures",v:"tdv",d:["atm"],steps:[
+ {t:"What is Tradovate?",
+  p:["Tradovate is a futures trading platform that runs on web, desktop and mobile. Many futures prop firms give you a Tradovate login for your eval and funded accounts.",
+     "It has charts, a DOM (price ladder), an order ticket, and ATM templates that attach your stop and target to every entry."],
+  m:{k:"order",fut:true,hl:"panel",cap:"Futures order ticket: contract, quantity, type, bracket."},
+  ex:"Your futures eval sends you Tradovate login details. That's where you place MGC or MES orders.",
+  q:["What is Tradovate?",["A futures trading platform","A news calendar","A prop firm"],0,"It's where futures orders are placed."]},
+ {t:"Why you need it",
+  p:["If you trade futures (gold MGC/GC, ES/MES, NQ/MNQ), this is where your orders, brackets and contract months live. Getting the contract or quantity wrong here is a real-money mistake.",
+     "Tradovate can also connect to TradingView, so some traders place futures orders right from their TradingView chart."],
+  m:{k:"stack",items:[["MGCZ26","Micro gold, Dec 2026","$1 per tick"],["GCZ26","Gold, Dec 2026","$10 per tick"],["MESZ26","Micro S&P, Dec 2026","$1.25 per tick"],["MNQZ26","Micro Nasdaq, Dec 2026","$0.50 per tick"]]},
+  ex:"Sending GC instead of MGC is 10 times the risk on the same chart.",
+  q:["You meant 2 MGC and sent 2 GC. What happened to your risk?",["Nothing","10 times bigger","Half"],1,"GC is 10× MGC."]},
+ {t:"Log in and pick the contract",
+  p:["Log in with the credentials your prop firm or broker gives you, then choose the exact contract, like MGCZ26 for micro gold, December 2026.",
+     "Trade the front month (the most volume). Check the month every Monday."],
+  m:{k:"list",items:["Log in with your firm's Tradovate credentials","Choose your account (eval or funded)","Search the contract: MGC, GC, MES, MNQ","Pick the front month, e.g. MGCZ26","Chart and ticket on the same month"]},
+  ex:"Late November, gold traders move from GCZ26 to GCG27 on both chart and ticket.",
+  q:["What does MGCZ26 mean?",["Micro gold, December 2026","Gold mini, March 2026","26 micro gold contracts"],0,"Z = December, 26 = 2026."]},
+ {t:"Place an order",
+  p:["Choose the order type (market, limit or stop), the quantity in whole contracts, and Buy or Sell. You can also click directly on the DOM ladder to place limit orders at exact prices.",
+     "Check contract, side and quantity before every click."],
+  m:{k:"dom",cap:"DOM: bids left, asks right, price in the middle. Click to place limits."},
+  ex:"Buy 2 MGCZ26 limit at 4,138.0 for a pullback entry.",
+  q:["On the DOM, what are bids?",["Resting buy orders","Resting sell orders","Filled trades"],0,"Bids want to buy; asks want to sell."]},
+ {t:"Set up your bracket (ATM)",
+  p:["An ATM template attaches a stop and target to every entry. Open the ATM settings (the gear near Buy/Sell), click +, name it, choose ticks, price or dollars, enter the stop and target, pick the stop type and save.",
+     "Select it before entering. It shows OFF by default, so check it's on every time."],
+  m:{k:"order",fut:true,atm:true,hl:"atm",cap:"ATM template on: stop and target attach automatically."},
+  ex:"Template \"FTA 3R\": stop 100 ticks, target 300 ticks. On MGC that's a $10 move in gold each way: $100 risk and $300 target per contract.",
+  q:["Your ATM shows OFF. What happens if you enter?",["No stop or target is attached","A default stop is used","The order is rejected"],0,"OFF = no bracket."]},
+ {t:"Manage and flatten",
+  p:["Open positions and working orders show in the positions and orders panels. You can move a stop closer to protect profit, never further away.",
+     "To get out fast, use flatten/close position for that contract, and make sure no working orders are left behind."],
+  m:{k:"list",items:["Watch positions and working orders","Move stops closer only, never further","Flatten to exit","Check no orders are left working after you're out"]},
+  ex:"You close manually, but the bracket's target is still working. Cancel it, or it could open a new position later.",
+  q:["You closed a trade but an old limit order is still working. Risk?",["It could fill and open a trade you didn't want","None","It improves your stats"],0,"Always check working orders after exiting."]},
+ {t:"Tradovate checklist",
+  p:["Before your first futures trade."],
+  m:{k:"list",items:["Logged in to the right account (eval or funded)","Front-month contract selected","Chart and ticket on the same contract","ATM template built and switched ON","Quantity checked: MGC vs GC","No leftover working orders after exits"]},
+  ex:"Run this every session for your first month until it's automatic.",
+  q:["Which check stops a 10× sizing mistake?",["MGC vs GC quantity check","Chart color","Time zone"],0,"Micro vs full-size is the classic error."]}
+]},
+/* ---------------------------------------------------------------- 5 TradeLocker */
+{t:"TradeLocker",mod:"Tool 5 · Forex/CFD",v:"tl",d:["tl","tlcalc"],steps:[
+ {t:"What is TradeLocker?",
+  p:["TradeLocker is an order platform that many forex and CFD prop firms give you to trade XAUUSD and currency pairs. It has a chart, an instrument list, an order panel, and a positions area for open trades, pending orders and history.",
+     "Sizes are in lots."],
+  m:{k:"order",hl:"panel",cap:"Order panel: instrument, side, type, size, stop and target."},
+  ex:"Your CFD prop eval runs on TradeLocker: that's where XAUUSD orders go.",
+  q:["Where do you see your open trades in TradeLocker?",["The positions area","The calendar","The chart title"],0,"Positions = open trades; orders = pending."]},
+ {t:"Why you need it",
+  p:["If you trade gold or forex with a CFD prop firm, this is where stops, targets and sizes get set. Its SL/TP calculator can show your stop as a price, ticks, dollars or percent of balance, so you can see your real risk before clicking.",
+     "Platform mistakes (wrong side, wrong size, no stop) are the most avoidable losses in trading."],
+  m:{k:"list",items:["Places your XAUUSD and forex orders","Stop loss and take profit on every trade","See the dollar risk before you click","Positions, pending orders and history in one place"]},
+  ex:"Typing 0.50 instead of 0.05 lot is 10 times your risk. The order panel is where you catch it.",
+  q:["You typed 0.50 lot instead of 0.05. What did that do to your risk?",["Nothing","Made it 10 times bigger","Halved it"],1,"An extra zero is 10× the risk."]},
+ {t:"Market vs pending orders",
+  p:["A market order fills now. A pending order (limit or stop) waits at your price. For pullback entries at a level, a limit lets price come to you."],
+  m:{k:"order",type:"Limit",price:"4,138.00",hl:"type",cap:"Choose Market, Limit or Stop."},
+  ex:"Gold at 4,146, you want the pullback to 4,138: buy limit at 4,138.",
+  q:["Price is above your level and you want to buy the pullback into it. Which order?",["Buy limit","Buy stop","Market sell"],0,"A buy limit waits below price."]},
+ {t:"Stop, target and size",
+  p:["Set the stop at the price where the setup is wrong (beyond the last higher low or lower high), and the target where you'll take profit. Then adjust lots until the dollar risk at the stop matches your plan.",
+     "Stop from structure. Size from the stop."],
+  m:{k:"order",type:"Limit",price:"4,138.00",sl:"4,128.00",tp:"4,168.00",lots:"0.10",risk:"$100.00",hl:"lots",cap:"Adjust lots until the risk at the stop matches your plan."},
+  ex:"$10 stop on XAUUSD: 0.10 lot risks $100. Plan is $50? Use 0.05 lot.",
+  q:["Your stop is $20 away and you risk $100. What size on XAUUSD?",["0.05 lot","0.10 lot","0.50 lot"],0,"$100 ÷ ($20 × $100 per lot per $1) = 0.05."]},
+ {t:"Manage and close",
+  p:["After the fill, your stop and target show on the chart and in positions. Move the stop closer to lock in profit if your plan says so, never further away. Close from the positions list if your plan says exit."],
+  m:{k:"list",items:["Stop and target visible on the chart","Move stop closer: allowed","Move stop further: never","Close from positions when the plan says"]},
+  ex:"At +2R you may move the stop to breakeven at 4,138, never below 4,128.",
+  q:["Price moves toward your stop. Can you move it further away?",["Yes","Never","Only on Fridays"],1,"That's how accounts blow."]},
+ {t:"TradeLocker checklist",
+  p:["Before every click."],
+  m:{k:"list",items:["Instrument: XAUUSD (or your pair)","Side matches your plan","Order type: market, limit or stop","Stop loss and take profit set","Lots match your dollar risk","Outside the 15-minute news window"]},
+  ex:"Thirty seconds per trade. It saves accounts.",
+  q:["What do you set before clicking Buy or Sell?",["Stop loss and take profit","Nothing","Only the target"],0,"Every trade, every time."]}
+]},
+/* ---------------------------------------------------------------- 6 Journal */
+{t:"TradeZella",mod:"Tool 6 · Review",v:"tz",d:["zella","zbrokers"],steps:[
+ {t:"What is TradeZella?",
+  p:["TradeZella is a trading journal. It imports your trades (auto-sync from supported platforms like TradeLocker, or file upload) and shows your results by setup, day, time and tag, with notes and screenshots on each trade.",
+     "It's a paid tool. If you'd rather not pay, the FTA spreadsheet journal at the end of this section does the same core job."],
+  m:{k:"journal",cap:"Every trade: setup, A+?, entry, stop, target, R, rules followed?"},
+  ex:"Your TradeLocker trades flow into TradeZella automatically; you add the setup tag and a screenshot.",
+  q:["What does TradeZella do?",["Imports and analyzes your trades","Places trades","Shows the news"],0,"It's your review tool."]},
+ {t:"Why you need it",
+  p:["Memory lies. The journal shows which setups make money, which mistakes repeat, and what they cost in R.",
+     "Judge trades on process: did you follow the plan? Not on whether they made money."],
+  m:{k:"list",items:["Find which setups actually pay","Put a number on each mistake","See your best and worst times of day","Track rule-following, not just P&L"]},
+  ex:"After 30 trades: A+ trades +18R, B-setups −11R. Now you know what to cut.",
+  q:["What does a journal mainly help you find?",["Which setups and mistakes repeat","Tomorrow's price","A new broker"],0,"Patterns in your own trading."]},
+ {t:"Sync your account",
+  p:["In TradeZella: Add Trade → add a new account → choose TradeLocker (or your platform) → Auto Sync → set a start date (blank imports everything) → Connect → accept the terms → check the sync status.",
+     "For platforms without auto-sync, export your trades and upload the file."],
+  m:{k:"list",items:["Add Trade → add new account","Choose your platform (e.g. TradeLocker)","Import method: Auto Sync","Start date (blank = all)","Connect → accept terms","Check the sync status"]},
+  ex:"Once synced, every fill from your eval appears without typing.",
+  q:["Which import method keeps trades coming in automatically?",["Auto Sync","Manual upload","Screenshots"],0,"Auto Sync keeps it updated."]},
+ {t:"Tag every trade",
+  p:["Tag the setup (trend pullback, failed breakout), A+ or not, the session, and any mistake (moved stop, FOMO, news window). Add a screenshot of the 1-hour and the entry chart."],
+  m:{k:"list",items:["Setup: trend pullback / failed breakout","Grade: A+ or not","Session","Mistakes: moved stop, FOMO, revenge, news","Screenshots: 1-hour + entry"]},
+  ex:"Filter by \"moved stop\": it cost you 6R this month.",
+  q:["Why tag mistakes?",["To measure what they cost you","To feel bad","It's required"],0,"What gets measured gets fixed."]},
+ {t:"No TradeZella? Use the FTA journal",
+  p:["A spreadsheet works. One row per trade: date, time, instrument, setup, A+ yes/no, entry, stop, target, result in R, rules followed yes/no, one-line lesson."],
+  m:{k:"journal",cap:"The FTA journal columns."},
+  ex:"10/23 · 9:52 · XAUUSD · trend pullback · A+ yes · 4,138 / 4,128 / 4,168 · +3R · rules yes · waited for the 5m turn.",
+  q:["Which journal column do you never skip?",["Rules followed: yes or no","Your mood","The weather"],0,"Process over outcome."]},
+ {t:"Weekly review checklist",
+  p:["Every weekend, 20 minutes."],
+  m:{k:"list",items:["Total R for the week","Win rate and average win/loss in R","Results by setup tag","Biggest mistake by cost","One fix for next week"]},
+  ex:"+4.5R, 50% win rate, top mistake: entering before the 5m close. Fix: wait for the close.",
+  q:["How many fixes should you take into next week?",["One","Ten","None"],0,"One fix at a time sticks."]}
+]}
+];
+
+var SWAY=[{r:"",w:""},{r:"",w:""},{r:"",w:""},{r:"",w:""},{r:"",w:""},{r:"",w:""}];
+
+(function(){
+"use strict";
+function $(id){return document.getElementById(id);}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function fmt(v){return Number(v).toLocaleString("en-US",{minimumFractionDigits:0,maximumFractionDigits:2});}
+
+/* ---------- drawing candles ---------- */
+var MINT="#3fdc9a", CORAL="#f0736b", MUTE="#9db8b0", GOLD="#e8c468";
+function gen(p,n){
+  var C=[],piv=[],prev=p[0],k=0;
+  var W=[0.6,0.9,1.2,0.8,1.0];
+  for(var j=1;j<p.length;j++){
+    var a=p[j-1],b=p[j],up=b>a;
+    for(var t=0;t<n;t++){
+      var o=prev,c=a+(b-a)*(t+1)/n,w=W[k%5],last=(t===n-1);
+      if(last) c=up?b-1.5:b+1.5;
+      var h=Math.max(o,c)+w,l=Math.min(o,c)-w;
+      if(last){ if(up) h=b; else l=b; }
+      if(j===1&&t===0){ if(up) l=Math.min(l,a); else h=Math.max(h,a); }
+      C.push([o,h,l,c]); prev=c; k++;
+    }
+    piv.push({i:j*n-1,v:b,hi:up});
+  }
+  piv.unshift({i:0,v:p[0],hi:p[1]<p[0]});
+  return {C:C,piv:piv};
+}
+function draw(f,opt){
+  opt=opt||{};
+  var G=f.g&&!f.c?gen(f.g.p,f.g.n):null, C=G?G.C:f.c, piv=G?G.piv:[], n=C.length, notes=f.notes||[], lv=f.lv||[], tags=f.tags||[], hl=f.hl||null;
+  var vals=[]; C.forEach(function(c){vals.push(c[1],c[2]);}); lv.forEach(function(l){vals.push(l.v);});
+  var mx=Math.max.apply(null,vals), mn=Math.min.apply(null,vals), pad=(mx-mn)*0.12||2; mx+=pad; mn-=pad;
+  var hasN=notes.length>0, small=opt.small;
+  var slot=small?30:(n>8?26:Math.max(40,Math.min(70,300/n)));
+  var left=small?10:16, plotW=slot*n, right=hasN?40:16;
+  var sw=f.sw||[], W=left+plotW+right, top=small?8:(sw.length?28:16), bottom=(tags.length&&!small)?28:(sw.length?24:10), H=small?120:(f.h||(sw.length?240:210));
+  var ph=H-top-bottom;
+  function y(v){return top+(mx-v)/(mx-mn)*ph;}
+  var bw=Math.max(6,Math.min(22,slot*0.56));
+  var o=['<svg class="fig" viewBox="0 0 '+W.toFixed(0)+' '+H+'" role="img" aria-label="'+esc(opt.label||"Candlestick diagram")+'" style="max-width:'+Math.round(W*1.7)+'px">'];
+  if(f.zone){ o.push('<rect x="'+left+'" y="'+y(f.zone.a)+'" width="'+plotW+'" height="'+(y(f.zone.b)-y(f.zone.a))+'" fill="rgba(232,196,104,.10)"/>'); }
+  lv.forEach(function(l){ var yy=y(l.v);
+    o.push('<line x1="'+(left-6)+'" x2="'+(left+plotW+right-6)+'" y1="'+yy+'" y2="'+yy+'" stroke="'+GOLD+'" stroke-width="1.2" stroke-dasharray="5 4" opacity=".85"/>');
+  });
+  var xs=[];
+  C.forEach(function(c,i){
+    var x=left+slot*i+slot/2; xs.push(x);
+    var col=c[3]>c[0]?MINT:(c[3]<c[0]?CORAL:MUTE), dim=hl&&hl.indexOf(i)<0;
+    var bt=y(Math.max(c[0],c[3])), bb=y(Math.min(c[0],c[3])), bh=Math.max(1.6,bb-bt);
+    o.push('<g opacity="'+(dim?0.32:1)+'"'+(hl&&!dim?' class="glowc"':'')+'>');
+    o.push('<line x1="'+x+'" x2="'+x+'" y1="'+y(c[1])+'" y2="'+y(c[2])+'" stroke="'+col+'" stroke-width="'+(small?1.4:1.8)+'" stroke-linecap="round"/>');
+    o.push('<rect x="'+(x-bw/2)+'" y="'+(bh<=1.6?bt-0.8:bt)+'" width="'+bw+'" height="'+bh+'" rx="2" fill="'+col+'"/>');
+    o.push('</g>');
+    if(tags[i]&&!small) o.push('<text x="'+x+'" y="'+(H-8)+'" class="tg" text-anchor="middle">'+esc(tags[i])+'</text>');
+  });
+  if(f.vw&&!small){ o.push('<polyline fill="none" stroke="#b9a7ff" stroke-width="1.6" stroke-dasharray="2 4" points="'+f.vw.map(function(v,i){return xs[i]+","+y(v);}).join(" ")+'"/>'); }
+  if(f.zz&&piv.length&&!small){ o.push('<polyline fill="none" stroke="rgba(234,245,241,.55)" stroke-width="1.4" stroke-dasharray="4 3" points="'+piv.map(function(p){return xs[p.i]+","+y(p.v);}).join(" ")+'"/>'); }
+  if(sw.length&&!small) piv.forEach(function(p,j){ var t=sw[j]; if(!t) return;
+    var col=/^(HH|HL)/.test(t)?MINT:(/^(LH|LL)/.test(t)?CORAL:"#cfe3dc");
+    o.push('<text x="'+xs[p.i]+'" y="'+(p.hi?y(p.v)-8:y(p.v)+17)+'" text-anchor="middle" class="swl" fill="'+col+'">'+esc(t)+'</text>'); });
+  var legend=[];
+  if(f.bos&&!small){ var use=-1;
+    for(var q4=C.length-1;q4>0;q4--){ if((C[q4][3]-f.bos.v)*(C[q4-1][3]-f.bos.v)<0){ use=q4; break; } }
+    if(use>=0){ var bx=xs[use], by=y(f.bos.v);
+      o.push('<path d="M'+bx+' '+(by-7)+' L'+(bx+7)+' '+by+' L'+bx+' '+(by+7)+' L'+(bx-7)+' '+by+' Z" fill="'+GOLD+'" stroke="#06211a" stroke-width="1.2"/>');
+      legend.push('<li class="bos"><span>◆</span>'+esc(f.bos.t)+': candle closes past the level</li>'); } }
+  if(hasN&&!small){
+    var pts=notes.map(function(nt,ix){
+      var c=C[nt.i], v;
+      switch(nt.on){case "o":v=c[0];break;case "c":v=c[3];break;case "h":v=c[1];break;case "l":v=c[2];break;
+        case "body":v=(c[0]+c[3])/2;break;case "uw":v=(c[1]+Math.max(c[0],c[3]))/2;break;case "lw":v=(c[2]+Math.min(c[0],c[3]))/2;break;default:v=c[3];}
+      var wick=(nt.on==="h"||nt.on==="l"||nt.on==="uw"||nt.on==="lw");
+      return {ax:xs[nt.i]+(wick?1:bw/2),ay:y(v),ly:y(v),bx:xs[nt.i]+bw/2+16,t:nt.t,num:ix+1};
+    });
+    var byY=pts.slice().sort(function(a,b){return a.ly-b.ly;});
+    for(var k=1;k<byY.length;k++){ if(Math.abs(byY[k].bx-byY[k-1].bx)<20&&byY[k].ly-byY[k-1].ly<18) byY[k].ly=byY[k-1].ly+18; }
+    pts.forEach(function(p){
+      p.ly=Math.max(top+8,Math.min(H-bottom-6,p.ly));
+      o.push('<path d="M'+(p.ax+2)+' '+p.ay+' L'+(p.bx-8)+' '+p.ly+'" stroke="rgba(234,245,241,.45)" stroke-width="1" fill="none"/>');
+      o.push('<circle cx="'+p.bx+'" cy="'+p.ly+'" r="8" fill="#eaf5f1"/><text x="'+p.bx+'" y="'+(p.ly+3.6)+'" class="nb" text-anchor="middle">'+p.num+'</text>');
+      legend.push('<li><span>'+p.num+'</span>'+esc(p.t)+'</li>');
+    });
+  }
+  if(f.vw&&!small) legend.push('<li class="vwl"><span></span>VWAP</li>');
+  if(lv.length&&!small) lv.forEach(function(l){ legend.push('<li class="lvl"><span></span>'+esc(l.t)+'</li>'); });
+  o.push('</svg>');
+  return o.join("")+(legend.length?'<ol class="leg">'+legend.join("")+'</ol>':"");
+}
+
+/* ---------- drawn screen mockups (generic, not copies of any app) ---------- */
+function mockHTML(m){
+  var H=function(cond,cls){return cond?' '+cls:'';};
+  if(m.k==="stack") return '<div class="mk mstack">'+m.items.map(function(r){return '<div class="mcard"><small>'+esc(r[0])+'</small><b>'+esc(r[1])+'</b><span>'+esc(r[2])+'</span></div>';}).join("")+'</div>';
+  if(m.k==="list") return '<ul class="mk mlist">'+m.items.map(function(r){return '<li><i aria-hidden="true">✓</i><span>'+esc(r)+'</span></li>';}).join("")+'</ul>';
+  if(m.k==="chart"){
+    var tfs=["1m","3m","5m","15m","1H","4H"], f={g:{p:[4100,4126,4112,4140,4124,4152],n:2}};
+    if(m.lv) f.lv=[{v:4141.82,t:"Yesterday's high"},{v:4112,t:"Higher low"}];
+    if(m.fib){ f.lv=[{v:4120,t:"0.5"},{v:4115.28,t:"0.618"}]; f.zone={a:4120,b:4115.28}; f.g={p:[4100,4140,4117,4150],n:3}; }
+    if(m.vw){ f.c=[[4110,4116,4109,4115],[4115,4121,4114,4120],[4120,4122,4114,4116],[4116,4118,4113,4117],[4117,4125,4116,4124],[4124,4130,4123,4129],[4129,4130,4120,4122],[4122,4124,4119,4123],[4123,4134,4122,4133]]; f.vw=[4110,4113,4115,4115.5,4117,4119,4120,4120.5,4122]; }
+    var tools=[["cursor","↖"],["trend","╱"],["draw","—"],["fib","𝐅"],["rect","▭"],["text","T"]];
+    return '<div class="mk mchart">'+
+      '<div class="mtop"><span class="mchip'+H(m.hl==="sym","hot")+'">'+esc(m.sym||"XAUUSD")+'</span>'+
+        '<span class="mtfs'+H(m.hl==="tf","hot")+'">'+tfs.map(function(t){return '<i class="'+(t===m.tf?'on':'')+'">'+t+'</i>';}).join("")+'</span>'+
+        '<span class="mchip'+H(m.hl==="ind","hot")+'">ƒx Indicators</span><span class="mchip ico'+H(m.hl==="alert","hot")+'" title="Alert">⏰</span>'+
+        '<span class="mchip'+H(m.hl==="layout","hot")+'">Layout ▾</span></div>'+
+      '<div class="mbody"><div class="mleft">'+tools.map(function(t){var on=(m.hl==="draw"&&t[0]==="draw")||(m.hl==="fib"&&t[0]==="fib");return '<i class="'+(on?'hot':'')+'">'+t[1]+'</i>';}).join("")+'</div>'+
+      '<div class="mplot">'+draw(f,{label:"Chart mockup"})+'</div></div>'+
+      (m.cap?'<div class="mcap">'+esc(m.cap)+'</div>':'')+'</div>';
+  }
+  if(m.k==="order"){
+    var fut=!!m.fut, type=m.type||"Market";
+    var row=function(lab,val,key,unit){return '<div class="frow'+H(m.hl===key||(m.hl==="sltp"&&(key==="sl"||key==="tp")),"hot")+'"><label>'+lab+'</label><span class="fval">'+esc(val)+'</span>'+(unit?'<span class="funit">'+unit+'</span>':'')+'</div>';};
+    return '<div class="mk morder'+H(m.hl==="panel","hotbox")+'">'+
+      '<div class="ohead"><b>'+(fut?"MGCZ26":"XAUUSD")+'</b><span>'+(fut?"Micro gold futures":"Gold vs US dollar")+'</span></div>'+
+      '<div class="obtns"><span class="osell">SELL<small>4,145.80</small></span><span class="obuy">BUY<small>4,146.10</small></span></div>'+
+      '<div class="otabs'+H(m.hl==="type","hot")+'">'+["Market","Limit","Stop"].map(function(t){return '<i class="'+(t===type?'on':'')+'">'+t+'</i>';}).join("")+'</div>'+
+      (type!=="Market"?row("Price",m.price||"4,138.00","price"):"")+
+      row(fut?"Quantity":"Lots",m.lots||(fut?"2":"0.10"),"lots",fut?"contracts":"lots")+
+      (fut?'<div class="frow'+H(m.hl==="atm","hot")+'"><label>ATM</label><span class="fval">'+(m.atm?"FTA 3R":"OFF")+'</span><span class="funit">▾</span></div>':
+        row("Stop loss",m.sl||"—","sl",'<em>$</em><em>ticks</em><em>%</em><em class="on">price</em>')+row("Take profit",m.tp||"—","tp",'<em class="on">price</em>'))+
+      (m.risk?'<div class="orisk">Risk at stop: <b>'+esc(m.risk)+'</b></div>':'')+
+      '<div class="ogo">'+(type==="Market"?"Place market order":"Place "+type.toLowerCase()+" order")+'</div>'+
+      (m.cap?'<div class="mcap">'+esc(m.cap)+'</div>':'')+'</div>';
+  }
+  if(m.k==="cal"){
+    var rows=[["8:30","USD","red","Core CPI m/m","0.4%","0.2%","0.3%"],["8:30","USD","red","CPI y/y","3.1%","2.9%","2.9%"],["10:00","USD","orange","CB Consumer Confidence","","99.5","98.7"],["10:30","USD","yellow","Crude Oil Inventories","","-1.2M","2.4M"],["4:30","EUR","orange","German Prelim CPI","","0.2%","0.1%"]];
+    if(m.filtered) rows=rows.filter(function(r){return r[1]==="USD"&&r[2]!=="yellow";});
+    return '<div class="mk mcal">'+
+      '<div class="ctop"><span class="mchip'+H(m.tz,"hot")+'">Time zone: Eastern (UTC−4)</span><span class="mchip'+H(m.filtered,"hot")+'">⚲ Filter'+(m.filtered?': USD · high + medium':'')+'</span></div>'+
+      '<div class="ctable"><div class="crow chead"><span>ET</span><span>Cur</span><span>Imp</span><span>Event</span><span class="'+(m.actual?'hotc':'')+'">Actual</span><span class="'+(m.actual?'hotc':'')+'">Fcst</span><span>Prev</span></div>'+
+      rows.map(function(r){return '<div class="crow"><span>'+r[0]+'</span><span>'+r[1]+'</span><span><i class="fold '+r[2]+'"></i></span><span class="cev">'+esc(r[3])+'</span><span class="'+(m.actual&&r[4]?'hotc':'')+'">'+r[4]+'</span><span class="'+(m.actual&&r[4]?'hotc':'')+'">'+r[5]+'</span><span>'+r[6]+'</span></div>';}).join("")+
+      '</div><div class="mcap">'+esc(m.cap||"")+'</div></div>';
+  }
+  if(m.k==="foot"){
+    var prices=[4142,4141,4140,4139,4138,4137], A=[[40,120],[85,210],[150,180],[120,340],[460,90],[0,0]], B=[[30,95],[35,110],[40,130],[200,260],[440,70],[0,0]];
+    var cell=function(b,a,p,j){
+      if(!b&&!a) return '<span class="fc empty"></span>';
+      var cls="fc", d=a-b;
+      if(m.imb&&a>=3*b&&b>0) cls+=" imbB";
+      if(m.absorb&&p===4138) cls+=" absorb";
+      var txt=m.mode==="delta"?'<b class="'+(d>=0?'pos':'neg')+'">'+(d>0?'+':'')+d+'</b>':b+' × '+a;
+      return '<span class="'+cls+'">'+txt+'</span>';
+    };
+    return '<div class="mk mfoot"><div class="fhead"><span>Price</span><span>9:40 (5m)</span><span>9:45 (5m)</span></div>'+
+      prices.map(function(p,i){return '<div class="frw"><span class="fp">'+fmt(p)+'.0</span>'+cell(A[i][0],A[i][1],p)+cell(B[i][0],B[i][1],p)+'</div>';}).join("")+
+      '<div class="flegend">'+(m.mode==="delta"?'Delta = buys at ask − sells at bid':'Each cell: sold at bid × bought at ask')+'</div>'+
+      '<div class="mcap">'+esc(m.cap||"")+'</div></div>';
+  }
+  if(m.k==="dom"){
+    var lad=[[4141.0,0,62],[4140.5,0,48],[4140.0,0,95],[4139.5,0,31],[4139.0,"last",0],[4138.5,44,0],[4138.0,38,0],[4137.5,51,0],[4137.0,210,0]];
+    return '<div class="mk mdom"><div class="drow dh"><span>Bids</span><span>Price</span><span>Asks</span></div>'+
+      lad.map(function(r){return '<div class="drow'+(r[1]==="last"?' last':'')+'"><span class="db">'+(r[1]&&r[1]!=="last"?r[1]:'')+'</span><span class="dp">'+r[0].toFixed(1)+'</span><span class="da">'+(r[2]||'')+'</span></div>';}).join("")+
+      '<div class="mcap">'+esc(m.cap||"")+'</div></div>';
+  }
+  if(m.k==="compare"){
+    var fl=["Futures","Metals","50K","1-step","EOD drawdown","Tradovate"];
+    var hd=["Firm","Drawdown","Max loss","Daily limit","Consistency","News"];
+    var rs=[["Firm A","Trailing","$2,000","None","None","Allowed"],["Firm B","End of day","$2,000","$1,000","40%","Allowed"],["Firm C","Static","$2,500","$1,250","None","Restricted"]];
+    return '<div class="mk mcmp"><div class="ctop'+H(m.hl==="filters","hot")+'">'+fl.map(function(f){return '<span class="mchip">'+esc(f)+'</span>';}).join("")+'</div>'+
+      '<div class="jscroll'+H(m.hl==="rules","hot")+'"><table><thead><tr>'+hd.map(function(c){return '<th>'+c+'</th>';}).join("")+'</tr></thead><tbody>'+
+      rs.map(function(r){return '<tr>'+r.map(function(c){return '<td>'+esc(c)+'</td>';}).join("")+'</tr>';}).join("")+'</tbody></table></div>'+
+      '<div class="mcap">'+esc(m.cap||"Example firms, not real data.")+'</div></div>';
+  }
+  if(m.k==="journal"){
+    var cols=["Date","Setup","A+?","Entry / Stop / Target","R","Rules?"], rows2=[["10/21","Trend pullback","Yes","4,138 / 4,128 / 4,168","+3.0","Yes"],["10/22","Failed breakout","No","4,121 / 4,127 / 4,103","−1.0","No: B-setup"],["10/23","Trend pullback","Yes","4,090 / 4,098 / 4,066","−1.0","Yes"]];
+    return '<div class="mk mjour"><div class="jscroll"><table><thead><tr>'+cols.map(function(c){return '<th>'+c+'</th>';}).join("")+'</tr></thead><tbody>'+
+      rows2.map(function(r){return '<tr>'+r.map(function(c,i){return '<td class="'+(i===4?(c.charAt(0)==="+"?"pos":"neg"):'')+'">'+esc(c)+'</td>';}).join("")+'</tr>';}).join("")+'</tbody></table></div>'+
+      '<div class="mcap">'+esc(m.cap||"")+'</div></div>';
+  }
+  return "";
+}
+
+/* ---------- state ---------- */
+var K="fta.tools.v2", S={passed:{}};
+try{var raw=localStorage.getItem(K); if(raw){var ob=JSON.parse(raw); if(ob&&ob.passed) S.passed=ob.passed;}}catch(e){}
+function save(){try{localStorage.setItem(K,JSON.stringify(S));}catch(e){}}
+function sid(s,k){return s+"."+k;}
+function stageDone(s){return STAGES[s].steps.every(function(_,k){return S.passed[sid(s,k)];});}
+function stageOpen(s){return s===0||stageDone(s-1);}
+function nextStep(){for(var s=0;s<STAGES.length;s++)for(var k=0;k<STAGES[s].steps.length;k++)if(!S.passed[sid(s,k)])return {s:s,k:k};return null;}
+var TOTAL=0; STAGES.forEach(function(st){TOTAL+=st.steps.length;});
+
+var LOCK='<svg class="lock" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>';
+var ARROW='<svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#06211a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+var CHECK='<svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#06211a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function paintPath(){
+  var nx=nextStep(), done=Object.keys(S.passed).length;
+  $("pfill").style.width=(done/TOTAL*100)+"%";
+  $("pnum").textContent=done+" of "+TOTAL+" steps";
+  if(nx){
+    var st=STAGES[nx.s].steps[nx.k];
+    $("cont").innerHTML='<span class="ci"><small>'+(done?'Stage '+(nx.s+1)+' · Step '+(nx.k+1)+' of '+STAGES[nx.s].steps.length:'Step 1 · Stage 1 of '+STAGES.length)+'</small><b>'+esc(st.t)+'</b></span><span class="arrow">'+ARROW+'</span>';
+    $("cont").setAttribute("data-s",nx.s); $("cont").setAttribute("data-k",nx.k); $("cont").hidden=false;
+    $("pathtitle").textContent=done?"Pick up where you left off":"Set up your trading tools step by step";
+  } else { $("cont").hidden=true; $("pathtitle").textContent="Guide complete. Your desk is ready."; }
+  $("stages").innerHTML=STAGES.map(function(st,i){
+    var n=st.steps.filter(function(_,k){return S.passed[sid(i,k)];}).length, open=stageOpen(i), dn=n===st.steps.length, cur=nx&&nx.s===i;
+    return '<li><button type="button" class="stage'+(dn?' done':'')+(cur?' cur':'')+'" data-stage="'+i+'"'+(open?'':' disabled')+'>'+
+      '<span class="snum">'+(dn?'✓':(i+1))+'</span><span class="sinfo"><b>'+esc(st.t)+'</b><span>'+esc(st.mod)+' · '+
+      (open?(dn?'Done · tap to review':n+' of '+st.steps.length+' steps'):'Finish stage '+i+' to unlock')+'</span>'+
+      (open?'<span class="sbar2"><i style="width:'+(n/st.steps.length*100)+'%"></i></span>':'')+'</span>'+(open?'':LOCK)+'</button></li>';
+  }).join("");
+}
+
+/* ---------- walk-through ---------- */
+var W={s:0,k:0,wrong:0};
+function shuffled(n,seed){var a=[];for(var i=0;i<n;i++)a.push(i);var x=seed;for(var j=n-1;j>0;j--){x=(x*9301+49297)%233280;var r=Math.floor(x/233280*(j+1));var t=a[j];a[j]=a[r];a[r]=t;}return a;}
+function vidHTML(key){
+  var keys=Array.isArray(key)?key:(key?[key]:[]), vs=keys.map(function(k){return VIDEOS[k];}).filter(Boolean);
+  if(!vs.length) return '<span class="soon">Sway\'s walkthrough clip for this lesson is coming soon</span>';
+  return vs.map(function(v){ return '<a class="vid" href="'+v.u+'" target="_blank" rel="noopener"><span class="play"><svg viewBox="0 0 12 12"><path d="M3 1.8v8.4L10 6z" fill="#06211a"/></svg></span><span>Watch: '+esc(v.t)+' <small>· '+esc(v.src)+'</small></span></a>'; }).join("");
+}
+/* ---------- Sway's two videos per section (Whop course). Paste each Whop lesson link into r (rundown) or w (walkthrough). ---------- */
+function swayHTML(i,kind){
+  var v=(SWAY[i]||{})[kind], r=kind==="r";
+  var lab=r?"Video 1 · Quick rundown":"Video 2 · Full walkthrough", sub=r?"Sway explains what you'll learn in this section":"Watch Sway do it start to finish";
+  var ico='<span class="play"><svg viewBox="0 0 12 12"><path d="M3 1.8v8.4L10 6z" fill="#1a1405"/></svg></span>';
+  return v?'<a class="sway" href="'+v+'" target="_blank" rel="noopener">'+ico+'<span><b>'+lab+'</b><small>'+sub+'</small></span><span class="sgo">Watch on Whop →</span></a>'
+          :'<div class="sway soonw">'+ico+'<span><b>'+lab+'</b><small>'+sub+' · in the Whop course soon</small></span></div>';
+}
+function openWalk(s,k){W.s=s;W.k=k;W.wrong=0;$("home").hidden=true;$("walk").hidden=false;paintWalk();window.scrollTo({top:0});}
+function closeWalk(){$("walk").hidden=true;$("home").hidden=false;paintPath();window.scrollTo({top:0});}
+function paintWalk(){
+  var stg=STAGES[W.s], st=stg.steps[W.k], id=sid(W.s,W.k), passed=!!S.passed[id], q=st.q;
+  var seed=0; for(var c=0;c<st.t.length;c++) seed+=st.t.charCodeAt(c)*(c+1);
+  var order=shuffled(q[1].length,seed);
+  var dots=stg.steps.map(function(_,i){return '<i class="'+(S.passed[sid(W.s,i)]?'ok':(i===W.k?'now':''))+'"></i>';}).join("");
+  $("walk").innerHTML=
+    '<div class="wtop"><button type="button" class="link" id="wback">← Back to the guide</button><span class="wstage">Stage '+(W.s+1)+' · '+esc(stg.t)+'</span></div>'+
+    '<div class="dots" aria-hidden="true">'+dots+'</div>'+
+    '<span class="wstep">STEP '+(W.k+1)+' OF '+stg.steps.length+'</span>'+
+    '<h2>'+esc(st.t)+'</h2>'+
+    st.p.map(function(p,i){return '<p class="'+(i===0?'def':'para')+'">'+esc(p)+'</p>';}).join("")+
+    '<figure class="figbox mkbox">'+mockHTML(st.m)+'</figure>'+
+    '<div class="box"><div class="blab">Example</div><p>'+esc(st.ex)+'</p></div>'+
+    (W.k===0&&(stg.v||stg.d)?'<div class="row">'+(stg.v?vidHTML(stg.v):'')+(stg.d||[]).map(function(k){var d=DOCS[k];return d?'<a class="doc" href="'+d.u+'" target="_blank" rel="noopener">📄 '+esc(d.t)+'</a>':'';}).join("")+'</div>':'')+
+    '<div class="check"><div class="blab">Quick check</div><p class="cq">'+esc(q[0])+'</p>'+
+      order.map(function(oi,pos){return '<button type="button" class="ans'+(passed&&oi===q[2]?' right':'')+'" data-a="'+oi+'"'+(passed?' disabled':'')+'><span class="k">'+"ABCD"[pos]+'</span>'+esc(q[1][oi])+'</button>';}).join("")+
+      '<p class="fb'+(passed?' ok':'')+'" id="fb">'+(passed?esc(q[3]):'')+'</p></div>'+
+    '<div class="wnav">'+(W.k>0?'<button type="button" class="prev" id="wprev">Back</button>':'')+
+      '<button type="button" class="next" id="wnext"'+(passed?'':' disabled')+'>'+(W.k===stg.steps.length-1?'Finish stage':'Next step')+' →</button></div>';
+}
+function paintDone(){
+  var nxt=W.s+1<STAGES.length?W.s+1:null;
+  $("walk").innerHTML='<div class="done-card"><span class="big">'+CHECK+'</span><span class="eyebrow">Stage '+(W.s+1)+' complete</span><h2>'+esc(STAGES[W.s].t)+'</h2>'+
+    '<p>'+(nxt===null?'That\'s the whole guide. Your toolkit is set up. Now use it the same way every day.':'Next up: '+esc(STAGES[nxt].t)+'.')+'</p>'+
+    (nxt!==null?'<button type="button" class="next" id="wnextstage" style="margin:6px auto 0">Start stage '+(nxt+1)+' →</button>':'')+
+    '<button type="button" class="link" id="wback">Back to the guide</button></div>';
+}
+$("walk").addEventListener("click",function(e){
+  var t=e.target.closest("button"); if(!t) return;
+  if(t.id==="wback"){closeWalk();return;}
+  if(t.id==="wprev"){W.k--;W.wrong=0;paintWalk();window.scrollTo({top:0});return;}
+  if(t.id==="wnext"){ if(W.k<STAGES[W.s].steps.length-1){W.k++;W.wrong=0;paintWalk();}else paintDone(); window.scrollTo({top:0}); return; }
+  if(t.id==="wnextstage"){openWalk(W.s+1,0);return;}
+  if(t.classList.contains("ans")){
+    var q=STAGES[W.s].steps[W.k].q, a=+t.getAttribute("data-a"), fb=$("fb");
+    if(a===q[2]){
+      Array.prototype.forEach.call($("walk").querySelectorAll(".ans"),function(b){b.disabled=true;});
+      t.classList.add("right"); fb.className="fb ok"; fb.textContent="Right. "+q[3];
+      S.passed[sid(W.s,W.k)]=1; save(); $("wnext").disabled=false;
+      var d=$("walk").querySelectorAll(".dots i"); if(d[W.k]) d[W.k].className="ok";
+    } else {
+      W.wrong++; t.classList.add("wrong"); t.disabled=true; fb.className="fb no";
+      fb.textContent=W.wrong>1?"Not quite. Look at the screen drawing again and reread the first paragraph.":"Not quite. Try again.";
+    }
+  }
+});
+$("cont").addEventListener("click",function(){openWalk(+this.getAttribute("data-s"),+this.getAttribute("data-k"));});
+$("stages").addEventListener("click",function(e){
+  var b=e.target.closest(".stage"); if(!b||b.disabled) return;
+  var i=+b.getAttribute("data-stage"), k=0;
+  for(var j=0;j<STAGES[i].steps.length;j++){ if(!S.passed[sid(i,j)]){k=j;break;} }
+  openWalk(i,k);
+});
+
+$("count").textContent=TOTAL+" steps · "+STAGES.length+" tools";
+paintPath();
+
+/* ---------- deep link: #stage-N opens that stage (used by the Whop lessons) ---------- */
+function stageFromHash(){var m=/^#stage-(\d+)$/.exec(location.hash||"");if(!m)return -1;var i=+m[1]-1;return (i>=0&&i<STAGES.length)?i:-1;}
+function openStageHash(){var i=stageFromHash();if(i<0)return;var k=0;for(var j=0;j<STAGES[i].steps.length;j++){if(!S.passed[sid(i,j)]){k=j;break;}}openWalk(i,k);}
+openStageHash();window.addEventListener("hashchange",openStageHash);
+})();
+
+</script>
+
+</body></html>

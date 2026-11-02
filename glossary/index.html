@@ -1,0 +1,1278 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>FTA Glossary</title></head><body>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* One-column reference tool. Setup → search → start-here → term accordions → suggest.
+   FTA brand = the FLOW STACK desk: deep green, mint light, beams running through it. */
+:root{
+  color-scheme:dark;
+  --bg:#081d19; --panel:#0c2722; --panel2:#0f2e28; --card:rgba(255,255,255,.04); --card2:rgba(255,255,255,.065);
+  --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.17);
+  --fg:#eaf5f1; --muted:#8fb8ac; --dim:#628f82;
+  --mint:#3fdc9a; --mintdim:rgba(63,220,154,.14); --mintglow:rgba(63,220,154,.35);
+  --gold:#e8c468; --golddim:rgba(232,196,104,.13);
+  --coral:#f0736b;
+  --sans:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:17px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 72px;
+  position:relative;min-height:100vh}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:var(--mint)}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--mint);outline-offset:2px;border-radius:8px}
+
+/* ---------- background: glow, dot grid, light streaks ---------- */
+.fx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.fx .glow{position:absolute;inset:0;background:radial-gradient(900px 520px at 50% -6%,#13402f 0%,transparent 64%),radial-gradient(700px 500px at 100% 100%,rgba(63,220,154,.06),transparent 70%)}
+.fx .grid{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.055) 1px,transparent 1.2px);background-size:24px 24px;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.35) 60%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.35) 60%,transparent 100%)}
+.fx .track{position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,rgba(63,220,154,.07) 20%,rgba(63,220,154,.07) 80%,transparent)}
+.fx .track i{position:absolute;left:-1px;width:3px;height:200px;top:-220px;border-radius:3px;
+  background:linear-gradient(to bottom,transparent,rgba(63,220,154,.15) 30%,var(--mint) 85%,#fff 100%);
+  box-shadow:0 0 12px var(--mint),0 0 26px var(--mintglow);animation:fall var(--d,7s) linear infinite;animation-delay:var(--w,0s)}
+@keyframes fall{from{transform:translateY(0)}to{transform:translateY(calc(100vh + 440px))}}
+.wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+
+/* ---------- beams (FLOW STACK) ---------- */
+@property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes spin{to{--ang:360deg}}
+@keyframes breathe{0%,100%{box-shadow:0 0 0 1px rgba(63,220,154,.05),0 0 22px -6px var(--mintglow)}50%{box-shadow:0 0 0 1px rgba(63,220,154,.08),0 0 38px -4px var(--mintglow)}}
+.beam{border:1.5px solid transparent;
+  background:linear-gradient(var(--panel),var(--panel)) padding-box,
+    conic-gradient(from var(--ang),rgba(63,220,154,.16) 0 58%,var(--mint) 76%,#ffffff 80%,var(--mint) 84%,rgba(63,220,154,.16) 97%) border-box;
+  animation:spin 4.2s linear infinite,breathe 3.4s ease-in-out infinite;animation-delay:var(--delay,0s)}
+.beam.gold{background:linear-gradient(var(--panel),var(--panel)) padding-box,
+    conic-gradient(from var(--ang),rgba(232,196,104,.16) 0 58%,var(--gold) 76%,#fff 80%,var(--gold) 84%,rgba(232,196,104,.16) 97%) border-box}
+.rail{height:2px;border-radius:2px;background:linear-gradient(90deg,transparent 0%,rgba(63,220,154,.12) 20%,rgba(63,220,154,.12) 80%,transparent 100%);position:relative;overflow:hidden}
+.rail::after{content:"";position:absolute;top:0;bottom:0;width:22%;left:-22%;background:linear-gradient(90deg,transparent,var(--mint),#fff,var(--mint),transparent);
+  box-shadow:0 0 14px var(--mint);animation:run 3.6s cubic-bezier(.6,0,.4,1) infinite}
+@keyframes run{to{left:100%}}
+
+/* ---------- header ---------- */
+.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.mark{width:44px;height:44px;border-radius:13px;background:var(--mint);display:grid;place-items:center;flex:none;box-shadow:0 0 0 4px rgba(63,220,154,.12),0 0 28px var(--mintglow)}
+.mark svg{width:22px;height:22px}
+.brand{font-weight:800;font-size:25px;letter-spacing:-.025em;line-height:1.1}
+.brand span{color:var(--mint);text-shadow:0 0 22px var(--mintglow)}
+.brand small{display:block;font-size:13.5px;font-weight:600;color:var(--muted);letter-spacing:.02em;margin-top:3px}
+.count{margin-left:auto;font-family:var(--mono);font-size:13px;color:var(--mint);border:1px solid rgba(63,220,154,.35);border-radius:999px;padding:5px 12px;background:var(--mintdim)}
+
+/* ---------- setup ---------- */
+.setup{border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:22px}
+.setup h1{margin:0;font-size:clamp(27px,6vw,36px);font-weight:800;letter-spacing:-.03em;line-height:1.15;text-wrap:balance}
+.setup h1 em{font-style:normal;color:var(--mint);text-shadow:0 0 24px var(--mintglow)}
+.setup p{margin:0;color:var(--muted);max-width:58ch;font-size:17px}
+.q{display:flex;flex-direction:column;gap:10px}
+.qlab{font-size:12.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mint)}
+.opts{display:flex;flex-wrap:wrap;gap:10px}
+.opt{appearance:none;cursor:pointer;border:1px solid var(--line2);background:var(--card);color:var(--fg);border-radius:16px;padding:14px 18px;text-align:left;min-width:160px;flex:1 1 160px;transition:border-color .15s,background .15s,box-shadow .15s}
+.opt b{display:block;font-size:18px}
+.opt i{display:block;font-style:normal;font-size:14px;color:var(--muted);margin-top:3px}
+.opt:hover{border-color:rgba(63,220,154,.5)}
+.opt[aria-pressed="true"]{background:var(--mintdim);border-color:var(--mint);box-shadow:0 0 22px -6px var(--mintglow)}
+.opt[aria-pressed="true"] b{color:var(--mint)}
+.go{appearance:none;border:0;cursor:pointer;background:var(--mint);color:#06211a;font-weight:800;font-size:17px;padding:14px 26px;border-radius:999px;align-self:flex-start;box-shadow:0 0 26px -4px var(--mintglow)}
+.go:disabled{opacity:.35;cursor:default;box-shadow:none}
+
+/* ---------- profile, search ---------- */
+.profile{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:15px;color:var(--muted)}
+.pchip{font-weight:700;color:var(--fg);background:var(--card2);border:1px solid var(--line2);border-radius:999px;padding:5px 13px}
+.link{appearance:none;background:none;border:0;color:var(--mint);cursor:pointer;font-size:15px;font-weight:700;padding:4px 2px}
+.searchbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;padding-block:10px;display:flex;flex-direction:column;gap:12px;
+  background:var(--bg);box-shadow:0 14px 18px -6px var(--bg)}
+.search{display:flex;align-items:center;gap:12px;border-radius:16px;padding:0 16px}
+.search svg{width:20px;height:20px;color:var(--mint);flex:none}
+.search input{flex:1;min-width:0;background:transparent;border:0;color:var(--fg);font:inherit;font-size:18px;padding:15px 0}
+.search input::placeholder{color:var(--dim)}
+.search input:focus{outline:none}
+.cats{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.cats::-webkit-scrollbar{display:none}
+.cat{appearance:none;cursor:pointer;white-space:nowrap;border:1px solid var(--line2);background:rgba(8,29,25,.7);color:var(--muted);border-radius:999px;padding:8px 15px;font-size:14.5px;font-weight:600}
+.cat[aria-pressed="true"]{background:var(--mintdim);color:var(--mint);border-color:var(--mint);box-shadow:0 0 16px -4px var(--mintglow)}
+.prog{display:flex;align-items:center;gap:12px}
+.pbar{flex:1;height:7px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
+.pbar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#1fa673,var(--mint),#b9ffe0);border-radius:999px;box-shadow:0 0 12px var(--mint);transition:width .5s}
+.pnum{font-family:var(--mono);font-size:13.5px;color:var(--muted);white-space:nowrap}
+
+/* ---------- start here ---------- */
+.start{border-radius:20px;padding:20px;--delay:-1.4s}
+/* ---------- path + walk-through ---------- */
+.browse{display:flex;flex-direction:column;gap:20px}
+.path{border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:16px;--delay:-1.4s}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mint)}
+.path h2{margin:0;font-size:clamp(24px,5.5vw,30px);font-weight:800;letter-spacing:-.025em;line-height:1.2;text-wrap:balance}
+.path .sub{margin:0;color:var(--muted);font-size:16px}
+.cont{appearance:none;cursor:pointer;text-align:left;display:flex;align-items:center;gap:14px;width:100%;border:1px solid var(--mint);background:linear-gradient(135deg,rgba(63,220,154,.22),rgba(63,220,154,.07));color:var(--fg);border-radius:18px;padding:16px 18px;box-shadow:0 0 30px -8px var(--mintglow)}
+.cont .ci{flex:1;min-width:0}
+.cont small{display:block;font-size:13.5px;color:var(--mint);font-weight:700;letter-spacing:.04em}
+.cont b{display:block;font-size:20px;font-weight:800;letter-spacing:-.015em;margin-top:2px}
+.cont .arrow{width:44px;height:44px;border-radius:50%;background:var(--mint);display:grid;place-items:center;flex:none;box-shadow:0 0 18px var(--mintglow)}
+.cont .arrow svg{width:20px;height:20px}
+.stages{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.stage{appearance:none;width:100%;text-align:left;cursor:pointer;display:flex;align-items:center;gap:14px;border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--fg);border-radius:15px;padding:12px 14px}
+.stage:hover:not(:disabled){border-color:rgba(63,220,154,.5)}
+.stage:disabled{cursor:default;opacity:.55}
+.snum{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:14px;background:rgba(255,255,255,.07);color:var(--muted);border:1px solid var(--line2)}
+.stage.done .snum{background:var(--mint);color:#06211a;border-color:var(--mint);box-shadow:0 0 12px var(--mintglow)}
+.stage.cur .snum{border-color:var(--mint);color:var(--mint);box-shadow:0 0 0 3px var(--mintdim)}
+.sinfo{flex:1;min-width:0}
+.sinfo b{display:block;font-size:17px;font-weight:700}
+.sinfo span{display:block;font-size:13.5px;color:var(--muted)}
+.sbar2{height:4px;border-radius:4px;background:rgba(255,255,255,.08);margin-top:6px;overflow:hidden}
+.sbar2 i{display:block;height:100%;background:var(--mint);box-shadow:0 0 8px var(--mint)}
+.lock{width:18px;height:18px;color:var(--dim);flex:none}
+.divider{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;margin:8px 2px 2px}
+.divider::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(232,196,104,.4),transparent)}
+.lookup{margin:6px 0 0;font-size:20px;font-weight:800;letter-spacing:-.015em}
+.lookup span{display:block;font-size:14.5px;font-weight:500;color:var(--muted);letter-spacing:0;margin-top:2px}
+.walk{border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:18px}
+.wtop{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.wtop .link{font-size:15px}
+.wstage{margin-left:auto;font-size:13.5px;color:var(--muted);font-weight:600}
+.dots{display:flex;gap:5px}
+.dots i{flex:1;height:6px;border-radius:6px;background:rgba(255,255,255,.1)}
+.dots i.ok{background:var(--mint);box-shadow:0 0 8px var(--mintglow)}
+.dots i.now{background:rgba(63,220,154,.45)}
+.wstep{font-family:var(--mono);font-size:13.5px;color:var(--mint);letter-spacing:.06em}
+.walk h2{margin:-8px 0 0;font-size:clamp(28px,7vw,38px);font-weight:800;letter-spacing:-.03em;line-height:1.12;text-wrap:balance}
+.check{border:1px solid rgba(232,196,104,.4);border-radius:16px;padding:16px;background:rgba(232,196,104,.05);display:flex;flex-direction:column;gap:10px}
+.check .blab{margin:0}
+.check .cq{margin:0;font-size:18px;font-weight:700;line-height:1.45}
+.ans{appearance:none;cursor:pointer;text-align:left;border:1px solid var(--line2);background:rgba(0,0,0,.2);color:var(--fg);border-radius:13px;padding:13px 15px;font-size:16.5px;font-weight:600;display:flex;gap:10px;align-items:center}
+.ans:hover:not(:disabled){border-color:rgba(232,196,104,.6)}
+.ans:disabled{cursor:default}
+.ans .k{font-family:var(--mono);font-size:13px;color:var(--muted);width:24px;height:24px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;flex:none}
+.ans.right{border-color:var(--mint);background:var(--mintdim);color:var(--mint)}
+.ans.right .k{background:var(--mint);color:#06211a;border-color:var(--mint)}
+.ans.wrong{border-color:rgba(240,115,107,.6);background:rgba(240,115,107,.08);color:var(--coral)}
+.fb{font-size:15.5px;min-height:1.2em;margin:0}
+.fb.ok{color:var(--mint)} .fb.no{color:var(--coral)}
+.wnav{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.next{appearance:none;border:0;cursor:pointer;background:var(--mint);color:#06211a;font-weight:800;font-size:17px;padding:14px 26px;border-radius:999px;box-shadow:0 0 26px -4px var(--mintglow);margin-left:auto}
+.next:disabled{opacity:.3;cursor:default;box-shadow:none}
+.prev{appearance:none;cursor:pointer;background:none;border:1px solid var(--line2);color:var(--fg);border-radius:999px;padding:12px 20px;font-weight:700;font-size:15px}
+.done-card{text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center;padding:12px 4px}
+.done-card .big{width:72px;height:72px;border-radius:50%;background:var(--mint);display:grid;place-items:center;box-shadow:0 0 0 8px var(--mintdim),0 0 40px var(--mintglow)}
+.done-card .big svg{width:34px;height:34px}
+.done-card h2{margin:6px 0 0}
+.done-card p{margin:0;color:var(--muted);max-width:44ch}
+.shead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.shead b{font-size:19px;font-weight:800}
+.shead span{font-size:14.5px;color:var(--muted)}
+.steps{display:flex;flex-wrap:wrap;gap:9px;margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s}
+.step{appearance:none;cursor:pointer;display:flex;align-items:center;gap:9px;border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--fg);border-radius:999px;padding:7px 15px 7px 7px;font-size:15px;font-weight:600}
+.step:hover{border-color:rgba(63,220,154,.5)}
+.step::before{content:counter(s);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.step.done::before{content:"\2713";background:var(--mint);color:#06211a;box-shadow:0 0 10px var(--mintglow)}
+
+/* ---------- list ---------- */
+.group{display:flex;flex-direction:column;gap:10px}
+.ghead{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mint);margin:14px 2px 2px}
+.ghead::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(63,220,154,.35),transparent)}
+details.term{border:1.5px solid var(--line);border-radius:16px;background:rgba(12,39,34,.72);transition:border-color .15s;scroll-margin-top:170px}
+details.term:hover{border-color:rgba(63,220,154,.3)}
+details.term[open]{border-color:transparent;
+  background:linear-gradient(var(--panel),var(--panel)) padding-box,
+    conic-gradient(from var(--ang),rgba(63,220,154,.18) 0 58%,var(--mint) 76%,#fff 80%,var(--mint) 84%,rgba(63,220,154,.18) 97%) border-box;
+  animation:spin 4.2s linear infinite,breathe 3.4s ease-in-out infinite}
+details.term summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:16px 16px}
+details.term summary::-webkit-details-marker{display:none}
+.tname{font-weight:700;font-size:18.5px;min-width:0;letter-spacing:-.01em}
+.tname mark{background:var(--golddim);color:var(--gold);border-radius:3px;padding:0 1px}
+.tags{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
+.tag{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 9px;border:1px solid var(--line2);color:var(--muted);white-space:nowrap}
+.tag.lv{color:var(--mint);border-color:rgba(63,220,154,.35)}
+.tag.cf{color:var(--gold);border-color:rgba(232,196,104,.45)}
+@media (max-width:560px){.tag.mk{display:none}}
+.tick{width:11px;height:11px;border-radius:50%;flex:none;border:1.5px solid var(--dim)}
+.tick.on{background:var(--mint);border-color:var(--mint);box-shadow:0 0 10px var(--mint)}
+.chev{width:18px;height:18px;color:var(--muted);flex:none;transition:transform .2s}
+details.term[open] .chev{transform:rotate(180deg);color:var(--mint)}
+.body{padding:0 16px 18px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.def{margin:0;font-size:20px;font-weight:600;line-height:1.5;max-width:62ch;letter-spacing:-.01em}
+.box{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:rgba(0,0,0,.2);min-width:0}
+.blab{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+.box p{margin:0;max-width:64ch;font-size:16.5px}
+.box p+p{margin-top:9px;padding-top:9px;border-top:1px dashed var(--line)}
+.box p b{color:var(--gold);font-weight:700;font-family:var(--mono);font-size:.88em;letter-spacing:.02em;margin-right:4px}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.cmp{grid-template-columns:1fr}}
+.cmp .box .blab{color:var(--mint)}
+.calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end}
+.calc label{display:flex;flex-direction:column;gap:5px;font-size:13.5px;color:var(--muted);font-weight:600}
+.calc input,.calc select{background:var(--bg);border:1px solid var(--line2);color:var(--fg);border-radius:11px;padding:11px 12px;font:inherit;font-family:var(--mono);font-size:16px;min-width:0;width:100%}
+.calc input:focus,.calc select:focus{outline:none;border-color:var(--mint);box-shadow:0 0 0 3px var(--mintdim)}
+.out{grid-column:1/-1;font-family:var(--mono);font-size:16px;color:var(--mint);background:var(--mintdim);border:1px solid rgba(63,220,154,.3);border-radius:12px;padding:12px 14px;text-shadow:0 0 14px var(--mintglow)}
+.calcbox{border-color:rgba(63,220,154,.25)}
+.calcbox .blab{color:var(--mint)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.vid{display:inline-flex;align-items:center;gap:11px;text-decoration:none;border:1px solid rgba(63,220,154,.5);background:var(--mintdim);color:var(--fg);border-radius:14px;padding:10px 16px 10px 10px;font-weight:600;font-size:15.5px}
+.vid:hover{box-shadow:0 0 20px -4px var(--mintglow)}
+.vid .play{width:30px;height:30px;border-radius:50%;background:var(--mint);display:grid;place-items:center;flex:none;box-shadow:0 0 12px var(--mintglow)}
+.vid .play svg{width:12px;height:12px}
+.vid small{color:var(--muted);font-weight:500}
+.soon{font-size:15px;color:var(--muted);border:1px dashed var(--line2);border-radius:14px;padding:10px 16px}
+.mod{font-size:15px;color:var(--fg);border:1px solid var(--line2);border-radius:14px;padding:10px 16px;background:var(--card)}
+.mod b{color:var(--mint)}
+.rel{display:flex;flex-wrap:wrap;gap:7px;align-items:center;font-size:14px;color:var(--muted)}
+.rel button{appearance:none;cursor:pointer;border:1px solid var(--line2);background:transparent;color:var(--fg);border-radius:999px;padding:5px 12px;font-size:14px;font-weight:600}
+.rel button:hover{border-color:rgba(63,220,154,.5)}
+.rel button.cf{border-color:rgba(232,196,104,.55);color:var(--gold)}
+.learn{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--muted);cursor:pointer;width:fit-content}
+.learn input{width:19px;height:19px;accent-color:var(--mint)}
+.empty{color:var(--muted);text-align:center;padding:28px 12px;border:1px dashed var(--line2);border-radius:16px;font-size:16px}
+.all{appearance:none;cursor:pointer;background:rgba(8,29,25,.7);border:1px solid var(--line2);color:var(--fg);border-radius:999px;padding:10px 18px;font-weight:700;font-size:15px;align-self:center}
+
+.candlelink{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--fg);border-radius:18px;padding:16px 18px;--delay:-2s}
+.cl-ico{width:42px;height:42px;border-radius:12px;background:var(--gold);display:grid;place-items:center;flex:none}
+.cl-ico svg{width:20px;height:20px}
+.cl-txt{flex:1;min-width:0}.cl-txt b{display:block;font-size:18px}.cl-txt span{display:block;font-size:14.5px;color:var(--muted)}
+.cl-go{font-size:22px;color:var(--gold)}
+/* ---------- suggest ---------- */
+.suggest{border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:12px;--delay:-2.6s}
+.suggest b{font-size:20px}
+.suggest p{margin:0;color:var(--muted);font-size:16px}
+.sform{display:flex;gap:10px;flex-wrap:wrap}
+.sform input{flex:1 1 230px;min-width:0;background:var(--bg);border:1px solid var(--line2);color:var(--fg);border-radius:13px;padding:13px 14px;font:inherit;font-size:16.5px}
+.sform input:focus{outline:none;border-color:var(--mint)}
+.sform button{appearance:none;border:0;cursor:pointer;background:var(--mint);color:#06211a;font-weight:800;font-size:16px;border-radius:13px;padding:13px 22px;box-shadow:0 0 22px -6px var(--mintglow)}
+.sform button:disabled{opacity:.45;cursor:default}
+.smsg{font-size:15px;color:var(--mint);min-height:1em}
+.foot{text-align:center;color:var(--dim);font-size:13.5px;max-width:62ch;margin:0 auto}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important}
+  .beam,.walk,details.term[open],.rail::after,.fx .track i{animation:none!important}
+  .fx .track i{display:none}
+}
+
+.sway{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--fg);border:1px solid rgba(244,196,88,.55);background:linear-gradient(135deg,rgba(244,196,88,.14),rgba(244,196,88,.04));border-radius:16px;padding:12px 14px;margin:14px 0}
+.sway .play{width:34px;height:34px;border-radius:50%;background:var(--gold);display:grid;place-items:center;flex:none;box-shadow:0 0 14px rgba(244,196,88,.45)}
+.sway .play svg{width:13px;height:13px}
+.sway>span:nth-child(2){display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.sway b{font-size:15.5px}.sway small{color:var(--muted);font-size:13.5px}
+.sway .sgo{color:var(--gold);font-weight:700;font-size:14px;white-space:nowrap}
+.sway.soonw{border-style:dashed;opacity:.85}.sway.soonw .play{background:var(--line2);box-shadow:none}
+</style>
+
+<div class="fx" aria-hidden="true">
+  <div class="glow"></div><div class="grid"></div>
+  <span class="track" style="left:7%"><i style="--d:8.5s;--w:-1s"></i></span>
+  <span class="track" style="left:23%"><i style="--d:11s;--w:-6s"></i></span>
+  <span class="track" style="left:41%"><i style="--d:9.5s;--w:-3.5s"></i></span>
+  <span class="track" style="left:62%"><i style="--d:12s;--w:-8s"></i></span>
+  <span class="track" style="left:80%"><i style="--d:7.5s;--w:-2.5s"></i></span>
+  <span class="track" style="left:94%"><i style="--d:10.5s;--w:-5s"></i></span>
+</div>
+
+<div class="wrap">
+  <header class="top">
+    <span class="mark" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M2 11.5 5.5 6l3 3.5L13 3" stroke="#06211a" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="brand">FTA <span>Glossary</span><small>Flow Trading Academy</small></span>
+    <span class="count" id="count"></span>
+  </header>
+  <div class="rail" aria-hidden="true"></div>
+
+  <section class="setup beam" id="setup" hidden>
+    <h1>Understand any trading term in <em>30 seconds.</em></h1>
+    <p>Answer two quick questions and we'll build your step-by-step path, starting with the very first thing you need to know. Search always covers everything.</p>
+    <div class="q">
+      <span class="qlab" id="q1">1 · What do you trade?</span>
+      <div class="opts" role="group" aria-labelledby="q1" id="mkt">
+        <button type="button" class="opt" data-v="fx" aria-pressed="false"><b>Forex</b><i>EURUSD, the majors, XAUUSD · lots and pips</i></button>
+        <button type="button" class="opt" data-v="fut" aria-pressed="false"><b>Futures</b><i>Gold, ES, NQ · contracts and ticks</i></button>
+        <button type="button" class="opt" data-v="both" aria-pressed="false"><b>Both</b><i>Still deciding, or switching over</i></button>
+      </div>
+    </div>
+    <div class="q">
+      <span class="qlab" id="q2">2 · What's your level?</span>
+      <div class="opts" role="group" aria-labelledby="q2" id="lvl">
+        <button type="button" class="opt" data-v="B" aria-pressed="false"><b>Beginner</b><i>New, or still learning the basics</i></button>
+        <button type="button" class="opt" data-v="I" aria-pressed="false"><b>Intermediate</b><i>Already trading, want the full picture</i></button>
+      </div>
+    </div>
+    <button type="button" class="go" id="go" disabled>Build my path</button>
+  </section>
+
+  <div id="main" hidden>
+    <div class="wrap">
+      <div class="profile">Showing <span class="pchip" id="pm"></span><span class="pchip" id="pl"></span><button type="button" class="link" id="change">Change</button></div>
+
+      <section class="walk beam" id="walk" hidden aria-live="polite"></section>
+
+      <div class="browse" id="browse">
+      <section class="path beam" id="start">
+        <span class="eyebrow">Start here</span>
+        <h2 id="pathtitle">Your step-by-step path</h2>
+        <p class="sub">One question at a time. Read it, answer the quick check, and the next step unlocks.</p>
+        <button type="button" class="cont" id="cont"></button>
+        <ol class="stages" id="stages"></ol>
+      </section>
+
+      <a class="candlelink beam gold" href="../candles/" target="_blank" rel="noopener"><span class="cl-ico" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M5 2v12M11 3v10" stroke="#06211a" stroke-width="1.6" stroke-linecap="round"/><rect x="3" y="5" width="4" height="5" rx="1" fill="#06211a"/><rect x="9" y="6" width="4" height="4" rx="1" fill="none" stroke="#06211a" stroke-width="1.4"/></svg></span><span class="cl-txt"><b>Learn candles here</b><span>Everything about candlesticks lives in the FTA Candle Guide.</span></span><span class="cl-go">→</span></a>
+      <a class="candlelink beam" href="../structure/" target="_blank" rel="noopener" style="--delay:-3s"><span class="cl-ico" aria-hidden="true" style="background:var(--mint)"><svg viewBox="0 0 16 16" fill="none"><path d="M1.5 12.5 5 7l3 3 3.5-6 3 4" stroke="#06211a" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="cl-txt"><b>Learn market structure here</b><span>Swings, trends, breaks, key levels and A+ setups live in the FTA Structure Guide.</span></span><span class="cl-go" style="color:var(--mint)">→</span></a>
+      <a class="candlelink beam gold" href="../tools/" target="_blank" rel="noopener" style="--delay:-1s"><span class="cl-ico" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M9.8 2.2a3.4 3.4 0 0 0-3.9 4.5L2.3 10.3a1.3 1.3 0 0 0 1.9 1.9l3.6-3.6a3.4 3.4 0 0 0 4.5-3.9L10.4 6.6 8.9 6.1 8.4 4.6Z" fill="#06211a"/></svg></span><span class="cl-txt"><b>Set up your trading tools</b><span>TradingView, Forex Factory, Prop Firm Match, Tradovate, TradeLocker and TradeZella.</span></span><span class="cl-go">→</span></a>
+
+      <h2 class="lookup">Look up any term<span>Search or browse all the terms. Everything here is open.</span></h2>
+
+      <div class="searchbar">
+        <label class="search beam" for="q" style="--delay:-.8s">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <input id="q" type="search" placeholder="Search: pip, eval, drawdown…" autocomplete="off" aria-label="Search the glossary">
+        </label>
+        <div class="cats" id="cats" role="group" aria-label="Categories"></div>
+        <div class="prog"><span class="pbar"><span id="pfill"></span></span><span class="pnum" id="pnum"></span></div>
+      </div>
+
+      <div id="list"></div>
+      <button type="button" class="all" id="showall" hidden>Show every term</button>
+
+      <section class="suggest beam gold">
+        <b>Missing a term?</b>
+        <p>Tell Sway what confused you, and it gets added to the glossary.</p>
+        <form class="sform" id="sform">
+          <input id="sterm" maxlength="120" placeholder="e.g. What's a fair value gap?" aria-label="Term to suggest">
+          <button type="submit" id="sbtn">Suggest</button>
+        </form>
+        <span class="smsg" id="smsg" role="status"></span>
+      </section>
+
+      </div>
+      <p class="foot">Prices in the examples are for illustration only. This course counts 1 gold pip as $0.10, but some brokers count it differently, so check yours. Futures contract specs come from CME Group.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+var C="https://www.cmegroup.com/education/courses/introduction-to-futures/";
+var T="https://www.cmegroup.com/education/courses/things-to-know-before-trading-cme-futures/";
+var MGC="https://www.cmegroup.com/education/courses/understanding-micro-futures-contracts-at-cme-group/micro-gold-and-silver-futures/micro-gold-and-micro-silver-futures-product-overview.html";
+function yt(id,title){return {k:"yt",u:"https://www.youtube.com/watch?v="+id,t:title};}
+function cme(slug,title,base){return {k:"cme",u:(base||C)+slug,t:title};}
+var OWN={k:"own"};
+
+var CATS=[
+ {k:"basics",n:"Market basics"},{k:"price",n:"Price & movement"},{k:"size",n:"Position size"},
+ {k:"risk",n:"Money & risk"},{k:"orders",n:"Orders"},{k:"charts",n:"Charts & structure"},
+ {k:"prop",n:"Prop firms"},{k:"slang",n:"Slang & mindset"}
+];
+
+/* lv: B beginner, I intermediate · m: fx, fut, both
+   d: one-line definition · ex: examples, "Label|text" · cmp: [forex, futures] · v: video · mod: FTA lesson
+   rel: related ids · cf: commonly confused with · calc: pip | tick | size | rr (+ cd: default instrument) */
+var TERMS=[
+/* ---------- market basics ---------- */
+{id:"forex",n:"Forex",aka:["fx","foreign exchange","currency market"],c:"basics",lv:"B",m:"fx",
+ d:"The market where currencies are traded against each other, 24 hours a day, five days a week.",
+ ex:["EURUSD|At 1.0850, one euro costs 1.0850 US dollars. If you think the euro will strengthen, you buy EURUSD.","Gold|XAUUSD trades on forex platforms the same way: gold (XAU) priced in US dollars (USD)."],
+ v:yt("RK56JhZq1Kw","What is forex?"),rel:["majors","base-quote","pip","lot"]},
+{id:"majors",n:"Major pairs",aka:["majors","major currency pairs","eurusd","gbpusd","usdjpy","usdchf","usdcad","audusd","nzdusd","minors","crosses"],c:"basics",lv:"B",m:"fx",
+ d:"The seven most-traded currency pairs. Each one has the US dollar on one side.",
+ ex:["The 7|EURUSD (euro), GBPUSD (pound, \"cable\"), USDJPY (yen), USDCHF (Swiss franc), USDCAD (Canadian dollar), AUDUSD (Aussie), NZDUSD (kiwi).","Why it matters|Majors have the tightest spreads and the most liquidity. Pairs without the dollar, like EURJPY or GBPJPY, are called crosses."],
+ v:yt("RK56JhZq1Kw","What is forex?"),rel:["forex","base-quote","spread","liquidity"]},
+{id:"futures",n:"Futures contract",aka:["futures","future"],c:"basics",lv:"B",m:"fut",
+ d:"A standardized agreement to buy or sell something at a set price on a future date, traded on an exchange.",
+ ex:["Gold|One GC contract is 100 troy ounces of gold.","Indices|One ES contract tracks the S&P 500 at $50 per index point. Day traders close before expiration and keep only the profit or loss."],
+ v:cme("definition-of-a-futures-contract","Definition of a futures contract"),rel:["index-futures","contract","exchange","expiration"]},
+{id:"index-futures",n:"Index futures (ES and NQ)",aka:["es","nq","mes","mnq","s&p futures","nasdaq futures","e-mini","micro e-mini","indices"],c:"basics",lv:"B",m:"fut",
+ d:"Futures that track a stock index. ES follows the S&P 500 and NQ follows the Nasdaq-100. They're the most-traded contracts at prop firms.",
+ ex:["ES|$50 per point. Tick size 0.25 = $12.50. Micro version MES: $5 per point, $1.25 per tick.","NQ|$20 per point. Tick size 0.25 = $5. Micro version MNQ: $2 per point, $0.50 per tick."],
+ v:cme("learn-about-contract-specifications","Contract specifications"),rel:["micro-mini","tick","point","symbols"]},
+{id:"gold",n:"Spot gold vs gold futures",aka:["xauusd","gc","gold futures","spot gold"],c:"basics",lv:"B",m:"both",
+ d:"XAUUSD is spot gold you trade through a forex broker. GC is the gold futures contract traded on CME's COMEX exchange.",
+ ex:["Gold|They move almost tick for tick, but GC usually trades a little above spot because it includes the cost of holding gold until expiration. The gap shrinks as expiration gets closer."],
+ cmp:["Sized in lots, priced by your broker, no expiration, overnight swap fees.","Sized in contracts, one central exchange price, monthly expirations, no swap."],
+ v:OWN,rel:["forex","futures","lot-vs-contract"]},
+{id:"exchange",n:"Exchange (CME)",aka:["cme","comex","cme group"],c:"basics",lv:"B",m:"fut",
+ d:"A central marketplace where every buyer and seller trades the same contract at the same price. Gold, ES and NQ futures all trade at CME Group.",
+ ex:["Futures|Every ES trade in the world goes through CME, so everyone sees the same price and the same volume. Forex has no single exchange; each broker quotes its own price."],
+ v:cme("definition-of-a-futures-contract","Definition of a futures contract"),rel:["futures","volume","broker"]},
+{id:"broker",n:"Broker",aka:["brokerage"],c:"basics",lv:"B",m:"both",
+ d:"The company that gives you a trading account and passes your orders to the market.",
+ ex:["Forex|A forex broker quotes you its own EURUSD and XAUUSD prices.","Futures|A futures broker routes your ES or GC order to the CME exchange."],
+ v:cme("submitting-a-futures-order","Submitting a futures order",T),rel:["exchange","spread","margin"]},
+{id:"base-quote",n:"Base and quote currency",aka:["base currency","quote currency","currency pair"],c:"basics",lv:"B",m:"fx",
+ d:"In a pair, the first currency is the base and the second is the quote. The price tells you how much of the quote currency buys one unit of the base.",
+ ex:["EURUSD|EUR is the base, USD is the quote. 1.0850 means 1 euro = 1.0850 dollars.","USDJPY|USD is the base, JPY is the quote. 150.00 means 1 dollar = 150 yen. Buying USDJPY means you think the dollar will rise against the yen."],
+ v:OWN,rel:["forex","majors","pip-value"]},
+{id:"long-short",n:"Long and short",aka:["going long","going short","buy","sell","short selling"],c:"basics",lv:"B",m:"both",
+ d:"Long means you buy and profit if price rises. Short means you sell first and profit if price falls.",
+ ex:["Gold|Short gold at 4,150 and buy it back at 4,130, and you make the $20 drop.","EURUSD|Short at 1.0850, buy back at 1.0820, and you make 30 pips."],
+ v:yt("HD2SEMCPLNU","Why do traders go short?"),rel:["bull-bear","stop-loss"]},
+{id:"bull-bear",n:"Bullish and bearish",aka:["bullish","bearish","bulls","bears"],c:"basics",lv:"B",m:"both",
+ d:"Bullish means you expect price to go up. Bearish means you expect it to go down.",
+ ex:["Gold|A weaker dollar and falling interest rates are usually bullish for gold.","Indices|Strong earnings are usually bullish for ES and NQ."],
+ v:yt("HD2SEMCPLNU","Why do traders go short?"),rel:["long-short"]},
+{id:"volatility",n:"Volatility",aka:["vol","volatile"],c:"basics",lv:"I",m:"both",
+ d:"How far and how fast price moves. High volatility means bigger swings in both directions.",
+ ex:["Example|EURUSD might move 10 pips in a quiet hour and 60 pips in the minutes after a big US data release. Gold and NQ do the same on a larger scale."],
+ v:OWN,rel:["news","slippage","sessions"]},
+{id:"liquidity",n:"Liquidity",aka:["liquid","illiquid"],c:"basics",lv:"I",m:"both",
+ d:"How easily you can get in and out at a fair price. More buyers and sellers means tighter spreads and cleaner fills.",
+ ex:["Example|EURUSD and ES are among the most liquid markets in the world. Liquidity is highest when London and New York are both open, and thinnest in the late US afternoon and around holidays."],
+ v:cme("what-is-volume","What is volume"),rel:["volume","spread","sessions","slippage"]},
+
+/* ---------- price & movement ---------- */
+{id:"pip",n:"Pip",aka:["pips","percentage in point"],c:"price",lv:"B",m:"fx",cf:"tick",calc:"pip",cd:"EURUSD",
+ d:"The standard unit forex traders use to measure a price move. On most pairs it's the 4th decimal (0.0001). On yen pairs it's the 2nd decimal (0.01).",
+ ex:["EURUSD|1.0850 → 1.0875 is 25 pips.","USDJPY|150.20 → 150.50 is 30 pips.","Gold|This course counts 1 pip = $0.10. 4,150.00 → 4,155.00 is a $5 move, or 50 pips."],
+ v:yt("r9rrx0nDhvQ","What is a pip?"),rel:["pip-value","pipette","gold-pips","pip-tick"]},
+{id:"pipette",n:"Pipette (fractional pip)",aka:["pipette","fractional pip","5th decimal","point mt4"],c:"price",lv:"I",m:"fx",
+ d:"One tenth of a pip. It's the extra decimal most platforms show: the 5th decimal on most pairs, the 3rd on yen pairs.",
+ ex:["EURUSD|1.08503: the last digit, 3, is pipettes. 1.08500 → 1.08510 is 10 pipettes = 1 pip.","Heads up|MT4 and MT5 call a pipette a \"point,\" so a 100-point stop there is only 10 pips."],
+ v:OWN,rel:["pip","spread"]},
+{id:"pip-value",n:"Pip value",aka:["value per pip","pip worth","dollar per pip"],c:"price",lv:"B",m:"fx",calc:"pip",cd:"USDJPY",
+ d:"How many dollars one pip is worth at your position size.",
+ ex:["xxxUSD pairs|EURUSD, GBPUSD, AUDUSD, NZDUSD: always $10 per pip per standard lot.","USDxxx pairs|USDJPY, USDCAD, USDCHF: it changes with the price. USDJPY at 150.00 = 1,000 ÷ 150 = $6.67 per pip per lot.","Gold|$10 per pip per lot, using this course's $0.10 pip."],
+ v:OWN,rel:["pip","lot","position-sizing"]},
+{id:"gold-pips",n:"Why gold pips are different",aka:["gold pip","xauusd pip"],c:"price",lv:"B",m:"fx",cf:"pip",calc:"pip",cd:"XAUUSD",
+ d:"Gold is priced with 2 decimals, not 4, so brokers don't agree on what a gold \"pip\" is.",
+ ex:["Gold|This course uses 1 pip = $0.10. Some brokers and tools call $0.01 a pip, which makes every number 10 times bigger. A \"50-pip stop\" to us is a $5 stop. Always check how your broker counts."],
+ v:OWN,rel:["pip","point","pip-value"]},
+{id:"tick",n:"Tick, tick size and tick value",aka:["ticks","tick size","tick value","minimum tick"],c:"price",lv:"B",m:"fut",cf:"pip",calc:"tick",cd:"MGC",
+ d:"A tick is the smallest move a futures contract can make. Tick size is how big that move is, and tick value is what it's worth in dollars.",
+ ex:["Gold|Tick size $0.10. GC = $10 per tick, MGC = $1 per tick.","ES / MES|Tick size 0.25 points. ES = $12.50 per tick, MES = $1.25.","NQ / MNQ|Tick size 0.25 points. NQ = $5 per tick, MNQ = $0.50."],
+ v:cme("tick-movements-understanding-how-they-work","Tick movements: how they work"),rel:["pip-tick","point","contract","micro-mini"]},
+{id:"pip-tick",n:"Pip vs tick",aka:["pip or tick","pips vs ticks"],c:"price",lv:"B",m:"both",cf:"pip",
+ d:"Forex traders count pips. Futures traders count ticks. Both just measure how far price moved.",
+ ex:["Gold|On gold in this course they're the same size, $0.10. A $5 move is 50 pips on XAUUSD and 50 ticks on GC.","Indices|ES moves 1 point = 4 ticks. There are no \"pips\" in index futures."],
+ cmp:["1 pip = 0.0001 on most pairs, 0.01 on yen pairs, $0.10 on gold (course). 1 standard lot ≈ $10 per pip.","Tick size is set by the contract: gold 0.10, ES and NQ 0.25. Tick value depends on the contract."],
+ v:OWN,rel:["pip","tick","lot-vs-contract"]},
+{id:"point",n:"Point (handle)",aka:["points","handle"],c:"price",lv:"B",m:"both",
+ d:"A full 1.00 move in price. Futures traders usually talk in points.",
+ ex:["Gold|4,150 → 4,151 is 1 point = 10 ticks = 10 pips. GC $100, MGC $10.","ES|1 point = 4 ticks = $50 (MES $5).","NQ|1 point = 4 ticks = $20 (MNQ $2)."],
+ v:cme("tick-movements-understanding-how-they-work","Tick movements: how they work"),rel:["tick","pip","index-futures"]},
+{id:"spread",n:"Spread",aka:["bid ask spread","spreads"],c:"price",lv:"B",m:"both",
+ d:"The gap between the price you can buy at and the price you can sell at. It's a cost built into every trade.",
+ ex:["EURUSD|Sell 1.08500 / buy 1.08510 = 1 pip spread. At 1 lot that's $10 the moment you enter.","Gold|Sell 4,150.00 / buy 4,150.30 = $0.30, or 3 pips.","ES|Usually 1 tick (0.25) wide in normal hours."],
+ v:yt("Zw5UChml8bM","What is the spread?"),rel:["bid-ask","liquidity","slippage"]},
+{id:"bid-ask",n:"Bid and ask",aka:["bid","ask","offer"],c:"price",lv:"B",m:"both",
+ d:"The bid is the best price buyers will pay. The ask is the best price sellers will take. You sell at the bid and buy at the ask.",
+ ex:["EURUSD|Bid 1.08500 / ask 1.08510. Hit buy at market and you pay 1.08510."],
+ v:yt("Zw5UChml8bM","What is the spread?"),rel:["spread","market-order"]},
+{id:"price-discovery",n:"Price discovery",aka:[],c:"price",lv:"I",m:"fut",
+ d:"Buyers and sellers agreeing on a price in real time on the exchange.",
+ ex:["Example|When CPI comes out hotter than expected, gold and ES find their new levels in seconds as orders hit the exchange."],
+ v:cme("price-discovery","Price discovery"),rel:["exchange","volume"]},
+{id:"price-limits",n:"Price limits and banding",aka:["limit up","limit down","circuit breaker"],c:"price",lv:"I",m:"fut",
+ d:"Exchange rules that pause or cap trading when price moves too far, too fast.",
+ ex:["ES|Equity index futures have overnight limit-up and limit-down levels, and they halt with the stock market's circuit breakers on big selloffs.","Gold|On an extreme spike, CME can briefly pause trading before it resumes."],
+ v:cme("price-limits-price-banding","Price limits and price banding"),rel:["exchange","volatility"]},
+
+/* ---------- position size ---------- */
+{id:"lot",n:"Lot",aka:["lots","standard lot","lot size"],c:"size",lv:"B",m:"fx",cf:"contract",calc:"size",cd:"EURUSD",
+ d:"The unit for position size in forex. A standard lot (1.00) is 100,000 units of the base currency. On gold it's 100 ounces.",
+ ex:["EURUSD|1.00 lot = €100,000 = $10 per pip. 0.10 lot = $1 per pip. 0.01 lot = $0.10 per pip.","Gold|1.00 lot = 100 oz = $100 per $1 move, or $10 per pip."],
+ v:OWN,rel:["mini-micro-lot","pip-value","lot-vs-contract","position-sizing"]},
+{id:"mini-micro-lot",n:"Mini and micro lots",aka:["mini lot","micro lot","0.01","0.1 lot"],c:"size",lv:"B",m:"fx",calc:"size",cd:"EURUSD",
+ d:"Smaller lot sizes. A mini lot is 0.10 (10,000 units) and a micro lot is 0.01 (1,000 units).",
+ ex:["EURUSD|0.10 lot = $1 per pip. 0.01 lot = $0.10 per pip.","Gold|0.10 lot = 10 oz ($1 per pip). 0.01 lot = 1 oz ($0.10 per pip). Small lots let you control risk on a small account."],
+ v:OWN,rel:["lot","position-sizing"]},
+{id:"contract",n:"Contract",aka:["contracts","futures contract size"],c:"size",lv:"B",m:"fut",cf:"lot",calc:"size",cd:"MES",
+ d:"The unit for position size in futures. You can only trade whole contracts.",
+ ex:["Gold|1 GC = 100 oz ($10 per tick). 1 MGC = 10 oz ($1 per tick).","Indices|1 ES = $50 per point, 1 MES = $5. 1 NQ = $20 per point, 1 MNQ = $2. You can't buy half a contract."],
+ v:cme("learn-about-contract-specifications","Contract specifications"),rel:["micro-mini","lot-vs-contract","tick","specs"]},
+{id:"micro-mini",n:"Micro vs full-size contracts",aka:["mgc","mes","mnq","micro gold","micros","minis","micro e-mini"],c:"size",lv:"B",m:"fut",calc:"size",cd:"MNQ",
+ d:"Micro contracts are one-tenth the size of the full contract. Same chart, one-tenth the dollars.",
+ ex:["Gold|A $10 move: 1 GC = $1,000, 1 MGC = $100.","ES|A 10-point move: 1 ES = $500, 1 MES = $50.","NQ|A 50-point move: 1 NQ = $1,000, 1 MNQ = $100."],
+ v:{k:"cme",u:MGC,t:"Micro Gold and Micro Silver overview"},rel:["contract","tick","symbols","index-futures"]},
+{id:"lot-vs-contract",n:"Lot vs contract",aka:["lots vs contracts"],c:"size",lv:"B",m:"both",cf:"lot",calc:"size",cd:"XAUUSD",
+ d:"Both measure position size. Lots are for forex and can be fractions. Contracts are for futures and must be whole numbers.",
+ ex:["Gold|In dollars per move, 1.00 lot of XAUUSD ≈ 1 GC, and 0.10 lot ≈ 1 MGC."],
+ cmp:["1.00 lot = 100,000 units (100 oz on gold). You can trade 0.01, 0.37, anything.","GC = 100 oz, MGC = 10 oz, ES = $50/point, MES = $5/point. Whole numbers only."],
+ v:OWN,rel:["lot","contract","pip-tick"]},
+{id:"specs",n:"Contract specifications",aka:["contract specs","specs"],c:"size",lv:"B",m:"fut",
+ d:"The fixed rules of a futures contract: size, tick size, tick value, trading hours and expiration months.",
+ ex:["GC|100 troy oz, $0.10 tick, $10 per tick, most-traded months Feb, Apr, Jun, Aug, Oct, Dec.","ES|$50 × S&P 500 index, 0.25 tick, $12.50 per tick, expires in Mar, Jun, Sep, Dec."],
+ v:cme("learn-about-contract-specifications","Contract specifications"),rel:["contract","tick","symbols"]},
+{id:"symbols",n:"Symbols and month codes",aka:["month code","ticker","z26","gcz26","esz26","contract code"],c:"size",lv:"B",m:"fut",
+ d:"A futures symbol is the product code, then a month letter, then the year.",
+ ex:["Example|GCZ26 = gold, December 2026. ESZ26 = S&P 500, December 2026. NQH27 = Nasdaq-100, March 2027.","Month letters|F Jan · G Feb · H Mar · J Apr · K May · M Jun · N Jul · Q Aug · U Sep · V Oct · X Nov · Z Dec."],
+ v:cme("understanding-contract-trading-codes","Contract trading codes"),rel:["front-month","expiration","rollover"]},
+{id:"notional",n:"Notional value",aka:["contract value","exposure"],c:"size",lv:"I",m:"both",
+ d:"The full dollar value your position controls, not the margin you put up.",
+ ex:["Gold|1 GC at 4,150 controls 100 oz × $4,150 = $415,000 of gold.","EURUSD|1 lot at 1.0850 controls €100,000 = $108,500."],
+ v:cme("about-contract-notional-value","Contract notional value"),rel:["leverage","margin"]},
+{id:"expiration",n:"Expiration and settlement",aka:["expiry","settlement","delivery","cash settled","physical delivery"],c:"size",lv:"I",m:"fut",
+ d:"Every futures contract has a last trading day. After that it settles, either in cash or by delivering the actual product.",
+ ex:["Gold|GC is physically delivered, so traders close or roll well before delivery starts.","ES / NQ|Cash-settled quarterly on the third Friday of Mar, Jun, Sep and Dec."],
+ v:cme("get-to-know-futures-expiration-and-settlement","Expiration and settlement"),rel:["rollover","front-month","symbols"]},
+{id:"rollover",n:"Rollover",aka:["roll","rolling","contract roll"],c:"size",lv:"I",m:"fut",
+ d:"Moving your trading to the next contract month before the current one expires.",
+ ex:["Gold|Traders move from GCZ26 to GCG27 toward the end of November.","ES|Volume moves to the next quarter about a week before expiration. Make sure your chart and your order ticket are on the same month."],
+ v:cme("understanding-futures-expiration-contract-roll","Expiration and contract roll"),rel:["front-month","expiration","symbols"]},
+{id:"front-month",n:"Front month",aka:["active month","front contract"],c:"size",lv:"I",m:"fut",
+ d:"The contract month with the most trading activity, usually the one closest to expiring.",
+ ex:["Example|Trade the front month. It has the tightest spread and the deepest liquidity."],
+ v:cme("understanding-futures-expiration-contract-roll","Expiration and contract roll"),rel:["rollover","volume","open-interest"]},
+{id:"volume",n:"Volume",aka:["trading volume"],c:"size",lv:"I",m:"fut",
+ d:"How many contracts traded in a period. It shows how much real participation is behind a move.",
+ ex:["Example|A breakout on ES with volume far above normal is more believable than one on thin volume."],
+ v:cme("what-is-volume","What is volume"),rel:["open-interest","liquidity"]},
+{id:"open-interest",n:"Open interest",aka:["oi"],c:"size",lv:"I",m:"fut",
+ d:"How many contracts are still open, not yet closed out.",
+ ex:["Example|Rising open interest while gold rises means new money is opening longs, not just shorts closing."],
+ v:cme("open-interest","Open interest"),rel:["volume"]},
+
+/* ---------- money & risk ---------- */
+{id:"leverage",n:"Leverage",aka:["leveraged","1:30","1:100","1:500"],c:"risk",lv:"B",m:"both",cf:"margin",
+ d:"Controlling a large position with a small amount of money. It makes both wins and losses bigger.",
+ ex:["Gold|At 1:100, $4,150 of margin controls 1 lot of gold worth $415,000. A $10 move against you is a $1,000 loss.","EURUSD|At 1:30, about $3,617 of margin controls 1 lot ($108,500). A 50-pip move against you is a $500 loss."],
+ v:yt("gPTz1yY9K2E","What is leverage?"),rel:["margin","lev-margin","notional","margin-call"]},
+{id:"margin",n:"Margin",aka:["required margin","good faith deposit","day trade margin"],c:"risk",lv:"B",m:"both",cf:"leverage",
+ d:"The money set aside from your account to keep a position open. It's a deposit, not a fee.",
+ ex:["Forex|Margin = position value ÷ leverage.","Futures|The exchange sets the overnight margin. Brokers often allow a lower \"day trade\" margin. Both change, so check the current number before you trade."],
+ v:cme("margin-know-what-is-needed","Margin: know what is needed"),rel:["init-maint","margin-call","leverage"]},
+{id:"lev-margin",n:"Leverage vs margin",aka:[],c:"risk",lv:"B",m:"both",cf:"leverage",
+ d:"Margin is the money you put up. Leverage is how many times bigger your position is than that money. Two sides of the same coin.",
+ ex:["Gold|Put up $4,150 to control $415,000 of gold. The $4,150 is margin; 100 to 1 is the leverage."],
+ v:OWN,rel:["leverage","margin"]},
+{id:"init-maint",n:"Initial vs maintenance margin",aka:["initial margin","maintenance margin"],c:"risk",lv:"I",m:"fut",
+ d:"Initial margin is what you need to open a futures trade. Maintenance margin is the lower level you must stay above to keep it open.",
+ ex:["Example|If losses drag your account below maintenance margin, your broker asks for more money or closes you out."],
+ v:cme("margin-know-what-is-needed","Margin: know what is needed"),rel:["margin","margin-call","mtm"]},
+{id:"margin-call",n:"Margin call",aka:["stop out","liquidation"],c:"risk",lv:"B",m:"both",
+ d:"When your account falls too low to support your open trades, and the broker demands more money or closes positions for you.",
+ ex:["Example|Oversize, take a big move against you, and the broker can close your trade at the worst possible moment."],
+ v:cme("margin-know-what-is-needed","Margin: know what is needed"),rel:["margin","leverage","position-sizing"]},
+{id:"stop-loss",n:"Stop loss",aka:["sl","stop"],c:"risk",lv:"B",m:"both",
+ d:"An order that closes your trade at a set price to cap your loss.",
+ ex:["Gold|Long at 4,150 with a stop at 4,145: you can lose $5 of price and no more.","EURUSD|Long at 1.0850, stop at 1.0830: a 20-pip stop. Set it before you enter, and never move it further away."],
+ v:yt("rPWx4rWh1r0","How to manage risk"),rel:["take-profit","risk-reward","stopped-out","stop-order"]},
+{id:"take-profit",n:"Take profit",aka:["tp","target","profit target"],c:"risk",lv:"B",m:"both",
+ d:"An order that closes your trade at a set price to lock in the gain.",
+ ex:["Gold|Long at 4,150, stop 4,145, target 4,165: you risk $5 to make $15."],
+ v:yt("rPWx4rWh1r0","How to manage risk"),rel:["stop-loss","risk-reward","limit-order"]},
+{id:"pnl",n:"Profit and loss (P&L)",aka:["p&l","pnl","pl"],c:"risk",lv:"B",m:"both",calc:"tick",cd:"MES",
+ d:"How much money a trade made or lost.",
+ ex:["Gold|Long 2 MGC from 4,150.0 to 4,156.0 = 60 ticks × $1 × 2 = $120.","ES|Long 1 MES, up 10 points = 40 ticks × $1.25 = $50.","EURUSD|Long 0.50 lot, up 20 pips = 20 × $5 = $100."],
+ v:cme("calculating-futures-contract-profit-or-loss","Calculating profit or loss"),rel:["tick","pip-value","mtm"]},
+{id:"risk-reward",n:"Risk-to-reward (R)",aka:["rr","r multiple","risk reward","3r","1r"],c:"risk",lv:"I",m:"both",calc:"rr",
+ d:"How much you stand to make compared with how much you risk. 1R is the amount you risk on the trade.",
+ ex:["Example|Risk $5 of price to make $15 = 3R. At 3R you break even winning just 1 trade in 4 (before costs), and anything better is profit."],
+ v:OWN,mod:"Module 5: A+ Conditions",rel:["stop-loss","take-profit","position-sizing"]},
+{id:"position-sizing",n:"Position sizing",aka:["size","sizing","how many lots","how many contracts"],c:"risk",lv:"I",m:"both",calc:"size",cd:"XAUUSD",
+ d:"Choosing your size so that if your stop is hit, you lose exactly the amount you planned.",
+ ex:["Formula|Size = risk in $ ÷ (stop distance × $ per unit of move).","EURUSD|$100 risk, 20-pip stop: $100 ÷ (20 × $10) = 0.50 lot.","Futures|$100 risk, $5 stop on gold: $100 ÷ ($5 × $10 per MGC point) = 2 MGC."],
+ v:OWN,rel:["risk-per-trade","lot","contract","risk-reward"]},
+{id:"risk-per-trade",n:"Risk per trade",aka:["1% rule","risk percent"],c:"risk",lv:"B",m:"both",calc:"size",cd:"EURUSD",
+ d:"The fixed amount you're willing to lose on any one trade, usually a small percent of your account.",
+ ex:["Example|On a $5,000 account, 1% risk = $50 per trade. Same amount every trade, win or lose."],
+ v:yt("rPWx4rWh1r0","How to manage risk"),mod:"Section 2: Process Over Outcome",rel:["position-sizing","stop-loss"]},
+{id:"mtm",n:"Mark to market",aka:["marked to market","daily settlement"],c:"risk",lv:"I",m:"fut",
+ d:"Futures accounts are settled every day: your open profit or loss is added to or taken from your cash at each session's settlement.",
+ ex:["Example|Hold an ES long overnight that's up $500, and that $500 is already in your cash balance after the daily settlement."],
+ v:cme("mark-to-market","Mark to market"),rel:["margin","pnl"]},
+{id:"swap",n:"Swap (overnight fee)",aka:["rollover fee","overnight fee","financing","carry"],c:"risk",lv:"I",m:"fx",
+ d:"A fee or credit your forex broker applies when you hold a position past the daily cutoff (usually 5 pm New York).",
+ ex:["Example|It depends on the interest rates of the two currencies. Holding the higher-yielding one can earn a small credit; the other side pays. Wednesday's swap is usually triple to cover the weekend. Futures have no swap; the cost is built into the price."],
+ v:OWN,rel:["gold","forex"]},
+
+/* ---------- orders ---------- */
+{id:"order",n:"Order",aka:["orders","order types"],c:"orders",lv:"B",m:"both",
+ d:"An instruction to your broker to buy or sell.",
+ ex:["Example|Buy 1 MES at market, sell 0.10 lot of EURUSD with a limit at 1.0880, or close a gold long with a stop at 4,140."],
+ v:yt("dkqGtzcPsyg","What is an order?"),rel:["market-order","limit-order","stop-order"]},
+{id:"market-order",n:"Market order",aka:["market","buy at market","market execution"],c:"orders",lv:"B",m:"both",cf:"limit-order",
+ d:"Buy or sell right now at the best available price.",
+ ex:["Example|Fast and certain to fill, but in a fast move you may get a worse price than the one on your screen."],
+ v:cme("futures-order-types","Futures order types",T),rel:["limit-order","slippage","bid-ask"]},
+{id:"limit-order",n:"Limit order",aka:["limit","buy limit","sell limit"],c:"orders",lv:"B",m:"both",cf:"market-order",
+ d:"Buy or sell only at your price or better.",
+ ex:["Example|EURUSD is at 1.0880 and you want to buy the pullback: a buy limit at 1.0850 fills only if price comes down to you."],
+ v:cme("futures-order-types","Futures order types",T),rel:["market-order","stop-order","take-profit"]},
+{id:"stop-order",n:"Stop order",aka:["stop market","buy stop","sell stop"],c:"orders",lv:"B",m:"both",
+ d:"An order that turns into a market order once price reaches your level. Used for stop losses and breakout entries.",
+ ex:["Example|A sell stop at 4,145 under your gold long closes the trade if price drops there."],
+ v:cme("futures-order-types","Futures order types",T),rel:["stop-loss","stop-limit","slippage"]},
+{id:"stop-limit",n:"Stop-limit order",aka:["stop limit"],c:"orders",lv:"I",m:"both",
+ d:"A stop that becomes a limit order instead of a market order, so it never fills worse than your limit.",
+ ex:["Example|Safer on price, but in a fast drop it may not fill at all, leaving you in a losing trade."],
+ v:cme("futures-order-types","Futures order types",T),rel:["stop-order","limit-order"]},
+{id:"bracket",n:"Bracket order (OCO)",aka:["oco","one cancels other","atm strategy"],c:"orders",lv:"I",m:"both",
+ d:"An entry with a stop loss and take profit attached. When one exit fills, the other cancels.",
+ ex:["Example|Enter long with the stop and target set in one click, so you're never in a trade without a stop."],
+ v:OWN,rel:["stop-loss","take-profit"]},
+{id:"place-order",n:"Placing an order",aka:["submit order","order ticket"],c:"orders",lv:"B",m:"fut",
+ d:"Choosing the contract, side, size and order type, then sending it to your broker.",
+ ex:["Example|Check the symbol every time. Sending ES when you meant MES, or GC instead of MGC, is 10 times the risk."],
+ v:cme("submitting-a-futures-order","Submitting a futures order",T),rel:["order","symbols","fill"]},
+{id:"fill",n:"Fill",aka:["filled","execution","partial fill"],c:"orders",lv:"I",m:"both",
+ d:"When your order actually trades. A partial fill means only some of your size traded.",
+ ex:["Example|Your buy limit fills only if a seller trades with you at that price."],
+ v:cme("what-happens-when-you-submit-an-order","What happens when you submit an order",T),rel:["slippage","limit-order"]},
+{id:"slippage",n:"Slippage",aka:["slipped","slip"],c:"orders",lv:"I",m:"both",
+ d:"Getting filled at a worse price than you expected, usually in fast or thin markets.",
+ ex:["Example|Your gold stop at 4,145 fills at 4,143.80 during NFP. That $1.20 is slippage, and it comes out of your planned risk."],
+ v:OWN,rel:["market-order","stop-order","news","liquidity"]},
+{id:"close",n:"Closing a position",aka:["exit","flatten","flat"],c:"orders",lv:"B",m:"both",
+ d:"Making the opposite trade to get out. Sell to close a long, buy to close a short. Being flat means you have no open position.",
+ ex:["Example|Long 2 MES? Sell 2 MES and you're flat."],
+ v:cme("closing-your-position","Closing your position",T),rel:["order","stop-loss"]},
+
+/* ---------- charts & structure ---------- */
+{id:"tech-analysis",n:"Technical analysis",aka:["ta","price action"],c:"charts",lv:"B",m:"both",
+ d:"Reading the chart itself, its structure, levels and candles, to decide when to trade.",
+ ex:["Example|Fundamentals tell you why price might move. Technical analysis tells you where and when."],
+ v:yt("VaGXrbj40cM","What is technical analysis?"),rel:["market-structure","support-resistance"]},
+{id:"market-structure",n:"Market structure",aka:["structure","ms"],c:"charts",lv:"B",m:"both",
+ d:"The pattern of highs and lows that tells you whether price is trending up, trending down, or ranging.",
+ ex:["Example|Higher highs and higher lows on the 1-hour chart = uptrend. Only look for buys until that breaks."],
+ v:OWN,mod:"Module 5: Market Structure 101",rel:["hh-hl","trend-range","bos"]},
+{id:"hh-hl",n:"Higher highs and higher lows",aka:["hh","hl","lh","ll","lower highs","lower lows"],c:"charts",lv:"B",m:"both",
+ d:"An uptrend makes higher highs and higher lows. A downtrend makes lower highs and lower lows.",
+ ex:["Gold|Low 4,140, high 4,160, low 4,150, high 4,172: each high and each low is above the last one, so price is trending up."],
+ v:OWN,mod:"Module 5: Market Structure 101",rel:["market-structure","bos","pullback"]},
+{id:"trend-range",n:"Trend vs range",aka:["trend","range","ranging","trending","consolidation"],c:"charts",lv:"B",m:"both",
+ d:"A trend moves in one direction. A range bounces between a ceiling and a floor.",
+ ex:["Example|Markets spend a lot of time ranging. Knowing which one you're in comes before picking a trade."],
+ v:yt("0NaERvcQBho","What are trends and channels?"),mod:"Module 5: Trend vs. Range",rel:["chop","market-structure"]},
+{id:"chop",n:"Chop",aka:["choppy","whipsaw","sideways"],c:"charts",lv:"B",m:"both",
+ d:"Messy, sideways price that keeps reversing with no clear direction.",
+ ex:["Example|Price flipping back and forth inside a tight box for an hour is chop. The best trade is usually no trade."],
+ v:OWN,mod:"Section 2: Train Your Patience",rel:["trend-range","overtrading"]},
+{id:"support-resistance",n:"Support and resistance",aka:["support","resistance","s/r","sr"],c:"charts",lv:"B",m:"both",
+ d:"Support is a price floor where buyers keep stepping in. Resistance is a ceiling where sellers keep showing up.",
+ ex:["Example|EURUSD bounced at 1.0800 three times this week. That's support until it breaks."],
+ v:yt("nbhd3p_0qeE","What are support and resistance?"),mod:"Module 5: Key Levels",rel:["key-level","bos"]},
+{id:"key-level",n:"Key level",aka:["levels","zone","key levels"],c:"charts",lv:"B",m:"both",
+ d:"A price where the market has reacted before and is likely to react again.",
+ ex:["Example|Yesterday's high and low, and round numbers like 1.1000 on EURUSD or 4,100 on gold."],
+ v:OWN,mod:"Module 5: Key Levels",rel:["support-resistance","liquidity-grab"]},
+{id:"bos",n:"Break of structure (BOS)",aka:["bos","break of structure","choch","change of character"],c:"charts",lv:"I",m:"both",
+ d:"When price closes through the last swing high or low, signaling the trend may be continuing or changing.",
+ ex:["Example|In an uptrend, a candle closing below the last higher low is a break of structure. Stop looking for buys."],
+ v:OWN,mod:"Module 5: Break of Structure",rel:["market-structure","hh-hl","pullback"]},
+{id:"pullback",n:"Pullback",aka:["retracement","retrace","pull back"],c:"charts",lv:"I",m:"both",
+ d:"A temporary move against the trend before it continues.",
+ ex:["Gold|Price runs from 4,140 to 4,170, dips to 4,158, then pushes higher. The dip to 4,158 was the pullback."],
+ v:OWN,mod:"Module 5: Pullback Types",rel:["hh-hl","bos","a-plus"]},
+{id:"mtf",n:"Multi-timeframe analysis",aka:["mtf","top down analysis","htf","ltf"],c:"charts",lv:"I",m:"both",
+ d:"Using a higher timeframe for direction and a lower one for entries.",
+ ex:["Example|1-hour in an uptrend? Only take 5-minute buy setups. Never take a 5-minute trade against the 1-hour."],
+ v:OWN,mod:"Module 5: Multi-Timeframe",rel:["market-structure"]},
+{id:"liquidity-grab",n:"Liquidity grab (stop hunt)",aka:["stop hunt","sweep","liquidity sweep","stop run"],c:"charts",lv:"I",m:"both",
+ d:"A quick push through an obvious level that triggers the stops sitting there before price reverses.",
+ ex:["Example|Price dips below yesterday's low for 2 minutes, takes out the stops, then rips back above. That was a sweep."],
+ v:OWN,rel:["key-level","stopped-out"]},
+{id:"sessions",n:"Trading sessions",aka:["asia","london","new york","sydney","session","ny open","london open"],c:"charts",lv:"I",m:"both",
+ d:"The four overlapping market sessions: Sydney, Asia (Tokyo), London and New York. Each has its own personality.",
+ ex:["Forex|AUD, NZD and JPY pairs are most active in Asia. EUR and GBP pairs come alive at the London open.","Futures|ES and NQ trade nearly 24 hours, but the big volume starts at the 9:30 am New York stock open."],
+ v:OWN,rel:["liquidity","volatility","news"]},
+{id:"news",n:"News events (CPI, NFP, FOMC)",aka:["cpi","nfp","fomc","fed","news","high impact"],c:"charts",lv:"I",m:"both",
+ d:"Scheduled US economic releases that can move markets hard in seconds. CPI is inflation, NFP is jobs, FOMC is the Fed's interest rate decision.",
+ ex:["Example|CPI and NFP come out at 8:30 am New York time. FOMC decisions come at 2:00 pm. Every major pair, gold, ES and NQ can jump on them. In this course: no new entries 15 minutes either side of a high-impact release."],
+ v:OWN,rel:["red-folder","volatility","slippage"]},
+{id:"red-folder",n:"Red folder",aka:["red folder news","forex factory","economic calendar"],c:"charts",lv:"I",m:"both",
+ d:"Trader slang for a high-impact news event, from the red icon on the Forex Factory economic calendar.",
+ ex:["Example|\"Red folder at 8:30\" means a major release at 8:30 am ET. Check the calendar before every session."],
+ v:OWN,rel:["news"]},
+{id:"a-plus",n:"A+ setup",aka:["a+","a plus","setup"],c:"charts",lv:"I",m:"both",
+ d:"A trade where every one of your rules lines up. Anything less, you skip.",
+ ex:["Example|Trend on the 1-hour, pullback into a key level, clean entry candle on the 5-minute, and room for 3R: that's A+."],
+ v:OWN,mod:"Module 5: A+ Conditions",rel:["pullback","risk-reward","mtf"]},
+{id:"order-flow",n:"Order flow",aka:["footprint","delta","atas","dom","depth of market"],c:"charts",lv:"I",m:"fut",
+ d:"Reading the actual buy and sell orders hitting the market, not just the candles they create.",
+ ex:["Example|On a footprint chart you can see sellers getting absorbed at a level before price turns up. Futures show this clearly because all trades go through one exchange."],
+ v:OWN,rel:["volume","liquidity"]},
+
+/* ---------- prop firms ---------- */
+{id:"eval",n:"Evaluation (eval)",aka:["eval","challenge","evaluation","combine"],c:"prop",lv:"B",m:"both",
+ d:"A paid test where you trade under a firm's rules. Pass it and you get a funded account.",
+ ex:["Example|A 50K eval asks you to hit a profit target without breaking the daily loss limit or max drawdown. Every firm's rules are different, so read them before you buy."],
+ v:OWN,rel:["funded","daily-loss","max-dd","breach"]},
+{id:"funded",n:"Funded account",aka:["funded","pa","performance account","fa"],c:"prop",lv:"B",m:"both",
+ d:"The account you get after passing an eval. You trade the firm's account and keep a share of the profit.",
+ ex:["Example|Pass a 50K eval, trade the funded 50K, and request payouts once you meet the firm's rules."],
+ v:OWN,rel:["eval","payout","sim-live"]},
+{id:"sim-live",n:"Sim vs live",aka:["simulated","sim funded","live account","demo"],c:"prop",lv:"B",m:"both",
+ d:"Many prop firms run funded accounts on a simulated feed and pay you from their own money. Live means real orders in the real market.",
+ ex:["Example|Fills on a sim account can be cleaner than real fills. Trade it like it's live."],
+ v:OWN,rel:["funded","demo"]},
+{id:"daily-loss",n:"Daily loss limit",aka:["dll","daily drawdown","daily loss"],c:"prop",lv:"B",m:"both",
+ d:"The most you can lose in one day before the firm fails or pauses the account.",
+ ex:["Example|With a $1,000 daily limit, three $400 losses breach it partway through the third trade. Know your number before the open."],
+ v:OWN,rel:["max-dd","breach","risk-per-trade"]},
+{id:"max-dd",n:"Max drawdown",aka:["drawdown","dd","max loss","mll"],c:"prop",lv:"B",m:"both",
+ d:"The furthest your account is allowed to fall, in total, before it fails.",
+ ex:["Example|A 50K account with a $2,000 max drawdown fails if the balance hits $48,000."],
+ v:OWN,rel:["trailing-dd","eod-dd","static-dd","breach"]},
+{id:"breach",n:"Breach",aka:["blown","failed","hard breach","soft breach"],c:"prop",lv:"B",m:"both",
+ d:"Breaking a firm's rule, which fails or closes the account.",
+ ex:["Example|At most firms, touching the drawdown floor even for a moment counts as a breach, even if price comes right back."],
+ v:OWN,rel:["daily-loss","max-dd","consistency"]},
+{id:"trailing-dd",n:"Intraday trailing drawdown",aka:["trailing drawdown","trailing dd","intraday trailing"],c:"prop",lv:"I",m:"both",cf:"eod-dd",
+ d:"A drawdown floor that moves up with your highest account value, including open profit during the trade.",
+ ex:["Example|Up $800 in an open trade, then it reverses? Your floor already moved up $800, even though you never banked it."],
+ v:OWN,rel:["eod-dd","static-dd","dd-lock","buffer"]},
+{id:"eod-dd",n:"End-of-day drawdown",aka:["eod drawdown","eod trailing","end of day"],c:"prop",lv:"I",m:"both",cf:"trailing-dd",
+ d:"A drawdown floor that moves up only based on your balance at the end of each day, not open profit.",
+ ex:["Example|Open profit swinging during the day doesn't move your floor. Only your closing balance does."],
+ v:OWN,rel:["trailing-dd","static-dd"]},
+{id:"static-dd",n:"Static drawdown",aka:["static","fixed drawdown"],c:"prop",lv:"I",m:"both",
+ d:"A drawdown floor that never moves.",
+ ex:["Example|A 50K account with a static $2,000 drawdown always fails at $48,000, no matter how much you make first."],
+ v:OWN,rel:["trailing-dd","eod-dd"]},
+{id:"dd-lock",n:"Drawdown lock",aka:["trailing stops","lock"],c:"prop",lv:"I",m:"both",
+ d:"The point where a trailing drawdown stops moving up, usually once your balance is far enough above the start.",
+ ex:["Example|At many firms the floor stops trailing once it reaches the starting balance (some add a small amount on top). From there, it's fixed."],
+ v:OWN,rel:["trailing-dd","buffer"]},
+{id:"buffer",n:"Buffer",aka:["cushion"],c:"prop",lv:"I",m:"both",
+ d:"How much room you have between your current balance and your drawdown floor.",
+ ex:["Example|Balance $50,600, floor $48,600: your buffer is $2,000. Size from the buffer, not the account size."],
+ v:OWN,rel:["max-dd","dd-lock","position-sizing"]},
+{id:"consistency",n:"Consistency rule",aka:["consistency"],c:"prop",lv:"I",m:"both",
+ d:"A rule that stops one big day from making up most of your profit.",
+ ex:["Example|With a 30% rule and $3,000 total profit, no single day can be more than $900. One lucky day won't pass you."],
+ v:OWN,rel:["payout","eval"]},
+{id:"payout",n:"Payout and profit split",aka:["split","withdrawal","payout"],c:"prop",lv:"I",m:"both",
+ d:"Withdrawing your share of funded-account profits. The split is how much you keep versus the firm.",
+ ex:["Example|On a 90/10 split, $2,000 of profit pays you $1,800. Firms set minimum days and amounts before a payout."],
+ v:OWN,rel:["funded","consistency","scaling"]},
+{id:"scaling",n:"Scaling plan",aka:["scaling","contract limits"],c:"prop",lv:"I",m:"both",
+ d:"Firm rules that limit your size until your account builds a cushion.",
+ ex:["Example|Start with a low contract or lot limit, and unlock more size as your balance grows."],
+ v:OWN,rel:["payout","buffer"]},
+{id:"reset",n:"Reset",aka:["reset fee"],c:"prop",lv:"I",m:"both",
+ d:"Paying to restart a failed or struggling eval from the beginning.",
+ ex:["Example|A reset usually costs less than a new eval, but it's still a cost. Fix the reason you breached first."],
+ v:OWN,rel:["eval","breach"]},
+
+/* ---------- slang & mindset ---------- */
+{id:"scalping",n:"Scalping",aka:["scalp","scalper"],c:"slang",lv:"B",m:"both",cf:"day-trading",
+ d:"Very short trades, seconds to minutes, aiming for small moves.",
+ ex:["Example|In and out of EURUSD for 5 to 10 pips, or ES for a few points, in a couple of minutes."],
+ v:OWN,rel:["day-trading","swing"]},
+{id:"day-trading",n:"Day trading",aka:["day trader","intraday"],c:"slang",lv:"B",m:"both",
+ d:"Opening and closing trades in the same day, with nothing held overnight.",
+ ex:["Example|Trade the New York session, then be flat by the close."],
+ v:OWN,rel:["scalping","swing","sessions"]},
+{id:"swing",n:"Swing trading",aka:["swing","swing trader"],c:"slang",lv:"B",m:"both",
+ d:"Holding trades for days to weeks to catch bigger moves.",
+ ex:["Example|Buy EURUSD at a weekly support level and hold it for a 200-pip move."],
+ v:OWN,rel:["day-trading","swap"]},
+{id:"stopped-out",n:"Stopped out",aka:["got stopped","stop hit"],c:"slang",lv:"B",m:"both",
+ d:"Your stop loss was hit and the trade closed at a loss.",
+ ex:["Example|Getting stopped out is the cost of doing business. Moving your stop to avoid it is how accounts blow up."],
+ v:OWN,rel:["stop-loss","liquidity-grab"]},
+{id:"fomo",n:"FOMO",aka:["fear of missing out","chasing"],c:"slang",lv:"B",m:"both",
+ d:"Jumping into a move late because you're scared to miss it.",
+ ex:["Example|Price ran without you, so you buy the top with no plan. Missing a move costs nothing. Chasing it can cost everything."],
+ v:yt("Qeu0GvsJWI8","How to manage emotions when trading"),mod:"Section 2: Why You're Not Growing",rel:["revenge","overtrading"]},
+{id:"revenge",n:"Revenge trading",aka:["revenge","tilt","tilted"],c:"slang",lv:"B",m:"both",
+ d:"Forcing trades right after a loss to win the money back.",
+ ex:["Example|One loss turns into five because you're trading angry. After a loss, step away for 5 minutes."],
+ v:yt("Qeu0GvsJWI8","How to manage emotions when trading"),mod:"Section 2: Why You're Not Growing",rel:["fomo","daily-loss"]},
+{id:"overtrading",n:"Overtrading",aka:["boredom trades","too many trades"],c:"slang",lv:"B",m:"both",
+ d:"Taking trades that aren't your setup, usually out of boredom or impatience.",
+ ex:["Example|Five trades in a choppy session when your system called for zero."],
+ v:yt("-zJKDr69P0o","How to avoid common trading mistakes"),mod:"Section 2: Train Your Patience",rel:["chop","a-plus","fomo"]},
+{id:"process",n:"Process over outcome",aka:["process","execution"],c:"slang",lv:"B",m:"both",
+ d:"Judging a trade by whether you followed your rules, not by whether it made money.",
+ ex:["Example|A loss where every rule was followed is a good trade. A win where you broke the rules is a bad one."],
+ v:OWN,mod:"Section 2: Process Over Outcome",rel:["journal","risk-per-trade"]},
+{id:"journal",n:"Trading journal",aka:["journal","trade log"],c:"slang",lv:"B",m:"both",
+ d:"A record of every trade: setup, entry, exit, result, and whether you followed your rules.",
+ ex:["Example|Screenshot each trade and grade it on three questions: Was it my setup? Was my size right? Did I leave my stop alone?"],
+ v:OWN,mod:"Section 2: Process Over Outcome",rel:["process","backtesting"]},
+{id:"backtesting",n:"Backtesting",aka:["backtest","replay","bar replay"],c:"slang",lv:"B",m:"both",
+ d:"Testing your strategy on past price data to see how it would have performed.",
+ ex:["Example|Replay 50 New York sessions and log every A+ setup your rules find."],
+ v:yt("rDe11mMKvXE","How to build a trading strategy"),rel:["journal","demo","a-plus"]},
+{id:"demo",n:"Demo account",aka:["paper trading","demo","practice account"],c:"slang",lv:"B",m:"both",
+ d:"A practice account with fake money and real prices.",
+ ex:["Example|Prove your rules on a demo before you pay for an eval."],
+ v:OWN,rel:["backtesting","sim-live"]}
+];
+
+var BY={}; TERMS.forEach(function(t){BY[t.id]=t;});
+TERMS.forEach(function(t){ t.rel=(t.rel||[]).filter(function(r){return BY[r];}); });
+
+var START={
+  fx:["forex","majors","pip","pip-value","spread","lot","leverage","stop-loss","market-structure"],
+  fut:["futures","index-futures","contract","micro-mini","tick","point","symbols","stop-loss","market-structure"],
+  both:["forex","futures","pip-tick","lot-vs-contract","micro-mini","leverage","stop-loss","risk-per-trade","market-structure"]
+};
+
+/* forex: pip size, units per lot, quote ccy (non-USD quote → pip value ÷ price)
+   futures: tick size, tick value ($), $ per point */
+var FX={
+  EURUSD:{p:.0001,u:100000,q:"USD"},GBPUSD:{p:.0001,u:100000,q:"USD"},AUDUSD:{p:.0001,u:100000,q:"USD"},NZDUSD:{p:.0001,u:100000,q:"USD"},
+  USDJPY:{p:.01,u:100000,q:"JPY"},USDCAD:{p:.0001,u:100000,q:"CAD"},USDCHF:{p:.0001,u:100000,q:"CHF"},
+  XAUUSD:{p:.10,u:100,q:"USD"}
+};
+var FUT={
+  GC:{t:.10,v:10,pt:100,n:"Gold"},MGC:{t:.10,v:1,pt:10,n:"Micro gold"},
+  ES:{t:.25,v:12.5,pt:50,n:"S&P 500"},MES:{t:.25,v:1.25,pt:5,n:"Micro S&P"},
+  NQ:{t:.25,v:5,pt:20,n:"Nasdaq-100"},MNQ:{t:.25,v:.5,pt:2,n:"Micro Nasdaq"}
+};
+function pipVal(sym,rate){ var s=FX[sym]; var v=s.p*s.u; return s.q==="USD"?v:(rate>0?v/rate:NaN); }
+
+var K="fta.gloss.v1";
+var S={mkt:null,lvl:null,learned:{},passed:{}};
+try{var raw=localStorage.getItem(K); if(raw){var o=JSON.parse(raw); if(o&&typeof o==="object"){S.mkt=o.mkt||null;S.lvl=o.lvl||null;S.learned=o.learned||{};S.passed=o.passed||{};}}}catch(e){}
+function save(){try{localStorage.setItem(K,JSON.stringify(S));}catch(e){}}
+
+var cat="all", q="", showAll=false, pick={mkt:null,lvl:null};
+function $(id){return document.getElementById(id);}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+
+function fits(t){
+  var m = S.mkt==="both" || t.m==="both" || t.m===S.mkt;
+  var l = S.lvl==="I" || t.lv==="B";
+  return m && l;
+}
+function norm(s){return String(s).toLowerCase().replace(/[^a-z0-9&+/% ]/g," ").replace(/\s+/g," ").trim();}
+function score(t,nq){
+  if(!nq) return 1;
+  var n=norm(t.n);
+  if(n===nq) return 100;
+  if(n.indexOf(nq)===0) return 80;
+  for(var i=0;i<t.aka.length;i++){ var a=norm(t.aka[i]); if(a===nq) return 90; if(a.indexOf(nq)===0) return 70; }
+  if(n.indexOf(nq)>=0) return 60;
+  for(var j=0;j<t.aka.length;j++){ if(norm(t.aka[j]).indexOf(nq)>=0) return 50; }
+  if(norm(t.d).indexOf(nq)>=0) return 20;
+  return 0;
+}
+function hl(name,nq){
+  if(!nq) return esc(name);
+  var i=name.toLowerCase().indexOf(nq); if(i<0) return esc(name);
+  return esc(name.slice(0,i))+"<mark>"+esc(name.slice(i,i+nq.length))+"</mark>"+esc(name.slice(i+nq.length));
+}
+var MK={fx:"Forex",fut:"Futures",both:"Both"};
+var LV={B:"Beginner",I:"Intermediate"};
+
+function opts(list,sel){return list.map(function(k){return '<option value="'+k+'"'+(k===sel?' selected':'')+'>'+k+'</option>';}).join("");}
+var FXK=Object.keys(FX), FUTK=Object.keys(FUT);
+function calcHTML(kind,id,def){
+  var p='c-'+id;
+  function lab(s,inner,hide){return '<label for="'+p+s+'" id="'+p+s+'w"'+(hide?' hidden':'')+'><span id="'+p+s+'t">'+inner[0]+'</span>'+inner[1]+'</label>';}
+  var head='<div class="box calcbox"><div class="blab">';
+  if(kind==="pip"){
+    var d=FX[def]?def:"EURUSD";
+    return head+'Pip calculator</div><div class="calc" data-calc="pip" data-id="'+id+'">'+
+      lab("i",["Pair",'<select id="'+p+'i">'+opts(FXK,d)+'</select>'])+
+      lab("a",["Pips",'<input id="'+p+'a" type="number" step="1" value="'+(d==="XAUUSD"?50:20)+'">'])+
+      lab("b",["Lots",'<input id="'+p+'b" type="number" step="0.01" min="0" value="0.10">'])+
+      lab("r",["Today's price",'<input id="'+p+'r" type="number" step="0.0001" min="0" placeholder="from your chart">'],FX[d].q==="USD")+
+      '<div class="out" aria-live="polite"></div></div></div>';
+  }
+  if(kind==="tick"){
+    var f=FUT[def]?def:"MES";
+    return head+'Tick calculator · futures</div><div class="calc" data-calc="tick" data-id="'+id+'">'+
+      lab("i",["Contract",'<select id="'+p+'i">'+FUTK.map(function(k){return '<option value="'+k+'"'+(k===f?' selected':'')+'>'+k+' · '+FUT[k].n+'</option>';}).join("")+'</select>'])+
+      lab("a",["Points moved",'<input id="'+p+'a" type="number" step="0.25" value="'+(f==="GC"||f==="MGC"?6:10)+'">'])+
+      lab("c",["Contracts",'<input id="'+p+'c" type="number" step="1" min="1" value="1">'])+
+      '<div class="out" aria-live="polite"></div></div></div>';
+  }
+  if(kind==="size"){
+    var all=FXK.concat(FUTK), s=all.indexOf(def)>=0?def:"EURUSD", isF=!!FUT[s];
+    return head+'Position size calculator</div><div class="calc" data-calc="size" data-id="'+id+'">'+
+      lab("i",["Trading",'<select id="'+p+'i"><optgroup label="Forex">'+opts(FXK,s)+'</optgroup><optgroup label="Futures">'+opts(FUTK,s)+'</optgroup></select>'])+
+      lab("a",["Risk ($)",'<input id="'+p+'a" type="number" step="10" min="0" value="100">'])+
+      lab("b",[isF?"Stop (points)":"Stop (pips)",'<input id="'+p+'b" type="number" step="0.25" min="0" value="'+(isF?(s==="GC"||s==="MGC"?5:10):(s==="XAUUSD"?50:20))+'">'])+
+      lab("r",["Today's price",'<input id="'+p+'r" type="number" step="0.0001" min="0" placeholder="from your chart">'],isF||FX[s].q==="USD")+
+      '<div class="out" aria-live="polite"></div></div></div>';
+  }
+  if(kind==="rr") return head+'Risk-to-reward calculator</div><div class="calc" data-calc="rr" data-id="'+id+'">'+
+      lab("a",["Entry",'<input id="'+p+'a" type="number" step="any" value="4150">'])+
+      lab("b",["Stop",'<input id="'+p+'b" type="number" step="any" value="4145">'])+
+      lab("c",["Target",'<input id="'+p+'c" type="number" step="any" value="4165">'])+
+      '<div class="out" aria-live="polite"></div></div></div>';
+  return "";
+}
+function money(x){return "$"+(Math.round(x*100)/100).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});}
+function trim(x,d){return parseFloat(x.toFixed(d)).toString();}
+function runCalc(box){
+  var k=box.getAttribute("data-calc"), p='c-'+box.getAttribute("data-id"), out=box.querySelector(".out");
+  function el(s){return $(p+s);}
+  function v(s){var e=el(s); return e?parseFloat(e.value):NaN;}
+  var a=v("a"), b=v("b"), c=v("c"), r=v("r"), sym=el("i")?el("i").value:null;
+  if(k==="pip"){
+    var needR=FX[sym].q!=="USD"; el("rw").hidden=!needR; el("rt").textContent="Today's "+sym+" price";
+    if(isNaN(a)||isNaN(b)){out.textContent="Enter pips and lots.";return;}
+    var pv=pipVal(sym,r);
+    if(isNaN(pv)){out.textContent="Enter today's "+sym+" price. On "+sym+" the pip value changes with the price.";return;}
+    var move=a*FX[sym].p;
+    out.textContent=trim(a,1)+" pips = "+(sym==="XAUUSD"?money(move):trim(move,FX[sym].p<.01?5:2))+" in price · "+money(pv*b)+" per pip · "+money(pv*b*a)+" total";
+  } else if(k==="tick"){
+    var f=FUT[sym];
+    if(isNaN(a)||isNaN(c)){out.textContent="Enter points moved and contracts.";return;}
+    var ticks=Math.round(a/f.t);
+    out.textContent=ticks+" ticks × "+money(f.v)+" × "+c+" = "+money(ticks*f.v*c);
+  } else if(k==="size"){
+    var isF=!!FUT[sym];
+    el("bt").textContent=isF?"Stop (points)":"Stop (pips)";
+    el("rw").hidden=isF||FX[sym].q==="USD"; el("rt").textContent="Today's "+sym+" price";
+    if(!(a>0)||!(b>0)){out.textContent="Enter your risk and your stop.";return;}
+    if(isF){
+      var F=FUT[sym], per=b*F.pt, n=Math.floor(a/per+1e-9);
+      out.textContent=n>0? n+" "+sym+" · real risk "+money(n*per)+" ("+money(F.pt)+" per point)" : "Too small for 1 "+sym+". One contract risks "+money(per)+" with that stop.";
+    } else {
+      var pv2=pipVal(sym,r);
+      if(isNaN(pv2)){out.textContent="Enter today's "+sym+" price to size this pair.";return;}
+      var lots=Math.floor(a/(b*pv2)*100+1e-9)/100;
+      out.textContent=lots>0? lots.toFixed(2)+" lots · real risk "+money(lots*pv2*b)+" ("+money(pv2*lots)+" per pip)" : "Your stop is too wide for that risk, even at 0.01 lot.";
+    }
+  } else if(k==="rr"){
+    if(isNaN(a)||isNaN(b)||isNaN(c)){out.textContent="Enter entry, stop and target.";return;}
+    var risk=Math.abs(a-b), rew=Math.abs(c-a), ok=(c>a&&b<a)||(c<a&&b>a);
+    out.textContent=!risk?"Stop can't equal entry.":(!ok?"Stop and target must be on opposite sides of entry.":
+      "Risk "+trim(risk,5)+" · reward "+trim(rew,5)+" · "+(rew/risk).toFixed(2)+"R · breakeven win rate "+Math.round(100/(1+rew/risk))+"%");
+  }
+}
+
+function vidHTML(v){
+  if(!v||v.k==="own") return '<span class="soon">Sway\'s 60-second clip is coming soon</span>';
+  var src=v.k==="yt"?"YouTube":"CME Group lesson";
+  return '<a class="vid" href="'+v.u+'" target="_blank" rel="noopener"><span class="play"><svg viewBox="0 0 12 12"><path d="M3 1.8v8.4L10 6z" fill="#06211a"/></svg></span><span>Watch: '+esc(v.t)+' <small>· '+src+'</small></span></a>';
+}
+function exHTML(ex){
+  var arr=Array.isArray(ex)?ex:[ex];
+  return arr.map(function(s){ var i=s.indexOf("|"); return i>0?'<p><b>'+esc(s.slice(0,i))+'</b> '+esc(s.slice(i+1))+'</p>':'<p>'+esc(s)+'</p>'; }).join("");
+}
+function termHTML(t,nq){
+  var on=!!S.learned[t.id];
+  var h='<details class="term" id="t-'+t.id+'" data-id="'+t.id+'"><summary>'+
+    '<span class="tick'+(on?' on':'')+'" aria-hidden="true"></span>'+
+    '<span class="tname">'+hl(t.n,nq)+'</span><span class="tags">'+
+    (t.cf?'<span class="tag cf">Often confused</span>':'')+
+    '<span class="tag mk">'+MK[t.m]+'</span><span class="tag lv">'+LV[t.lv]+'</span></span>'+
+    '<svg class="chev" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+    '</summary><div class="body">';
+  h+='<p class="def">'+esc(t.d)+'</p>';
+  h+='<div class="box"><div class="blab">Example</div>'+exHTML(t.ex)+'</div>';
+  if(t.cmp) h+='<div class="cmp"><div class="box"><div class="blab">Forex</div><p>'+esc(t.cmp[0])+'</p></div><div class="box"><div class="blab">Futures</div><p>'+esc(t.cmp[1])+'</p></div></div>';
+  if(t.calc) h+=calcHTML(t.calc,t.id,t.cd);
+  h+='<div class="row">'+vidHTML(t.v)+(t.mod?'<span class="mod">In the course: <b>'+esc(t.mod)+'</b></span>':'')+'</div>';
+  if(t.rel.length||t.cf){
+    h+='<div class="rel">Related:';
+    if(t.cf&&BY[t.cf]) h+='<button type="button" class="cf" data-go="'+t.cf+'">vs '+esc(BY[t.cf].n)+'</button>';
+    t.rel.forEach(function(r){ if(r!==t.cf) h+='<button type="button" data-go="'+r+'">'+esc(BY[r].n)+'</button>'; });
+    h+='</div>';
+  }
+  h+='<label class="learn" for="l-'+t.id+'"><input type="checkbox" id="l-'+t.id+'" data-learn="'+t.id+'"'+(on?' checked':'')+'> I\'ve got this one</label>';
+  return h+'</div></details>';
+}
+
+function render(){
+  var nq=norm(q);
+  var pool=TERMS.filter(function(t){ return nq||showAll ? true : fits(t); });
+  if(cat!=="all") pool=pool.filter(function(t){return t.c===cat;});
+  var list=$("list"), html="";
+  if(nq){
+    var hits=pool.map(function(t){return {t:t,s:score(t,nq)};}).filter(function(x){return x.s>0;})
+      .sort(function(a,b){return b.s-a.s||a.t.n.localeCompare(b.t.n);});
+    if(!hits.length) html=/candle|wick|doji|hammer|engulf|marubozu|star|harami|inside bar|pin ?bar|ohlc|timeframe|time frame|shadow|body/i.test(q)
+      ?'<div class="empty">Candles have their own guide now. <a href="../candles/" target="_blank" rel="noopener">Open the FTA Candle Guide →</a></div>'
+      :'<div class="empty">No term matches "'+esc(q)+'". Suggest it below and Sway will add it.</div>';
+    else html='<div class="group">'+hits.map(function(x){return termHTML(x.t,nq);}).join("")+'</div>';
+  } else {
+    CATS.forEach(function(c){
+      var ts=pool.filter(function(t){return t.c===c.k;});
+      if(!ts.length) return;
+      html+='<div class="group"><div class="ghead">'+esc(c.n)+' · '+ts.length+'</div>'+ts.map(function(t){return termHTML(t,"");}).join("")+'</div>';
+    });
+    if(!html) html='<div class="empty">Nothing in this category for your level. Tap "Show every term".</div>';
+  }
+  list.innerHTML=html;
+  Array.prototype.forEach.call(list.querySelectorAll("[data-calc]"),runCalc);
+  $("showall").hidden=!!nq||showAll;
+  $("showall").textContent="Show every term ("+TERMS.length+")";
+  paintProgress(); paintSteps();
+}
+function paintProgress(){
+  var mine=TERMS.filter(fits), done=mine.filter(function(t){return S.learned[t.id];}).length;
+  $("pfill").style.width=(mine.length?done/mine.length*100:0)+"%";
+  $("pnum").textContent=done+" of "+mine.length+" learned · "+LV[S.lvl];
+  $("count").textContent=TERMS.length+" terms";
+}
+/* ---------- step-by-step path ----------
+   Each step: [title question, check question, [answers], index of the right one] */
+var QZ={
+ "forex":["What is forex?","What gets traded in the forex market?",["Company stocks","Currencies against each other","Only gold"],1],
+ "majors":["What are the major pairs?","What do all seven major pairs have in common?",["They all include the US dollar","They all include gold","They only trade in Asia"],0],
+ "base-quote":["What are base and quote currencies?","EURUSD is at 1.0850. What does that mean?",["1 dollar buys 1.0850 euros","1 euro costs 1.0850 dollars","The euro moved 1.0850 pips"],1],
+ "futures":["What is a futures contract?","Where do futures trade?",["On a central exchange like CME","Only through a forex broker","Person to person, with no exchange"],0],
+ "index-futures":["What are ES and NQ?","ES moves up 1 point. How much does 1 ES contract make?",["$5","$20","$50"],2],
+ "exchange":["What is an exchange?","Why does everyone see the same ES price?",["Every trade goes through one exchange, CME","Brokers agree on a price each morning","The government sets it"],0],
+ "gold":["What's the difference between spot gold and gold futures?","Which one has expiration dates?",["XAUUSD (spot gold)","GC (gold futures)","Neither"],1],
+ "long-short":["What do long and short mean?","You short EURUSD at 1.0850 and buy back at 1.0820. What happened?",["You made 30 pips","You lost 30 pips","You broke even"],0],
+ "bull-bear":["What do bullish and bearish mean?","You expect price to fall. You are…",["Bullish","Bearish","Neutral"],1],
+ "pip":["What is a pip?","EURUSD moves from 1.0850 to 1.0875. How many pips is that?",["2.5 pips","25 pips","250 pips"],1],
+ "gold-pips":["Why are gold pips different?","In this course, gold moves from 4,150 to 4,155. How many pips is that?",["5 pips","50 pips","500 pips"],1],
+ "tick":["What is a tick?","Gold futures move one tick. What is that worth on 1 MGC?",["$0.10","$1","$10"],1],
+ "pip-tick":["What's the difference between a pip and a tick?","Which traders count ticks?",["Forex traders","Futures traders","Nobody"],1],
+ "point":["What is a point?","ES moves 1 point. How many ticks is that?",["1","4","10"],1],
+ "spread":["What is the spread?","EURUSD shows sell 1.08500 / buy 1.08510. What's the spread?",["0.1 pip","1 pip","10 pips"],1],
+ "bid-ask":["What are the bid and the ask?","You click buy at market. Which price do you pay?",["The bid","The ask","The midpoint"],1],
+ "lot":["What is a lot?","1 standard lot of EURUSD makes how much per pip?",["$1","$10","$100"],1],
+ "mini-micro-lot":["What are mini and micro lots?","How big is a micro lot?",["0.01","0.10","1.00"],0],
+ "pip-value":["What is pip value?","Why does the pip value on USDJPY keep changing?",["Profits are paid in yen, so the dollar value moves with the price","Brokers change it every day","It never changes"],0],
+ "contract":["What is a contract?","Can you trade half an ES contract?",["Yes","No, only whole contracts","Only in the New York session"],1],
+ "micro-mini":["What's the difference between micro and full-size contracts?","How big is MES compared with ES?",["Half the size","One-tenth the size","The same size"],1],
+ "specs":["What are contract specifications?","What is the tick size on ES?",["0.10","0.25","1.00"],1],
+ "lot-vs-contract":["What's the difference between a lot and a contract?","Which one can be a fraction, like 0.37?",["A lot","A contract","Both"],0],
+ "leverage":["What is leverage?","What does leverage do to your wins and losses?",["Makes both bigger","Only makes wins bigger","Protects you from losses"],0],
+ "margin":["What is margin?","Margin is…",["A fee the broker keeps","Money set aside to keep your trade open","Your profit"],1],
+ "stop-loss":["What is a stop loss?","When should you set your stop?",["After the trade goes against you","Before you enter","Only on big trades"],1],
+ "take-profit":["What is a take profit?","Long gold at 4,150, stop 4,145, target 4,165. What are you risking, and to make what?",["$5 to make $15","$15 to make $5","$5 to make $5"],0],
+ "risk-per-trade":["How much should I risk per trade?","$5,000 account, 1% risk. What do you risk per trade?",["$5","$50","$500"],1],
+ "order":["What is an order?","An order is…",["An instruction to buy or sell","A chart pattern","A prop firm rule"],0],
+ "market-order":["What is a market order?","What's the tradeoff with a market order?",["It fills now, but maybe at a worse price","It never fills","It always gets a better price"],0],
+ "limit-order":["What is a limit order?","EURUSD is at 1.0880 and your buy limit is at 1.0850. When does it fill?",["Right away","Only if price comes down to 1.0850 or better","Only if price goes up"],1],
+ "margin-call":["What is a margin call?","What usually causes a margin call?",["Trading too big for your account","Using a stop loss","Trading micros"],0],
+ "tech-analysis":["What is technical analysis?","Technical analysis means reading…",["The chart itself: structure, levels and candles","Company earnings reports","Only the news"],0],
+ "support-resistance":["What are support and resistance?","A price floor where buyers keep stepping in is called…",["Resistance","Support","A wick"],1],
+ "trend-range":["Is it a trend or a range?","Price keeps bouncing between a ceiling and a floor. That's a…",["Trend","Range","Breakout"],1],
+ "market-structure":["What is market structure?","The 1-hour chart is making higher highs and higher lows. What do you look for?",["Buys","Sells","Anything"],0],
+ "hh-hl":["What are higher highs and higher lows?","What does a downtrend make?",["Higher highs and higher lows","Lower highs and lower lows","Equal highs"],1],
+ "position-sizing":["How do I size a trade?","$100 risk with a 20-pip stop on EURUSD. What size?",["0.20 lot","0.50 lot","5.00 lots"],1],
+ "risk-reward":["What is risk-to-reward?","You risk $5 to make $15. That's…",["1R","3R","15R"],1],
+ "pnl":["How do I work out profit and loss?","Long 1 MES, up 10 points. What's the profit?",["$12.50","$50","$500"],1],
+ "stop-order":["What is a stop order?","What does a stop order turn into when price reaches your level?",["A market order","A limit order","Nothing, it cancels"],0],
+ "bracket":["What is a bracket order?","Your take profit fills. What happens to your stop?",["It stays open","It cancels","It doubles"],1],
+ "slippage":["What is slippage?","Your stop is at 4,145 and it fills at 4,143.80. How much slippage?",["$1.20","$4.80","None"],0],
+ "key-level":["What is a key level?","Which one is a key level?",["Yesterday's high","A random price in the middle","Last week's entry"],0],
+ "bos":["What is a break of structure?","In an uptrend, a candle closes below the last higher low. What now?",["Stop looking for buys","Buy more","Nothing has changed"],0],
+ "pullback":["What is a pullback?","Gold runs 4,140 → 4,170, dips to 4,158, then pushes higher. Which part was the pullback?",["The run to 4,170","The dip to 4,158","The final push"],1],
+ "mtf":["What is multi-timeframe analysis?","The 1-hour is in an uptrend. On the 5-minute you take…",["Only buy setups","Only sell setups","Both"],0],
+ "liquidity-grab":["What is a liquidity grab?","Price dips below yesterday's low, takes out the stops, then rips back up. That was…",["A liquidity grab","A confirmed downtrend","A gap"],0],
+ "sessions":["What are the trading sessions?","When does the big volume start in ES and NQ?",["9:30 am New York","Midnight","Sunday evening"],0],
+ "news":["What are CPI, NFP and FOMC?","What's this course's rule around high-impact news?",["No new entries 15 minutes either side","Double your size","Only trade the release"],0],
+ "a-plus":["What is an A+ setup?","One of your rules doesn't line up. What do you do?",["Take it at half size","Skip it","Take it anyway"],1],
+ "fomo":["What is FOMO?","Price ran without you. What does FOMO make you do?",["Chase it with no plan","Wait for your setup","Close your platform"],0],
+ "revenge":["What is revenge trading?","What's the best move right after a loss?",["Trade bigger to win it back","Step away for 5 minutes","Take the next thing you see"],1],
+ "overtrading":["What is overtrading?","Overtrading usually comes from…",["Boredom or impatience","Following your plan","Using a stop"],0],
+ "chop":["What is chop?","What's the best trade in chop?",["Usually no trade","A big position","A breakout buy"],0],
+ "process":["What does process over outcome mean?","You followed every rule and still lost. That trade was…",["A good trade","A bad trade","A mistake"],0],
+ "journal":["Why keep a trading journal?","A journal tracks…",["Every trade and whether you followed your rules","Only your wins","Other people's trades"],0],
+ "backtesting":["What is backtesting?","Backtesting means…",["Testing your rules on past price data","Trading live with real money","Copying signals"],0],
+ "eval":["What is a prop firm eval?","What do you get when you pass an eval?",["A funded account","Nothing","A guaranteed salary"],0],
+ "funded":["What is a funded account?","On a funded account you…",["Trade the firm's account and keep a share of the profit","Have to deposit $50,000","Can never withdraw"],0],
+ "daily-loss":["What is a daily loss limit?","$1,000 daily limit. You take three $400 losses. When do you breach?",["After the first loss","During the third loss","Never"],1],
+ "max-dd":["What is max drawdown?","50K account with a $2,000 max drawdown. Where does it fail?",["$45,000","$48,000","$49,000"],1],
+ "trailing-dd":["What is intraday trailing drawdown?","You're up $800 in an open trade, then it reverses. Your floor…",["Already moved up $800","Stayed where it was","Moved down"],0],
+ "eod-dd":["What is end-of-day drawdown?","What moves an end-of-day drawdown floor?",["Open profit during the day","Your closing balance","Nothing"],1],
+ "consistency":["What is a consistency rule?","30% rule and $3,000 total profit. What's the most one day can be?",["$300","$900","$3,000"],1],
+ "payout":["How do payouts and profit splits work?","A 90/10 split on $2,000 of profit pays you…",["$200","$1,800","$2,000"],1],
+ "pipette":["What is a pipette?","On MT4 or MT5, a 100-point stop is…",["1 pip","10 pips","100 pips"],1],
+ "swap":["What is swap?","When does swap get charged?",["When you hold past the daily cutoff","On every trade you open","When you close a trade"],0],
+ "volatility":["What is volatility?","High volatility means…",["Bigger, faster swings","No movement","Only up moves"],0],
+ "liquidity":["What is liquidity?","More liquidity usually means…",["Tighter spreads and cleaner fills","Wider spreads","No trading"],0],
+ "symbols":["How do futures symbols work?","What does GCZ26 mean?",["Gold, December 2026","Gold, October 2026","26 gold contracts"],0],
+ "expiration":["What is expiration?","How do ES and NQ settle?",["In cash","By physical delivery","They never expire"],0],
+ "rollover":["What is rollover?","Rolling over means…",["Moving to the next contract month","Closing for the weekend","Adding size"],0],
+ "front-month":["What is the front month?","Why trade the front month?",["Tightest spread and most liquidity","It's cheaper","It never expires"],0],
+ "mtm":["What is mark to market?","How often are futures accounts settled?",["Every day","Every month","Only when you close"],0],
+ "init-maint":["What's initial vs maintenance margin?","You drop below maintenance margin. What happens?",["The broker asks for money or closes you out","Nothing","You get a bonus"],0]
+};
+var SWAY=[{r:"",w:""},{r:"",w:""},{r:"",w:""},{r:"",w:""},{r:"",w:""},{r:"",w:""},{r:"",w:""},{r:"",w:""},{r:"",w:""},{r:"",w:""}];
+/* ---------- Sway's two videos per section (Whop course). Paste each Whop lesson link into r (rundown) or w (walkthrough). ---------- */
+function swayHTML(i,kind){
+  var v=(SWAY[i]||{})[kind], r=kind==="r";
+  var lab=r?"Video 1 · Quick rundown":"Video 2 · Full walkthrough", sub=r?"Sway explains what you'll learn in this section":"Watch Sway do it start to finish";
+  var ico='<span class="play"><svg viewBox="0 0 12 12"><path d="M3 1.8v8.4L10 6z" fill="#1a1405"/></svg></span>';
+  return v?'<a class="sway" href="'+v+'" target="_blank" rel="noopener">'+ico+'<span><b>'+lab+'</b><small>'+sub+'</small></span><span class="sgo">Watch on Whop →</span></a>'
+          :'<div class="sway soonw">'+ico+'<span><b>'+lab+'</b><small>'+sub+' · in the Whop course soon</small></span></div>';
+}
+var PATH=[
+ {t:"The Markets",ids:["forex","majors","base-quote","futures","index-futures","exchange","gold","long-short","bull-bear"]},
+ {t:"Price Movement",ids:["pip","gold-pips","tick","pip-tick","point","spread","bid-ask"]},
+ {t:"Position Size",ids:["lot","mini-micro-lot","pip-value","contract","micro-mini","specs","lot-vs-contract","leverage","margin"]},
+ {t:"Risk Management",ids:["stop-loss","take-profit","risk-per-trade","order","market-order","limit-order","margin-call"]},
+ {t:"Reading Charts",ids:["support-resistance","trend-range","market-structure","hh-hl","tech-analysis"]},
+ {t:"Risk-to-Reward",ids:["position-sizing","risk-reward","pnl","stop-order","bracket","slippage"]},
+ {t:"Structure Terms",ids:["key-level","bos","pullback","mtf","liquidity-grab","sessions","news","a-plus"]},
+ {t:"Trader Mindset",ids:["fomo","revenge","overtrading","chop","process","journal","backtesting"]},
+ {t:"Prop Firm Rules",ids:["eval","funded","daily-loss","max-dd","trailing-dd","eod-dd","consistency","payout"]},
+ {t:"Market Mechanics",ids:["pipette","swap","volatility","liquidity","symbols","expiration","rollover","front-month","mtm","init-maint"]}
+];
+var NB=5; /* stages 1-5 are beginner; the rest unlock once all five are done */
+function forMkt(t){ return S.mkt==="both"||t.m==="both"||t.m===S.mkt; }
+function stageIds(i){ return PATH[i].ids.filter(function(id){return BY[id]&&QZ[id]&&forMkt(BY[id]);}); }
+function stageDone(i){ return stageIds(i).every(function(id){return S.passed[id];}); }
+function stageOpen(i){ return i===0||stageDone(i-1); }
+function nextStep(){
+  for(var i=0;i<PATH.length;i++){ var ids=stageIds(i); for(var j=0;j<ids.length;j++){ if(!S.passed[ids[j]]) return {s:i,k:j}; } }
+  return null;
+}
+var LOCK='<svg class="lock" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>';
+var ARROW='<svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#06211a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+function paintSteps(){
+  var nx=nextStep(), html="";
+  if(nx){
+    var first=!Object.keys(S.passed).length;
+    $("cont").innerHTML='<span class="ci"><small>'+(first?'Step 1 · Stage 1 of '+PATH.length:'Stage '+(nx.s+1)+' · Step '+(nx.k+1)+' of '+stageIds(nx.s).length)+'</small><b>'+esc(QZ[stageIds(nx.s)[nx.k]][0])+'</b></span><span class="arrow">'+ARROW+'</span>';
+    $("cont").setAttribute("data-s",nx.s); $("cont").setAttribute("data-k",nx.k); $("cont").hidden=false;
+    $("pathtitle").textContent=first?"Your step-by-step path":"Pick up where you left off";
+  } else { $("cont").hidden=true; $("pathtitle").textContent="Path complete. You know the language."; }
+  PATH.forEach(function(st,i){
+    if(i===NB) html+='<li class="divider">Intermediate · unlocks after the 5 beginner stages</li>';
+    var ids=stageIds(i), n=ids.filter(function(id){return S.passed[id];}).length, open=stageOpen(i), done=n===ids.length;
+    var cur=nx&&nx.s===i;
+    html+='<li><button type="button" class="stage'+(done?' done':'')+(cur?' cur':'')+'" data-stage="'+i+'"'+(open?'':' disabled')+'>'+
+      '<span class="snum">'+(done?'✓':(i+1))+'</span><span class="sinfo"><b>'+esc(st.t)+'</b><span>'+
+      (open?(done?'Done · tap to review':n+' of '+ids.length+' steps'):(i>=NB&&i===NB?'Finish all 5 beginner stages to unlock':'Finish stage '+i+' to unlock'))+
+      '</span>'+(open?'<span class="sbar2"><i style="width:'+(ids.length?n/ids.length*100:0)+'%"></i></span>':'')+'</span>'+(open?'':LOCK)+'</button></li>';
+  });
+  $("stages").innerHTML=html;
+}
+
+/* ---------- walk-through ---------- */
+var W={s:0,k:0,order:null,wrong:0};
+function shuffled(n,seed){ var a=[]; for(var i=0;i<n;i++)a.push(i); var x=seed; for(var j=n-1;j>0;j--){ x=(x*9301+49297)%233280; var r=Math.floor(x/233280*(j+1)); var t=a[j];a[j]=a[r];a[r]=t; } return a; }
+function openWalk(s,k){
+  W.s=s; W.k=k; W.wrong=0;
+  $("browse").hidden=true; $("walk").hidden=false; paintWalk();
+  window.scrollTo({top:0,behavior:"auto"});
+}
+function closeWalk(){ $("walk").hidden=true; $("browse").hidden=false; render(); window.scrollTo({top:0,behavior:"auto"}); }
+function paintWalk(){
+  var ids=stageIds(W.s), id=ids[W.k], t=BY[id], z=QZ[id], passed=!!S.passed[id];
+  var seed=0; for(var c=0;c<id.length;c++) seed+=id.charCodeAt(c)*(c+1);
+  W.order=shuffled(z[2].length,seed);
+  var dots=ids.map(function(x,i){return '<i class="'+(S.passed[x]?'ok':(i===W.k?'now':''))+'"></i>';}).join("");
+  var h='<div class="wtop"><button type="button" class="link" id="wback">← Back to path</button><span class="wstage">Stage '+(W.s+1)+' · '+esc(PATH[W.s].t)+'</span></div>'+
+    '<div class="dots" aria-hidden="true">'+dots+'</div>'+
+    '<span class="wstep">STEP '+(W.k+1)+' OF '+ids.length+'</span>'+
+    '<h2>'+esc(z[0])+'</h2>'+
+    '<p class="def">'+esc(t.d)+'</p>'+
+    '<div class="box"><div class="blab">Example</div>'+exHTML(t.ex)+'</div>'+
+    (t.cmp?'<div class="cmp"><div class="box"><div class="blab">Forex</div><p>'+esc(t.cmp[0])+'</p></div><div class="box"><div class="blab">Futures</div><p>'+esc(t.cmp[1])+'</p></div></div>':'')+
+    '<div class="row">'+vidHTML(t.v)+(t.mod?'<span class="mod">In the course: <b>'+esc(t.mod)+'</b></span>':'')+'</div>'+
+    '<div class="check"><div class="blab">Quick check</div><p class="cq">'+esc(z[1])+'</p>'+
+    W.order.map(function(oi,pos){ return '<button type="button" class="ans'+(passed&&oi===z[3]?' right':'')+'" data-a="'+oi+'"'+(passed?' disabled':'')+'><span class="k">'+"ABC"[pos]+'</span>'+esc(z[2][oi])+'</button>'; }).join("")+
+    '<p class="fb'+(passed?' ok':'')+'" id="fb">'+(passed?'You got this one.':'')+'</p></div>'+
+    '<div class="wnav">'+(W.k>0?'<button type="button" class="prev" id="wprev">Back</button>':'')+
+    '<button type="button" class="next" id="wnext"'+(passed?'':' disabled')+'>'+(W.k===ids.length-1?'Finish stage':'Next step')+' →</button></div>';
+  $("walk").innerHTML=h;
+}
+function paintStageDone(){
+  var nxt=W.s+1<PATH.length?W.s+1:null, beginnerJustDone=(W.s===NB-1);
+  $("walk").innerHTML='<div class="done-card"><span class="big">'+ARROW.replace('M5 12h14M13 6l6 6-6 6','M5 13l4 4L19 7')+'</span>'+
+    '<span class="eyebrow">Stage '+(W.s+1)+' complete</span><h2>'+esc(PATH[W.s].t)+'</h2>'+
+    '<p>'+(beginnerJustDone?'That\'s all 5 beginner stages. The intermediate path is now unlocked.':(nxt===null?'You finished the whole path. Every term is still here whenever you need it.':'Next up: '+esc(PATH[nxt].t)))+'</p>'+
+    (nxt!==null?'<button type="button" class="next" id="wnextstage" style="margin:6px auto 0">Start stage '+(nxt+1)+' →</button>':'')+
+    '<button type="button" class="link" id="wback">Back to path</button></div>';
+}
+$("walk").addEventListener("click",function(e){
+  var t=e.target.closest("button"); if(!t) return;
+  if(t.id==="wback"){ closeWalk(); return; }
+  if(t.id==="wprev"){ W.k--; W.wrong=0; paintWalk(); window.scrollTo({top:0}); return; }
+  if(t.id==="wnext"){
+    var ids=stageIds(W.s);
+    if(W.k<ids.length-1){ W.k++; W.wrong=0; paintWalk(); window.scrollTo({top:0}); }
+    else { paintStageDone(); window.scrollTo({top:0}); }
+    return;
+  }
+  if(t.id==="wnextstage"){ openWalk(W.s+1,0); return; }
+  if(t.classList.contains("ans")){
+    var id=stageIds(W.s)[W.k], z=QZ[id], a=+t.getAttribute("data-a"), fb=$("fb");
+    if(a===z[3]){
+      Array.prototype.forEach.call($("walk").querySelectorAll(".ans"),function(b){b.disabled=true;});
+      t.classList.add("right"); fb.className="fb ok"; fb.textContent="That's it. Next step unlocked.";
+      S.passed[id]=1; S.learned[id]=1; save(); $("wnext").disabled=false;
+      var dots=$("walk").querySelectorAll(".dots i"); if(dots[W.k]) dots[W.k].className="ok";
+    } else {
+      W.wrong++; t.classList.add("wrong"); t.disabled=true; fb.className="fb no";
+      fb.textContent=W.wrong>1?"Not quite. Read the definition and example again, then try once more.":"Not quite. Try again.";
+    }
+  }
+});
+$("cont").addEventListener("click",function(){ openWalk(+this.getAttribute("data-s"),+this.getAttribute("data-k")); });
+$("stages").addEventListener("click",function(e){
+  var b=e.target.closest(".stage"); if(!b||b.disabled) return;
+  var i=+b.getAttribute("data-stage"), ids=stageIds(i), k=0;
+  for(var j=0;j<ids.length;j++){ if(!S.passed[ids[j]]){k=j;break;} }
+  openWalk(i,k);
+});
+function goTo(id){
+  if(!BY[id]) return;
+  var el=$("t-"+id);
+  if(!el){ q=""; $("q").value=""; cat="all"; paintCats(); showAll=true; render(); el=$("t-"+id); }
+  if(el){ el.open=true; el.scrollIntoView({block:"start",behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}); }
+}
+function paintCats(){
+  $("cats").innerHTML=[{k:"all",n:"All"}].concat(CATS).map(function(c){
+    return '<button type="button" class="cat" data-cat="'+c.k+'" aria-pressed="'+(cat===c.k)+'">'+esc(c.n)+'</button>';}).join("");
+}
+function showMain(){
+  $("setup").hidden=true; $("main").hidden=false;
+  $("walk").hidden=true; $("browse").hidden=false;
+  $("pm").textContent=MK[S.mkt]; $("pl").textContent=LV[S.lvl];
+  paintCats(); render();
+}
+function showSetup(){
+  pick={mkt:S.mkt,lvl:S.lvl};
+  ["mkt","lvl"].forEach(function(g){
+    Array.prototype.forEach.call($(g).querySelectorAll(".opt"),function(b){b.setAttribute("aria-pressed",b.getAttribute("data-v")===pick[g]?"true":"false");});
+  });
+  $("go").disabled=!(pick.mkt&&pick.lvl);
+  $("main").hidden=true; $("setup").hidden=false;
+}
+
+["mkt","lvl"].forEach(function(g){
+  $(g).addEventListener("click",function(e){
+    var b=e.target.closest(".opt"); if(!b) return;
+    pick[g]=b.getAttribute("data-v");
+    Array.prototype.forEach.call($(g).querySelectorAll(".opt"),function(x){x.setAttribute("aria-pressed",x===b?"true":"false");});
+    $("go").disabled=!(pick.mkt&&pick.lvl);
+  });
+});
+$("go").addEventListener("click",function(){ S.mkt=pick.mkt; S.lvl=pick.lvl; save(); showAll=false; showMain(); });
+$("change").addEventListener("click",showSetup);
+$("q").addEventListener("input",function(){ q=this.value; render(); });
+$("cats").addEventListener("click",function(e){ var b=e.target.closest(".cat"); if(!b) return; cat=b.getAttribute("data-cat"); paintCats(); render(); });
+$("showall").addEventListener("click",function(){ showAll=true; render(); });
+document.addEventListener("click",function(e){ var b=e.target.closest("[data-go]"); if(b){ e.preventDefault(); goTo(b.getAttribute("data-go")); } });
+$("list").addEventListener("input",function(e){ var box=e.target.closest("[data-calc]"); if(box) runCalc(box); });
+$("list").addEventListener("change",function(e){
+  var box=e.target.closest("[data-calc]"); if(box){ runCalc(box); return; }
+  var id=e.target.getAttribute&&e.target.getAttribute("data-learn"); if(!id) return;
+  if(e.target.checked) S.learned[id]=1; else delete S.learned[id];
+  save();
+  $("t-"+id).querySelector(".tick").classList.toggle("on",e.target.checked);
+  paintProgress(); paintSteps();
+});
+
+var dbRef=null;
+$("sform").addEventListener("submit",function(e){
+  e.preventDefault();
+  var v=$("sterm").value.trim(), msg=$("smsg");
+  if(!v){ msg.textContent="Type the term first."; return; }
+  if(!dbRef){ msg.textContent="Suggestions need you signed in to Claude. Send it to Sway in the community instead."; return; }
+  $("sbtn").disabled=true;
+  dbRef.collection("suggestions").add({term:v.slice(0,120),market:S.mkt||"",level:S.lvl||"",at:new Date().toISOString()})
+    .then(function(){ msg.textContent="Sent. Thanks, it's on Sway's list."; $("sterm").value=""; })
+    .catch(function(){ msg.textContent="That didn't go through. Send it to Sway in the community instead."; })
+    .then(function(){ $("sbtn").disabled=false; });
+});
+try{
+  if(window.claude&&typeof window.claude.use==="function"){
+    window.claude.use("db").then(function(db){ dbRef=db||null; }).catch(function(){});
+  }
+}catch(e){}
+
+$("count").textContent=TERMS.length+" terms";
+var hash=(location.hash||"").replace(/^#/,"");
+if(S.mkt&&S.lvl){ showMain(); if(hash&&BY[hash]) goTo(hash); } else showSetup();
+
+/* ---------- deep link: #stage-N opens that stage (used by the Whop lessons) ---------- */
+var pendingStage=-1;
+function stageFromHash(){var m=/^#stage-(\d+)$/.exec(location.hash||"");if(!m)return -1;var i=+m[1]-1;return (i>=0&&i<PATH.length)?i:-1;}
+function openStageAt(i){var ids=stageIds(i),k=0;for(var j=0;j<ids.length;j++){if(!S.passed[ids[j]]){k=j;break;}}showMain();openWalk(i,k);}
+function openStageHash(){var i=stageFromHash();if(i<0)return;if(!(S.mkt&&S.lvl)){pendingStage=i;showSetup();return;}openStageAt(i);}
+$("go").addEventListener("click",function(){setTimeout(function(){if(pendingStage>=0&&S.mkt&&S.lvl){var p=pendingStage;pendingStage=-1;openStageAt(p);}},0);});
+openStageHash();window.addEventListener("hashchange",openStageHash);
+})();
+</script>
+
+</body></html>

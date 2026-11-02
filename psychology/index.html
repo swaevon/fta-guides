@@ -1,0 +1,812 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>FTA Psychology Guide</title></head><body>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* One-column reference tool. Setup → search → start-here → term accordions → suggest.
+   FTA brand = the FLOW STACK desk: deep green, mint light, beams running through it. */
+:root{
+  color-scheme:dark;
+  --bg:#081d19; --panel:#0c2722; --panel2:#0f2e28; --card:rgba(255,255,255,.04); --card2:rgba(255,255,255,.065);
+  --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.17);
+  --fg:#eaf5f1; --muted:#8fb8ac; --dim:#628f82;
+  --mint:#3fdc9a; --mintdim:rgba(63,220,154,.14); --mintglow:rgba(63,220,154,.35);
+  --gold:#e8c468; --golddim:rgba(232,196,104,.13);
+  --coral:#f0736b;
+  --sans:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:17px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 72px;
+  position:relative;min-height:100vh}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:var(--mint)}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--mint);outline-offset:2px;border-radius:8px}
+
+/* ---------- background: glow, dot grid, light streaks ---------- */
+.fx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.fx .glow{position:absolute;inset:0;background:radial-gradient(900px 520px at 50% -6%,#13402f 0%,transparent 64%),radial-gradient(700px 500px at 100% 100%,rgba(63,220,154,.06),transparent 70%)}
+.fx .grid{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.055) 1px,transparent 1.2px);background-size:24px 24px;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.35) 60%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.35) 60%,transparent 100%)}
+.fx .track{position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,rgba(63,220,154,.07) 20%,rgba(63,220,154,.07) 80%,transparent)}
+.fx .track i{position:absolute;left:-1px;width:3px;height:200px;top:-220px;border-radius:3px;
+  background:linear-gradient(to bottom,transparent,rgba(63,220,154,.15) 30%,var(--mint) 85%,#fff 100%);
+  box-shadow:0 0 12px var(--mint),0 0 26px var(--mintglow);animation:fall var(--d,7s) linear infinite;animation-delay:var(--w,0s)}
+@keyframes fall{from{transform:translateY(0)}to{transform:translateY(calc(100vh + 440px))}}
+.wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+
+/* ---------- beams (FLOW STACK) ---------- */
+@property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes spin{to{--ang:360deg}}
+@keyframes breathe{0%,100%{box-shadow:0 0 0 1px rgba(63,220,154,.05),0 0 22px -6px var(--mintglow)}50%{box-shadow:0 0 0 1px rgba(63,220,154,.08),0 0 38px -4px var(--mintglow)}}
+.beam{border:1.5px solid transparent;
+  background:linear-gradient(var(--panel),var(--panel)) padding-box,
+    conic-gradient(from var(--ang),rgba(63,220,154,.16) 0 58%,var(--mint) 76%,#ffffff 80%,var(--mint) 84%,rgba(63,220,154,.16) 97%) border-box;
+  animation:spin 4.2s linear infinite,breathe 3.4s ease-in-out infinite;animation-delay:var(--delay,0s)}
+.beam.gold{background:linear-gradient(var(--panel),var(--panel)) padding-box,
+    conic-gradient(from var(--ang),rgba(232,196,104,.16) 0 58%,var(--gold) 76%,#fff 80%,var(--gold) 84%,rgba(232,196,104,.16) 97%) border-box}
+.rail{height:2px;border-radius:2px;background:linear-gradient(90deg,transparent 0%,rgba(63,220,154,.12) 20%,rgba(63,220,154,.12) 80%,transparent 100%);position:relative;overflow:hidden}
+.rail::after{content:"";position:absolute;top:0;bottom:0;width:22%;left:-22%;background:linear-gradient(90deg,transparent,var(--mint),#fff,var(--mint),transparent);
+  box-shadow:0 0 14px var(--mint);animation:run 3.6s cubic-bezier(.6,0,.4,1) infinite}
+@keyframes run{to{left:100%}}
+
+/* ---------- header ---------- */
+.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.mark{width:44px;height:44px;border-radius:13px;background:var(--mint);display:grid;place-items:center;flex:none;box-shadow:0 0 0 4px rgba(63,220,154,.12),0 0 28px var(--mintglow)}
+.mark svg{width:22px;height:22px}
+.brand{font-weight:800;font-size:25px;letter-spacing:-.025em;line-height:1.1}
+.brand span{color:var(--mint);text-shadow:0 0 22px var(--mintglow)}
+.brand small{display:block;font-size:13.5px;font-weight:600;color:var(--muted);letter-spacing:.02em;margin-top:3px}
+.count{margin-left:auto;font-family:var(--mono);font-size:13px;color:var(--mint);border:1px solid rgba(63,220,154,.35);border-radius:999px;padding:5px 12px;background:var(--mintdim)}
+
+/* ---------- setup ---------- */
+.setup{border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:22px}
+.setup h1{margin:0;font-size:clamp(27px,6vw,36px);font-weight:800;letter-spacing:-.03em;line-height:1.15;text-wrap:balance}
+.setup h1 em{font-style:normal;color:var(--mint);text-shadow:0 0 24px var(--mintglow)}
+.setup p{margin:0;color:var(--muted);max-width:58ch;font-size:17px}
+.q{display:flex;flex-direction:column;gap:10px}
+.qlab{font-size:12.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mint)}
+.opts{display:flex;flex-wrap:wrap;gap:10px}
+.opt{appearance:none;cursor:pointer;border:1px solid var(--line2);background:var(--card);color:var(--fg);border-radius:16px;padding:14px 18px;text-align:left;min-width:160px;flex:1 1 160px;transition:border-color .15s,background .15s,box-shadow .15s}
+.opt b{display:block;font-size:18px}
+.opt i{display:block;font-style:normal;font-size:14px;color:var(--muted);margin-top:3px}
+.opt:hover{border-color:rgba(63,220,154,.5)}
+.opt[aria-pressed="true"]{background:var(--mintdim);border-color:var(--mint);box-shadow:0 0 22px -6px var(--mintglow)}
+.opt[aria-pressed="true"] b{color:var(--mint)}
+.go{appearance:none;border:0;cursor:pointer;background:var(--mint);color:#06211a;font-weight:800;font-size:17px;padding:14px 26px;border-radius:999px;align-self:flex-start;box-shadow:0 0 26px -4px var(--mintglow)}
+.go:disabled{opacity:.35;cursor:default;box-shadow:none}
+
+/* ---------- profile, search ---------- */
+.profile{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:15px;color:var(--muted)}
+.pchip{font-weight:700;color:var(--fg);background:var(--card2);border:1px solid var(--line2);border-radius:999px;padding:5px 13px}
+.link{appearance:none;background:none;border:0;color:var(--mint);cursor:pointer;font-size:15px;font-weight:700;padding:4px 2px}
+.searchbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;padding-block:10px;display:flex;flex-direction:column;gap:12px;
+  background:var(--bg);box-shadow:0 14px 18px -6px var(--bg)}
+.search{display:flex;align-items:center;gap:12px;border-radius:16px;padding:0 16px}
+.search svg{width:20px;height:20px;color:var(--mint);flex:none}
+.search input{flex:1;min-width:0;background:transparent;border:0;color:var(--fg);font:inherit;font-size:18px;padding:15px 0}
+.search input::placeholder{color:var(--dim)}
+.search input:focus{outline:none}
+.cats{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.cats::-webkit-scrollbar{display:none}
+.cat{appearance:none;cursor:pointer;white-space:nowrap;border:1px solid var(--line2);background:rgba(8,29,25,.7);color:var(--muted);border-radius:999px;padding:8px 15px;font-size:14.5px;font-weight:600}
+.cat[aria-pressed="true"]{background:var(--mintdim);color:var(--mint);border-color:var(--mint);box-shadow:0 0 16px -4px var(--mintglow)}
+.prog{display:flex;align-items:center;gap:12px}
+.pbar{flex:1;height:7px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
+.pbar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#1fa673,var(--mint),#b9ffe0);border-radius:999px;box-shadow:0 0 12px var(--mint);transition:width .5s}
+.pnum{font-family:var(--mono);font-size:13.5px;color:var(--muted);white-space:nowrap}
+
+/* ---------- start here ---------- */
+.start{border-radius:20px;padding:20px;--delay:-1.4s}
+/* ---------- path + walk-through ---------- */
+.browse{display:flex;flex-direction:column;gap:20px}
+.path{border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:16px;--delay:-1.4s}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mint)}
+.path h2{margin:0;font-size:clamp(24px,5.5vw,30px);font-weight:800;letter-spacing:-.025em;line-height:1.2;text-wrap:balance}
+.path .sub{margin:0;color:var(--muted);font-size:16px}
+.cont{appearance:none;cursor:pointer;text-align:left;display:flex;align-items:center;gap:14px;width:100%;border:1px solid var(--mint);background:linear-gradient(135deg,rgba(63,220,154,.22),rgba(63,220,154,.07));color:var(--fg);border-radius:18px;padding:16px 18px;box-shadow:0 0 30px -8px var(--mintglow)}
+.cont .ci{flex:1;min-width:0}
+.cont small{display:block;font-size:13.5px;color:var(--mint);font-weight:700;letter-spacing:.04em}
+.cont b{display:block;font-size:20px;font-weight:800;letter-spacing:-.015em;margin-top:2px}
+.cont .arrow{width:44px;height:44px;border-radius:50%;background:var(--mint);display:grid;place-items:center;flex:none;box-shadow:0 0 18px var(--mintglow)}
+.cont .arrow svg{width:20px;height:20px}
+.stages{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.stage{appearance:none;width:100%;text-align:left;cursor:pointer;display:flex;align-items:center;gap:14px;border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--fg);border-radius:15px;padding:12px 14px}
+.stage:hover:not(:disabled){border-color:rgba(63,220,154,.5)}
+.stage:disabled{cursor:default;opacity:.55}
+.snum{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:14px;background:rgba(255,255,255,.07);color:var(--muted);border:1px solid var(--line2)}
+.stage.done .snum{background:var(--mint);color:#06211a;border-color:var(--mint);box-shadow:0 0 12px var(--mintglow)}
+.stage.cur .snum{border-color:var(--mint);color:var(--mint);box-shadow:0 0 0 3px var(--mintdim)}
+.sinfo{flex:1;min-width:0}
+.sinfo b{display:block;font-size:17px;font-weight:700}
+.sinfo span{display:block;font-size:13.5px;color:var(--muted)}
+.sbar2{height:4px;border-radius:4px;background:rgba(255,255,255,.08);margin-top:6px;overflow:hidden}
+.sbar2 i{display:block;height:100%;background:var(--mint);box-shadow:0 0 8px var(--mint)}
+.lock{width:18px;height:18px;color:var(--dim);flex:none}
+.divider{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;margin:8px 2px 2px}
+.divider::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(232,196,104,.4),transparent)}
+.lookup{margin:6px 0 0;font-size:20px;font-weight:800;letter-spacing:-.015em}
+.lookup span{display:block;font-size:14.5px;font-weight:500;color:var(--muted);letter-spacing:0;margin-top:2px}
+.walk{border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:18px}
+.wtop{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.wtop .link{font-size:15px}
+.wstage{margin-left:auto;font-size:13.5px;color:var(--muted);font-weight:600}
+.dots{display:flex;gap:5px}
+.dots i{flex:1;height:6px;border-radius:6px;background:rgba(255,255,255,.1)}
+.dots i.ok{background:var(--mint);box-shadow:0 0 8px var(--mintglow)}
+.dots i.now{background:rgba(63,220,154,.45)}
+.wstep{font-family:var(--mono);font-size:13.5px;color:var(--mint);letter-spacing:.06em}
+.walk h2{margin:-8px 0 0;font-size:clamp(28px,7vw,38px);font-weight:800;letter-spacing:-.03em;line-height:1.12;text-wrap:balance}
+.check{border:1px solid rgba(232,196,104,.4);border-radius:16px;padding:16px;background:rgba(232,196,104,.05);display:flex;flex-direction:column;gap:10px}
+.check .blab{margin:0}
+.check .cq{margin:0;font-size:18px;font-weight:700;line-height:1.45}
+.ans{appearance:none;cursor:pointer;text-align:left;border:1px solid var(--line2);background:rgba(0,0,0,.2);color:var(--fg);border-radius:13px;padding:13px 15px;font-size:16.5px;font-weight:600;display:flex;gap:10px;align-items:center}
+.ans:hover:not(:disabled){border-color:rgba(232,196,104,.6)}
+.ans:disabled{cursor:default}
+.ans .k{font-family:var(--mono);font-size:13px;color:var(--muted);width:24px;height:24px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;flex:none}
+.ans.right{border-color:var(--mint);background:var(--mintdim);color:var(--mint)}
+.ans.right .k{background:var(--mint);color:#06211a;border-color:var(--mint)}
+.ans.wrong{border-color:rgba(240,115,107,.6);background:rgba(240,115,107,.08);color:var(--coral)}
+.fb{font-size:15.5px;min-height:1.2em;margin:0}
+.fb.ok{color:var(--mint)} .fb.no{color:var(--coral)}
+.wnav{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.next{appearance:none;border:0;cursor:pointer;background:var(--mint);color:#06211a;font-weight:800;font-size:17px;padding:14px 26px;border-radius:999px;box-shadow:0 0 26px -4px var(--mintglow);margin-left:auto}
+.next:disabled{opacity:.3;cursor:default;box-shadow:none}
+.prev{appearance:none;cursor:pointer;background:none;border:1px solid var(--line2);color:var(--fg);border-radius:999px;padding:12px 20px;font-weight:700;font-size:15px}
+.done-card{text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center;padding:12px 4px}
+.done-card .big{width:72px;height:72px;border-radius:50%;background:var(--mint);display:grid;place-items:center;box-shadow:0 0 0 8px var(--mintdim),0 0 40px var(--mintglow)}
+.done-card .big svg{width:34px;height:34px}
+.done-card h2{margin:6px 0 0}
+.done-card p{margin:0;color:var(--muted);max-width:44ch}
+.shead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.shead b{font-size:19px;font-weight:800}
+.shead span{font-size:14.5px;color:var(--muted)}
+.steps{display:flex;flex-wrap:wrap;gap:9px;margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s}
+.step{appearance:none;cursor:pointer;display:flex;align-items:center;gap:9px;border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--fg);border-radius:999px;padding:7px 15px 7px 7px;font-size:15px;font-weight:600}
+.step:hover{border-color:rgba(63,220,154,.5)}
+.step::before{content:counter(s);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.step.done::before{content:"\2713";background:var(--mint);color:#06211a;box-shadow:0 0 10px var(--mintglow)}
+
+/* ---------- list ---------- */
+.group{display:flex;flex-direction:column;gap:10px}
+.ghead{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mint);margin:14px 2px 2px}
+.ghead::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(63,220,154,.35),transparent)}
+details.term{border:1.5px solid var(--line);border-radius:16px;background:rgba(12,39,34,.72);transition:border-color .15s;scroll-margin-top:170px}
+details.term:hover{border-color:rgba(63,220,154,.3)}
+details.term[open]{border-color:transparent;
+  background:linear-gradient(var(--panel),var(--panel)) padding-box,
+    conic-gradient(from var(--ang),rgba(63,220,154,.18) 0 58%,var(--mint) 76%,#fff 80%,var(--mint) 84%,rgba(63,220,154,.18) 97%) border-box;
+  animation:spin 4.2s linear infinite,breathe 3.4s ease-in-out infinite}
+details.term summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:16px 16px}
+details.term summary::-webkit-details-marker{display:none}
+.tname{font-weight:700;font-size:18.5px;min-width:0;letter-spacing:-.01em}
+.tname mark{background:var(--golddim);color:var(--gold);border-radius:3px;padding:0 1px}
+.tags{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
+.tag{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 9px;border:1px solid var(--line2);color:var(--muted);white-space:nowrap}
+.tag.lv{color:var(--mint);border-color:rgba(63,220,154,.35)}
+.tag.cf{color:var(--gold);border-color:rgba(232,196,104,.45)}
+@media (max-width:560px){.tag.mk{display:none}}
+.tick{width:11px;height:11px;border-radius:50%;flex:none;border:1.5px solid var(--dim)}
+.tick.on{background:var(--mint);border-color:var(--mint);box-shadow:0 0 10px var(--mint)}
+.chev{width:18px;height:18px;color:var(--muted);flex:none;transition:transform .2s}
+details.term[open] .chev{transform:rotate(180deg);color:var(--mint)}
+.body{padding:0 16px 18px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.def{margin:0;font-size:20px;font-weight:600;line-height:1.5;max-width:62ch;letter-spacing:-.01em}
+.box{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:rgba(0,0,0,.2);min-width:0}
+.blab{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+.box p{margin:0;max-width:64ch;font-size:16.5px}
+.box p+p{margin-top:9px;padding-top:9px;border-top:1px dashed var(--line)}
+.box p b{color:var(--gold);font-weight:700;font-family:var(--mono);font-size:.88em;letter-spacing:.02em;margin-right:4px}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.cmp{grid-template-columns:1fr}}
+.cmp .box .blab{color:var(--mint)}
+.calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end}
+.calc label{display:flex;flex-direction:column;gap:5px;font-size:13.5px;color:var(--muted);font-weight:600}
+.calc input,.calc select{background:var(--bg);border:1px solid var(--line2);color:var(--fg);border-radius:11px;padding:11px 12px;font:inherit;font-family:var(--mono);font-size:16px;min-width:0;width:100%}
+.calc input:focus,.calc select:focus{outline:none;border-color:var(--mint);box-shadow:0 0 0 3px var(--mintdim)}
+.out{grid-column:1/-1;font-family:var(--mono);font-size:16px;color:var(--mint);background:var(--mintdim);border:1px solid rgba(63,220,154,.3);border-radius:12px;padding:12px 14px;text-shadow:0 0 14px var(--mintglow)}
+.calcbox{border-color:rgba(63,220,154,.25)}
+.calcbox .blab{color:var(--mint)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.vid{display:inline-flex;align-items:center;gap:11px;text-decoration:none;border:1px solid rgba(63,220,154,.5);background:var(--mintdim);color:var(--fg);border-radius:14px;padding:10px 16px 10px 10px;font-weight:600;font-size:15.5px}
+.vid:hover{box-shadow:0 0 20px -4px var(--mintglow)}
+.vid .play{width:30px;height:30px;border-radius:50%;background:var(--mint);display:grid;place-items:center;flex:none;box-shadow:0 0 12px var(--mintglow)}
+.vid .play svg{width:12px;height:12px}
+.vid small{color:var(--muted);font-weight:500}
+.soon{font-size:15px;color:var(--muted);border:1px dashed var(--line2);border-radius:14px;padding:10px 16px}
+.mod{font-size:15px;color:var(--fg);border:1px solid var(--line2);border-radius:14px;padding:10px 16px;background:var(--card)}
+.mod b{color:var(--mint)}
+.rel{display:flex;flex-wrap:wrap;gap:7px;align-items:center;font-size:14px;color:var(--muted)}
+.rel button{appearance:none;cursor:pointer;border:1px solid var(--line2);background:transparent;color:var(--fg);border-radius:999px;padding:5px 12px;font-size:14px;font-weight:600}
+.rel button:hover{border-color:rgba(63,220,154,.5)}
+.rel button.cf{border-color:rgba(232,196,104,.55);color:var(--gold)}
+.learn{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--muted);cursor:pointer;width:fit-content}
+.learn input{width:19px;height:19px;accent-color:var(--mint)}
+.empty{color:var(--muted);text-align:center;padding:28px 12px;border:1px dashed var(--line2);border-radius:16px;font-size:16px}
+.all{appearance:none;cursor:pointer;background:rgba(8,29,25,.7);border:1px solid var(--line2);color:var(--fg);border-radius:999px;padding:10px 18px;font-weight:700;font-size:15px;align-self:center}
+
+.candlelink{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--fg);border-radius:18px;padding:16px 18px;--delay:-2s}
+.cl-ico{width:42px;height:42px;border-radius:12px;background:var(--gold);display:grid;place-items:center;flex:none}
+.cl-ico svg{width:20px;height:20px}
+.cl-txt{flex:1;min-width:0}.cl-txt b{display:block;font-size:18px}.cl-txt span{display:block;font-size:14.5px;color:var(--muted)}
+.cl-go{font-size:22px;color:var(--gold)}
+/* ---------- suggest ---------- */
+.suggest{border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:12px;--delay:-2.6s}
+.suggest b{font-size:20px}
+.suggest p{margin:0;color:var(--muted);font-size:16px}
+.sform{display:flex;gap:10px;flex-wrap:wrap}
+.sform input{flex:1 1 230px;min-width:0;background:var(--bg);border:1px solid var(--line2);color:var(--fg);border-radius:13px;padding:13px 14px;font:inherit;font-size:16.5px}
+.sform input:focus{outline:none;border-color:var(--mint)}
+.sform button{appearance:none;border:0;cursor:pointer;background:var(--mint);color:#06211a;font-weight:800;font-size:16px;border-radius:13px;padding:13px 22px;box-shadow:0 0 22px -6px var(--mintglow)}
+.sform button:disabled{opacity:.45;cursor:default}
+.smsg{font-size:15px;color:var(--mint);min-height:1em}
+.foot{text-align:center;color:var(--dim);font-size:13.5px;max-width:62ch;margin:0 auto}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important}
+  .beam,.walk,details.term[open],.rail::after,.fx .track i{animation:none!important}
+  .fx .track i{display:none}
+}
+
+.sway{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--fg);border:1px solid rgba(244,196,88,.55);background:linear-gradient(135deg,rgba(244,196,88,.14),rgba(244,196,88,.04));border-radius:16px;padding:12px 14px;margin:14px 0}
+.sway .play{width:34px;height:34px;border-radius:50%;background:var(--gold);display:grid;place-items:center;flex:none;box-shadow:0 0 14px rgba(244,196,88,.45)}
+.sway .play svg{width:13px;height:13px}
+.sway>span:nth-child(2){display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.sway b{font-size:15.5px}.sway small{color:var(--muted);font-size:13.5px}
+.sway .sgo{color:var(--gold);font-weight:700;font-size:14px;white-space:nowrap}
+.sway.soonw{border-style:dashed;opacity:.85}.sway.soonw .play{background:var(--line2);box-shadow:none}
+/* ===== candle guide additions ===== */
+.home{display:flex;flex-direction:column;gap:20px}
+.card{border:1px solid var(--line);border-radius:20px;padding:20px;background:rgba(12,39,34,.72);display:flex;flex-direction:column;gap:12px}
+.card.beam{border:1.5px solid transparent}
+.h2{margin:0;font-size:clamp(22px,5vw,27px);font-weight:800;letter-spacing:-.02em;line-height:1.2;text-wrap:balance}
+.eyebrow.gold{color:var(--gold)}
+.path .prog{margin-top:-4px}
+.figbox{margin:0;border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.22);padding:12px 10px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;overflow-x:auto}
+.figbox figcaption{font-size:14px;color:var(--muted);text-align:center;max-width:60ch}
+svg.fig{width:100%;height:auto;display:block}
+svg.fig text{font-family:var(--sans)}
+svg.fig .nt{font-size:11.5px;fill:#eaf5f1;font-weight:600}
+svg.fig .lvt{font-size:10.5px;fill:var(--gold);font-weight:700}
+svg.fig .tg{font-size:10.5px;fill:var(--muted);font-family:var(--mono)}
+svg.fig .glowc{filter:drop-shadow(0 0 6px rgba(63,220,154,.45))}
+.walk .para{margin:0;font-size:16.5px;color:#cfe3dc;max-width:64ch}
+.builder{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center}
+@media (max-width:620px){.builder{grid-template-columns:1fr}}
+.sliders{display:flex;flex-direction:column;gap:12px}
+.sliders label{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;font-size:14px;font-weight:700;color:var(--muted)}
+.sliders .sv{margin-left:auto;font-family:var(--mono);color:var(--fg);font-weight:600}
+.sliders input{width:100%;accent-color:var(--mint)}
+.read{border:1px solid rgba(63,220,154,.35);background:var(--mintdim);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.read b{color:var(--mint);font-size:16px}
+.read span{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.presets{display:flex;flex-wrap:wrap;gap:7px;align-items:center;font-size:14px;color:var(--muted)}
+.presets button,.btn{appearance:none;cursor:pointer;border:1px solid var(--line2);background:transparent;color:var(--fg);border-radius:999px;padding:7px 13px;font-size:14px;font-weight:600}
+.presets button:hover,.btn:hover{border-color:rgba(63,220,154,.5)}
+.btn{align-self:center;padding:11px 20px;font-size:15px;font-weight:700;background:var(--mintdim);border-color:rgba(63,220,154,.5)}
+.libwrap{display:flex;flex-direction:column;gap:12px}
+.lib{display:flex;flex-direction:column;gap:10px}
+details.pat{border:1.5px solid var(--line);border-radius:16px;background:rgba(12,39,34,.72)}
+details.pat[open]{border-color:transparent;background:linear-gradient(var(--panel),var(--panel)) padding-box,conic-gradient(from var(--ang),rgba(63,220,154,.18) 0 58%,var(--mint) 76%,#fff 80%,var(--mint) 84%,rgba(63,220,154,.18) 97%) border-box;animation:spin 4.2s linear infinite,breathe 3.4s ease-in-out infinite}
+details.pat summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:10px 14px}
+details.pat summary::-webkit-details-marker{display:none}
+.pmini{width:62px;flex:none}
+.pmini{display:flex;justify-content:center}
+.pmini svg{height:52px!important;width:auto!important;max-width:none!important}
+.pinfo{flex:1;min-width:0}
+.pinfo b{display:block;font-size:17.5px}
+.pinfo span{display:block;font-size:13.5px;color:var(--muted)}
+details.pat .chev{width:18px;height:18px;color:var(--muted);flex:none;transition:transform .2s}
+details.pat[open] .chev{transform:rotate(180deg);color:var(--mint)}
+.pbody{padding:0 14px 16px;display:flex;flex-direction:column;gap:12px}
+.pdl{margin:0;display:grid;grid-template-columns:150px minmax(0,1fr);gap:8px 14px;font-size:15.5px}
+@media (max-width:560px){.pdl{grid-template-columns:1fr;gap:2px}.pdl dd{margin-bottom:8px}}
+.pdl dt{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mint);padding-top:3px}
+.pdl dt.trap{color:var(--coral)}
+.pdl dd{margin:0}
+.gl{align-items:flex-start}
+.gl b{font-size:18px}
+.glink{font-weight:700;text-decoration:none;border:1px solid rgba(63,220,154,.5);background:var(--mintdim);border-radius:999px;padding:9px 16px}
+@media (prefers-reduced-motion:reduce){details.pat[open]{animation:none}}
+svg.fig .nb{font-size:10px;font-weight:800;fill:#06211a;font-family:var(--mono)}
+ol.leg{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;font-size:14.5px;font-weight:600}
+ol.leg li{display:flex;align-items:center;gap:7px}
+ol.leg li span{width:20px;height:20px;border-radius:50%;background:#eaf5f1;color:#06211a;font-family:var(--mono);font-size:11px;font-weight:800;display:grid;place-items:center;flex:none}
+ol.leg li.lvl span{width:20px;height:0;border-radius:0;border-top:2px dashed var(--gold);background:none}
+ol.leg li.lvl{color:var(--gold)}
+svg.fig{max-height:300px}
+
+svg.fig .swl{font-size:11px;font-weight:800;font-family:var(--mono)}
+ol.leg li.bos span{background:none;color:var(--gold);font-size:14px}
+ol.leg li.vwl span{width:20px;height:0;border-radius:0;border-top:2px dotted #b9a7ff;background:none}
+ol.leg li.vwl{color:#b9a7ff}
+.dopts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-family:var(--mono);font-size:13.5px;color:var(--muted)}
+.dfoot .btn{align-self:auto}
+
+.sway{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--fg);border:1px solid rgba(244,196,88,.55);background:linear-gradient(135deg,rgba(244,196,88,.14),rgba(244,196,88,.04));border-radius:16px;padding:12px 14px;margin:14px 0}
+.sway .play{width:34px;height:34px;border-radius:50%;background:var(--gold);display:grid;place-items:center;flex:none;box-shadow:0 0 14px rgba(244,196,88,.45)}
+.sway .play svg{width:13px;height:13px}
+.sway>span:nth-child(2){display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.sway b{font-size:15.5px}.sway small{color:var(--muted);font-size:13.5px}
+.sway .sgo{color:var(--gold);font-weight:700;font-size:14px;white-space:nowrap}
+.sway.soonw{border-style:dashed;opacity:.85}.sway.soonw .play{background:var(--line2);box-shadow:none}
+
+.scen{border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.22);padding:18px 18px;font-size:16.5px;line-height:1.55;min-height:96px;display:flex;align-items:center}
+.box.fixb{border-color:rgba(63,220,154,.35);background:rgba(63,220,154,.07)}
+.box.fixb .blab{color:var(--mint)}
+</style>
+<div class="fx" aria-hidden="true">
+  <div class="glow"></div><div class="grid"></div>
+  <span class="track" style="left:7%"><i style="--d:8.5s;--w:-1s"></i></span>
+  <span class="track" style="left:23%"><i style="--d:11s;--w:-6s"></i></span>
+  <span class="track" style="left:41%"><i style="--d:9.5s;--w:-3.5s"></i></span>
+  <span class="track" style="left:62%"><i style="--d:12s;--w:-8s"></i></span>
+  <span class="track" style="left:80%"><i style="--d:7.5s;--w:-2.5s"></i></span>
+  <span class="track" style="left:94%"><i style="--d:10.5s;--w:-5s"></i></span>
+</div>
+
+<div class="wrap">
+  <header class="top">
+    <span class="mark" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.6" stroke="#06211a" stroke-width="1.9"/><path d="M5.4 8.4 7.2 10.2 10.8 6" stroke="#06211a" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="brand">FTA <span>Psychology Guide</span><small>Flow Trading Academy · Mindset</small></span>
+    <span class="count" id="count"></span>
+  </header>
+  <div class="rail" aria-hidden="true"></div>
+
+  <section class="walk beam" id="walk" hidden aria-live="polite"></section>
+
+  <div class="home" id="home">
+    <section class="path beam" id="start">
+      <span class="eyebrow">Start here</span>
+      <h2 id="pathtitle">Master the mental side step by step</h2>
+      <p class="sub">Every psychology trap traders talk about on Reddit and trading forums: FOMO, revenge trading, tilt, overtrading, the brain biases, discipline, your routine and prop firm pressure. One term at a time: read it, see what it looks like on a trading day, learn the fix, and answer the quick check to unlock the next step.</p>
+      <div class="prog"><span class="pbar"><span id="pfill"></span></span><span class="pnum" id="pnum"></span></div>
+      <button type="button" class="cont" id="cont"></button>
+      <ol class="stages" id="stages"></ol>
+    </section>
+
+    <section class="card beam gold" style="--delay:-1.2s">
+      <span class="eyebrow gold">Drill</span>
+      <h2 class="h2">Name that trap</h2>
+      <p class="sub">Eight real trading-day moments. Call the trap before it costs you: FOMO, revenge, overtrading, or hope.</p>
+      <div class="scen" id="d_fig"></div>
+      <div class="dopts" id="d_opts">
+        <button type="button" class="ans" data-a="fomo">FOMO</button><button type="button" class="ans" data-a="revenge">Revenge trading</button><button type="button" class="ans" data-a="over">Overtrading</button><button type="button" class="ans" data-a="hope">Hope trading</button>
+      </div>
+      <p class="fb" id="d_fb" aria-live="polite"></p>
+      <div class="dfoot"><span id="d_n"></span><button type="button" class="btn" id="d_next" hidden>Next scenario →</button></div>
+    </section>
+
+    <section class="card">
+      <span class="eyebrow">Cheat sheet</span>
+      <h2 class="h2">Warning signs</h2>
+      <dl class="pdl">
+        <dt class="trap">FOMO</dt><dd>You're about to enter because price is moving, not because your setup is there.</dd>
+        <dt class="trap">Revenge</dt><dd>You just lost and you want it back right now.</dd>
+        <dt class="trap">Tilt</dt><dd>Fast clicking, bigger size, skipping your stop. You're done for the day.</dd>
+        <dt class="trap">Overtrading</dt><dd>You're past your trade limit or trading out of boredom.</dd>
+        <dt class="trap">Hope</dt><dd>Price passed where your idea was wrong and you're still in.</dd>
+        <dt>Reset</dt><dd>Stand up, walk away for 15 minutes, reread your plan.</dd>
+        <dt>Stop</dt><dd>Daily max loss hit, daily target hit, or trade limit hit. Close the platform.</dd>
+      </dl>
+    </section>
+
+    <section class="card gl">
+      <b>Keep going</b>
+      <p class="sub">Your mindset protects the system. The rest of the system lives in the other guides.</p>
+      <div class="row"><a class="glink" href="../glossary/" target="_blank" rel="noopener">FTA Glossary →</a><a class="glink" href="../candles/" target="_blank" rel="noopener">FTA Candle Guide →</a><a class="glink" href="../structure/" target="_blank" rel="noopener">FTA Structure Guide →</a><a class="glink" href="../tools/" target="_blank" rel="noopener">FTA Tools Guide →</a></div>
+    </section>
+
+    <p class="foot">This guide is trading education, not medical or mental health advice. If stress from trading is affecting your sleep, relationships or wellbeing, step back and talk to someone you trust or a professional.</p>
+  </div>
+</div>
+<script>
+/* ================= FTA TRADING PSYCHOLOGY GUIDE — CONTENT =================
+   Each step: t = term, p = [definition, more], ex = what it looks like on a trading day,
+   fix = what to do about it, q = [question, [answers], right index, why]. */
+
+var VIDEOS={
+  douglas:{u:"https://www.youtube.com/watch?v=sauPy2JHzI0",t:"Mark Douglas trading psychology in under 10 minutes",src:"YouTube"},
+  fomo:{u:"https://www.youtube.com/watch?v=q4TuaY-ccqA",t:"FOMO is ruining your trades? Here's how to fix it",src:"YouTube"},
+  revenge:{u:"https://www.youtube.com/watch?v=5lhfKK48auM",t:"How to actually stop revenge trading",src:"YouTube"},
+  over:{u:"https://www.youtube.com/watch?v=QEbhp_tmRcI",t:"Trading psychology: what is overtrading?",src:"YouTube"},
+  loss:{u:"https://www.youtube.com/watch?v=VY6QPb4BIco",t:"Trading psychology: loss aversion bias",src:"YouTube"},
+  mom:{u:"https://www.youtube.com/watch?v=PvBlsuLOXdY",t:"Mark Douglas: Mind Over Market, full interview",src:"YouTube"},
+  journal:{u:"https://www.youtube.com/watch?v=KHsTwlJt9i0",t:"How I journal my trades as a full-time trader",src:"YouTube"},
+  steen:{u:"https://www.youtube.com/watch?v=vFHwM5cimq4",t:"Dr. Brett Steenbarger shares a powerful technique",src:"YouTube"},
+  dd:{u:"https://www.youtube.com/watch?v=Z7EKQUUU01A",t:"How to eliminate revenge trading and control drawdowns",src:"YouTube"}
+};
+
+var STAGES=[
+/* ---------------------------------------------------------------- 1 */
+{t:"Psychology Basics",mod:"Mindset · Lesson 1",v:"douglas",steps:[
+ {t:"What is trading psychology?",
+  p:["Trading psychology is how your emotions and habits affect the decisions you make on the chart: when you enter, how much you risk, when you get out, and when you stop for the day.",
+     "Two traders can use the exact same system and get opposite results. The difference is almost always what they do when they feel scared, greedy or frustrated."],
+  ex:"You and a friend both trade the same gold setup. You follow the rules. He moves his stop after a bad morning. Same system, different result.",
+  fix:"Treat your mindset like part of your system. It needs rules and practice, just like your entries.",
+  q:["What does trading psychology cover?",["How your emotions and habits affect your trading decisions","Which indicator works best on gold","How fast your broker fills orders"],0,"It's the decisions you make under pressure, not the setup itself."]},
+ {t:"Fear and greed",
+  p:["Fear and greed are the two emotions behind most trading mistakes. Fear makes you hesitate, skip good setups and close winners too early. Greed makes you size up, chase moves and hold too long.",
+     "You can't switch them off. The goal is to notice them early and let your rules make the decision instead."],
+  ex:"Fear: you skip an A+ setup because your last two trades lost. Greed: you double your size after a big green day.",
+  fix:"When you feel a strong urge to act or to freeze, stop and ask: what do my rules say right now?",
+  q:["Closing a winner early because you're scared it will reverse is driven by…",["Fear","Greed","Patience"],0,"Fear of giving back profit makes you cut winners short."]},
+ {t:"Why mindset beats strategy",
+  p:["A strategy only has an edge if you run it the same way every time. If you skip trades, change your stop or double your size when emotional, you're no longer trading the strategy you tested.",
+     "That's why so many traders jump from system to system. The system often wasn't the problem. Executing it consistently was."],
+  ex:"A setup wins 55% of the time when you take every signal. Take only the ones that 'feel right' and you might end up with the worst 40%.",
+  fix:"Before blaming the system, check your journal: did you actually follow it on every trade?",
+  q:["Why do many traders keep switching strategies?",["They blame the system when the real problem is inconsistent execution","Strategies stop working every week","Brokers change the rules"],0,"Most systems never get a fair test because they're not executed consistently."]},
+ {t:"Process vs outcome",
+  p:["The outcome is whether one trade won or lost. The process is whether you followed your plan. A good trade can lose money, and a bad trade can make money.",
+     "Judge yourself on the process. Over many trades, a good process is what produces good outcomes."],
+  ex:"You take a perfect setup with a proper stop and it gets stopped out. That's a good trade. You chase a random candle and it wins. That's a bad trade.",
+  fix:"Grade every trade A, B or C on how well you followed the rules, not on the P&L.",
+  q:["You followed every rule and the trade hit your stop. That was…",["A good trade with a losing outcome","A bad trade","Proof the system is broken"],0,"Following the plan is a good trade, whatever one result says."]}
+]},
+/* ---------------------------------------------------------------- 2 */
+{t:"Emotional Traps",mod:"Mindset · Lesson 2",v:["fomo","revenge"],steps:[
+ {t:"FOMO",
+  p:["FOMO means fear of missing out. It's the urge to jump into a move because it's already running and you don't want to miss it.",
+     "FOMO entries usually come late, far from your level, with a bad stop. You end up buying the top or selling the bottom."],
+  ex:"Gold rips $15 in two minutes. You hit buy at the high with no setup, and it pulls back $8 right after.",
+  fix:"If price has left your level, the trade is gone. Wait for the next pullback or the next setup. There's always another one.",
+  q:["Gold already ran far from your level without you. What's the FOMO mistake?",["Jumping in late with no setup","Waiting for a pullback","Marking it in your journal as missed"],0,"Chasing a move that already left is the classic FOMO entry."]},
+ {t:"Revenge trading",
+  p:["Revenge trading is taking a trade to win back money you just lost. It's driven by anger or frustration, not by a setup.",
+     "Revenge trades are usually bigger, faster and sloppier than normal trades, so one bad loss often turns into three."],
+  ex:"You lose $200, feel cheated, and immediately take another trade with double size to 'get it back.' It loses too.",
+  fix:"After a loss, step away from the screen for at least 10 to 15 minutes. Use a daily max loss and stop when you hit it.",
+  q:["What drives a revenge trade?",["Wanting to win back a loss","A clean A+ setup","Your pre-market plan"],0,"Revenge trades come from emotion, not from the chart."]},
+ {t:"Tilt",
+  p:["Tilt is a word traders took from poker. It's when frustration takes over and you stop thinking clearly. Every decision gets worse.",
+     "On tilt you break several rules at once: bigger size, no stop, random entries. It often starts with one loss or one missed trade."],
+  ex:"After two losses you stop checking levels, start clicking on every candle and stop caring about your stop.",
+  fix:"Know your tilt signs (fast clicking, cursing at the screen, bigger size). The moment you notice one, you're done for the day.",
+  q:["What is tilt?",["When frustration takes over and you trade badly","A type of candle pattern","A prop firm rule"],0,"Tilt is an emotional state where judgment breaks down."]},
+ {t:"Overtrading",
+  p:["Overtrading is taking more trades than your plan allows, or trading when there's no real setup. It often comes from boredom, FOMO or trying to hit a target.",
+     "More trades means more fees and more mistakes. Most good traders take only a few trades a day."],
+  ex:"Your plan allows two trades in the 9:15 to 11:00 window. By 10:30 you've taken seven, and most were B or C setups.",
+  fix:"Set a max number of trades per day. When you hit it, close the platform.",
+  q:["Which is a sign of overtrading?",["Taking trades with no real setup because you're bored","Taking one A+ setup","Skipping a red-folder news spike"],0,"Trading without a setup just to be in the market is overtrading."]},
+ {t:"Greed",
+  p:["Greed is wanting more than your plan calls for: bigger size, a bigger target, one more trade after a great day.",
+     "It often shows up right after a win, when you feel like you can't lose."],
+  ex:"You hit your daily target by 9:40, then keep trading to 'make it a huge day' and give half of it back.",
+  fix:"Respect your daily target. When it's hit, the day is a win. Stop.",
+  q:["You hit your daily target early. The greedy move is…",["Keep trading to make it bigger","Stop for the day","Journal the trades"],0,"Pushing for more after your target is where greed costs you."]}
+]},
+/* ---------------------------------------------------------------- 3 */
+{t:"Fear Mistakes",mod:"Mindset · Lesson 3",v:"loss",steps:[
+ {t:"Hesitation",
+  p:["Hesitation is freezing when your setup shows up. You see it, you doubt it, and by the time you decide, the entry is gone.",
+     "It usually comes after a few losses, when your brain is trying to avoid more pain."],
+  ex:"Gold pulls back to your level exactly as planned. You wait 'one more candle' and it leaves without you.",
+  fix:"Decide in pre-market what an A+ setup looks like. If it shows up, you take it, no second-guessing.",
+  q:["Hesitation usually comes after…",["A few losses","A great week","A good night's sleep"],0,"Losses make your brain want to avoid the next trade."]},
+ {t:"Cutting winners early",
+  p:["Cutting winners early means closing a trade in profit before it reaches your target because you're scared it will turn around.",
+     "If you cut winners but let losers run to the full stop, your average win gets smaller than your average loss, and you can lose money even while winning often."],
+  ex:"Your target is $12. Price gets to $5 in profit, pulls back $1, and you panic-close for $4.",
+  fix:"Set your target and stop when you enter, then let the trade play out. Only exit early if your rules say so.",
+  q:["Why does cutting winners early hurt?",["Your average win gets smaller than your average loss","It makes trades take longer","It raises your broker fees"],0,"Small wins and full-size losses add up to a losing account."]},
+ {t:"Moving your stop",
+  p:["Moving your stop means pushing your stop-loss further away when price gets close to it, hoping the trade will come back.",
+     "It turns a small planned loss into a big unplanned one. It's one of the most common ways traders fail prop firm evaluations."],
+  ex:"Your stop is $6 away. Price gets within $1, so you move it another $6. Then again. A $60 loss becomes $180.",
+  fix:"Your stop is set before you enter and never moves further away. You can only move it closer, toward break-even.",
+  q:["When can you move your stop?",["Only closer, toward break-even","Further away when price gets close","Whenever the trade feels wrong"],0,"A stop only ever moves to reduce risk, never to add it."]},
+ {t:"Hope trading",
+  p:["Hope trading is holding a losing trade and hoping it comes back, instead of following your plan.",
+     "Hope isn't a strategy. The market doesn't know or care where you got in."],
+  ex:"Your trade is down past where your idea was wrong, but you keep holding because 'gold always comes back.'",
+  fix:"Before every trade, write down where your idea is wrong. If price gets there, you're out.",
+  q:["Hope trading means…",["Holding a loser and hoping it turns around","Waiting for your A+ setup","Planning your target"],0,"Holding past your invalidation is trading on hope."]},
+ {t:"Analysis paralysis",
+  p:["Analysis paralysis is having so many indicators, timeframes and opinions that you can't make a decision.",
+     "More information doesn't mean better trades. It usually means more reasons to doubt yourself."],
+  ex:"You have six indicators, three timeframes and two Discord calls. They disagree, so you never take the trade.",
+  fix:"Keep your chart simple. Use only the few tools your system actually needs.",
+  q:["What helps fix analysis paralysis?",["A simpler chart with only the tools your system needs","Adding more indicators","Checking more Discord groups"],0,"Less noise makes decisions clearer."]}
+]},
+/* ---------------------------------------------------------------- 4 */
+{t:"Brain Biases",mod:"Mindset · Lesson 4",v:"loss",steps:[
+ {t:"Loss aversion",
+  p:["Loss aversion means a loss hurts more than an equal gain feels good. Research in behavioral economics found losses feel roughly twice as strong.",
+     "In trading it makes you hold losers too long, to avoid admitting the loss, and close winners too fast, to lock in the good feeling."],
+  ex:"Losing $100 ruins your day, but making $100 only feels okay. So you'll do almost anything to avoid taking the loss.",
+  fix:"Accept the loss before you enter. If you can't handle losing your planned risk, your size is too big.",
+  q:["Loss aversion makes traders…",["Hold losers too long and close winners too fast","Trade less often","Use smaller stops"],0,"Avoiding the pain of a loss flips your behavior the wrong way."]},
+ {t:"Confirmation bias",
+  p:["Confirmation bias is only noticing information that agrees with what you already believe, and ignoring what doesn't.",
+     "If you're bullish, you'll see every reason to buy and miss the signs that sellers are taking over."],
+  ex:"You're sure gold is going up, so you ignore the lower high and the break of structure on the 1-hour chart.",
+  fix:"Before each trade, name one thing that would prove you wrong, and check whether it's already happening.",
+  q:["Confirmation bias is…",["Only seeing what agrees with your view","Checking your journal","Waiting for confirmation candles"],0,"It filters out evidence against you."]},
+ {t:"Recency bias",
+  p:["Recency bias is giving too much weight to your last few trades or the last few days of price action.",
+     "Three losses in a row can make you think your system is broken, even if it's been profitable over 100 trades."],
+  ex:"After three losses you change your rules. After three wins you double your size. Both are reacting to a tiny sample.",
+  fix:"Judge your system on at least 20 to 30 trades, not the last three.",
+  q:["You lose three trades in a row on a tested system. Recency bias tells you to…",["Change the whole system","Keep following it and review after more trades","Journal the trades"],0,"Three trades is too small a sample to judge anything."]},
+ {t:"Gambler's fallacy",
+  p:["The gambler's fallacy is believing that after several losses, a win is 'due.' Each trade is independent. The market doesn't owe you anything.",
+     "This belief leads to sizing up after losses, which is how small drawdowns become big ones."],
+  ex:"'I've lost four in a row, the next one has to win,' so you double your size. It loses too.",
+  fix:"Keep the same risk on every trade, no matter what happened before.",
+  q:["After four losses, is a win 'due'?",["No, each trade is independent","Yes, the odds go up","Only on gold"],0,"Past trades don't change the odds of the next one."]},
+ {t:"Overconfidence",
+  p:["Overconfidence is thinking you're better than you are, usually after a winning streak or a payout.",
+     "It shows up as bigger size, looser rules and skipped pre-market prep."],
+  ex:"After your first payout you stop marking levels in the morning because you 'just see it now.' Then the losses start.",
+  fix:"Keep the same routine and the same size after wins. Treat a hot streak as a reason to stay careful.",
+  q:["When is overconfidence most likely?",["Right after a winning streak or payout","After a losing week","During pre-market prep"],0,"Winning makes rules feel optional."]},
+ {t:"Sunk cost",
+  p:["The sunk cost fallacy is sticking with something because of what you've already put into it, not because it still makes sense.",
+     "In trading it means adding to a losing position or refusing to close it because you've already lost so much on it."],
+  ex:"You're down $300 on a trade, so you add more 'to get a better average' instead of taking the loss.",
+  fix:"Ask: if I had no position right now, would I enter this trade here? If not, get out.",
+  q:["Adding to a loser because you're already down a lot is…",["The sunk cost fallacy","Good risk management","Following the plan"],0,"What you've already lost shouldn't decide your next move."]}
+]},
+/* ---------------------------------------------------------------- 5 */
+{t:"Discipline",mod:"Mindset · Lesson 5",v:"mom",steps:[
+ {t:"Discipline",
+  p:["Discipline in trading means doing what your plan says even when you don't feel like it. It's not about willpower in the moment. It's about having clear rules and following them.",
+     "The more decisions you make in advance, the less discipline you need during the session."],
+  ex:"Your plan says no trades during red-folder news. CPI drops and gold explodes. Discipline is keeping your hands off.",
+  fix:"Write your rules down before the session so you're following a checklist, not making it up live.",
+  q:["Discipline is easiest when…",["Your decisions are made in advance","You decide everything live","You trade more often"],0,"Pre-made rules remove decisions in the heat of the moment."]},
+ {t:"Trading plan",
+  p:["A trading plan is your written rulebook: what you trade, when you trade, your setups, your risk per trade, your daily max loss and when you stop.",
+     "If it isn't written down, it isn't a plan. It's a mood."],
+  ex:"Gold only, 9:15 to 11:00 ET, A+ setups only, 1% risk per trade, stop after two losses or hitting the daily target.",
+  fix:"Keep your plan on one page and read it every morning before you open the chart.",
+  q:["Which belongs in a trading plan?",["Your risk per trade and daily max loss","Your favorite YouTuber","Yesterday's P&L screenshot"],0,"Risk rules are a core part of any plan."]},
+ {t:"Thinking in probabilities",
+  p:["Thinking in probabilities means understanding that any single trade can win or lose. Your edge only shows up over a series of trades.",
+     "This idea comes from Mark Douglas's book Trading in the Zone. Once you accept it, a single loss stops feeling personal."],
+  ex:"Your setup wins 6 out of 10 times. You don't know which 6. So you take all 10 the same way.",
+  fix:"Think of every trade as one of the next 20. Your job is to execute all 20 the same way.",
+  q:["Where does your edge show up?",["Over a series of trades","In every single trade","Only on winning days"],0,"An edge is a probability, so it needs many trades to play out."]},
+ {t:"Accepting the risk",
+  p:["Accepting the risk means being genuinely okay with losing your planned amount before you enter.",
+     "If a loss would upset you, you're risking too much. Fear of the loss will push you into the mistakes in this guide."],
+  ex:"Before clicking buy, you say: 'If this hits my stop, I lose $50, and I'm fine with that.'",
+  fix:"Size every trade so that the loss is boring, not painful.",
+  q:["If losing your planned risk would really upset you…",["Your size is too big","You should move your stop","You should skip the journal"],0,"Smaller size makes the loss acceptable, so you trade clearly."]},
+ {t:"Patience",
+  p:["Patience is waiting for your setup instead of forcing a trade. Most of trading is sitting and watching.",
+     "Not trading is a position too. A day with no A+ setup and no trades is a good day if you followed your plan."],
+  ex:"Gold chops sideways the whole window with no clean pullback. You take zero trades and close the chart at 11:00.",
+  fix:"Count waiting as part of the job. Your plan decides when you trade, not boredom.",
+  q:["A session with no A+ setup and zero trades is…",["A good day if you followed your plan","A wasted day","A reason to lower your standards"],0,"Sitting out bad conditions is discipline."]}
+]},
+/* ---------------------------------------------------------------- 6 */
+{t:"Daily Routine",mod:"Mindset · Lesson 6",v:["journal","steen"],steps:[
+ {t:"Trading journal",
+  p:["A trading journal is where you log every trade: the setup, entry, stop, target, result, a screenshot, and how you felt.",
+     "It's the only way to see your real patterns. Most traders are surprised by what their journal shows."],
+  ex:"After 30 trades your journal shows 80% of your losses happened after 10:30 AM. Now you know when to stop.",
+  fix:"Journal every trade the same day, including the ones you're not proud of.",
+  q:["What's the main job of a trading journal?",["To show your real patterns and mistakes","To post on social media","To replace your trading plan"],0,"The journal turns feelings into data."]},
+ {t:"Pre-market routine",
+  p:["A pre-market routine is the same short checklist you run before every session: check the news calendar, mark your levels, read the higher-timeframe bias, and set your risk for the day.",
+     "It puts you in a calm, prepared state before the market opens, instead of reacting to it."],
+  ex:"9:00 ET: check red folders, mark key levels on gold, read the 1-hour direction, write today's max loss.",
+  fix:"Do the routine every day, even when you're tired or excited. Especially then.",
+  q:["Why use a pre-market routine?",["To start the session prepared instead of reactive","To find more trades","To skip journaling"],0,"Preparation removes decisions during the session."]},
+ {t:"Daily max loss",
+  p:["A daily max loss is a hard limit on how much you can lose in one day. When you hit it, you stop trading. No exceptions.",
+     "It protects you from your worst day. Bad days happen. The max loss keeps them small."],
+  ex:"Your max loss is 2% of the account. You hit it by 9:50. You close the platform and go to the gym.",
+  fix:"Set it before the session, and if your platform allows it, set it inside the platform so it locks you out.",
+  q:["You hit your daily max loss. What now?",["Stop trading for the day","Take one more trade to win it back","Double your size"],0,"The max loss only works if you actually stop."]},
+ {t:"The walk-away rule",
+  p:["The walk-away rule means physically leaving the screen after a loss, a big win or any strong emotion.",
+     "A few minutes away lets the emotion drop so your next decision is made by you, not by adrenaline."],
+  ex:"You take a fast loss and feel your heart rate jump. You stand up, walk outside, and come back in 15 minutes.",
+  fix:"Pick a fixed break after any loss, like 15 minutes, and stick to it.",
+  q:["Why walk away after a loss?",["To let the emotion drop before the next decision","To find a better indicator","To check your P&L more often"],0,"Distance breaks the revenge-trading loop."]},
+ {t:"Consistency",
+  p:["Consistency means doing the same thing the same way every day: same window, same setup, same risk, same routine.",
+     "You can only improve what you do consistently. If every day is different, you can't tell what's working."],
+  ex:"For 30 days you trade only the 9:15 to 11:00 window with 1% risk. Now your journal has clean data.",
+  fix:"Pick your rules and run them for at least 30 trades before changing anything.",
+  q:["Why does consistency matter?",["You can only measure and improve what you do the same way","It makes trading more exciting","It lets you skip the journal"],0,"Consistent inputs give you clean data to improve from."]}
+]},
+/* ---------------------------------------------------------------- 7 */
+{t:"Prop Firm Pressure",mod:"Mindset · Lesson 7",v:"dd",steps:[
+ {t:"Evaluation pressure",
+  p:["Evaluation pressure is the stress of trading a prop firm challenge, where you have a profit target and a drawdown limit.",
+     "Many traders trade completely differently in an eval than they would in practice, because the money and the rules feel heavier."],
+  ex:"In practice you risk 1% per trade. In the eval you risk 3% to hit the target faster, and you blow it in two days.",
+  fix:"Trade the eval exactly like your plan. The target is reached by stacking normal days, not by forcing big ones.",
+  q:["The best way to pass an eval is…",["Trade your normal plan and stack normal days","Size up to hit the target fast","Trade more often"],0,"Forcing the target is how most evals are lost."]},
+ {t:"Drawdown fear",
+  p:["Drawdown fear is being so worried about hitting the firm's drawdown limit that you can't trade normally.",
+     "It leads to hesitation, tiny targets and cutting winners. Then a few small losses still add up."],
+  ex:"You're $400 from the drawdown limit, so you start skipping A+ setups and closing trades at the first tick of profit.",
+  fix:"Know your numbers. Work out how many full losses you can take before the limit, and size so it's plenty.",
+  q:["How do you reduce drawdown fear?",["Size so you can take many full losses before the limit","Move your stops further away","Trade bigger to get away from the limit"],0,"Room to breathe makes normal trading possible."]},
+ {t:"Rushing the target",
+  p:["Rushing the target means trying to pass a challenge in a day or two instead of letting your edge work over time.",
+     "Most firms give you plenty of time or no time limit at all. The only rush is in your head."],
+  ex:"You pass 60% of the target on day one, then take huge trades on day two to finish, and hit the daily loss limit.",
+  fix:"Check your firm's time rules. If there's no rush, trade like there's no rush.",
+  q:["You're 60% to the target after day one. What's the smart move?",["Keep trading your normal plan","Size up to finish today","Stop journaling"],0,"Your plan got you there. Changing it now is the risk."]},
+ {t:"After a payout",
+  p:["After a payout, many traders relax their rules, size up or take a break from their routine. That's when the account gets lost.",
+     "The habits that got you paid are the habits that keep you paid."],
+  ex:"First payout hits. You celebrate by doubling your size the next Monday and give back half the account in a week.",
+  fix:"After a payout, change nothing. Same size, same window, same routine.",
+  q:["What should you change after a payout?",["Nothing, keep the same rules","Double your size","Skip pre-market for a week"],0,"The process that paid you is the one to protect."]}
+]}
+];
+
+/* Drill: name the trap */
+var DRILL=[
+ {s:"Gold breaks out $15 while you're getting coffee. You come back and buy at the high with no setup.",a:"fomo"},
+ {s:"You lose $250 on a clean setup. Two minutes later you take a random trade with double size to get it back.",a:"revenge"},
+ {s:"Your plan allows two trades. It's 10:40 and you're on trade number six, mostly from boredom.",a:"over"},
+ {s:"Your trade is past your invalidation, but you keep holding because gold 'always comes back.'",a:"hope"},
+ {s:"You missed the morning move and feel like you have to catch the next candle, so you jump in mid-move.",a:"fomo"},
+ {s:"After three losses you stop checking levels and start clicking buy and sell on every candle to make it back.",a:"revenge"},
+ {s:"You hit your target early, keep trading anything that moves, and end up taking ten trades.",a:"over"},
+ {s:"Price is $1 from your stop, so you move the stop $6 further away and wait.",a:"hope"}
+];
+var DRILL_WHY={
+ fomo:"That's FOMO: chasing a move that already left, with no setup.",
+ revenge:"That's revenge trading: trading to win back a loss, driven by emotion.",
+ over:"That's overtrading: more trades than your plan allows, without real setups.",
+ hope:"That's hope trading: refusing to take the loss and hoping price comes back."
+};
+
+(function(){
+"use strict";
+function $(id){return document.getElementById(id);}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function fmt(v){return Number(v).toLocaleString("en-US",{minimumFractionDigits:0,maximumFractionDigits:2});}
+
+/* ---------- state ---------- */
+var K="fta.psychology.v1", S={passed:{}};
+try{var raw=localStorage.getItem(K); if(raw){var ob=JSON.parse(raw); if(ob&&ob.passed) S.passed=ob.passed;}}catch(e){}
+function save(){try{localStorage.setItem(K,JSON.stringify(S));}catch(e){}}
+function sid(s,k){return s+"."+k;}
+function stageDone(s){return STAGES[s].steps.every(function(_,k){return S.passed[sid(s,k)];});}
+function stageOpen(s){return s===0||stageDone(s-1);}
+function nextStep(){for(var s=0;s<STAGES.length;s++)for(var k=0;k<STAGES[s].steps.length;k++)if(!S.passed[sid(s,k)])return {s:s,k:k};return null;}
+var TOTAL=0; STAGES.forEach(function(st){TOTAL+=st.steps.length;});
+
+var LOCK='<svg class="lock" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>';
+var ARROW='<svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#06211a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+var CHECK='<svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#06211a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function paintPath(){
+  var nx=nextStep(), done=Object.keys(S.passed).length;
+  $("pfill").style.width=(done/TOTAL*100)+"%";
+  $("pnum").textContent=done+" of "+TOTAL+" steps";
+  if(nx){
+    var st=STAGES[nx.s].steps[nx.k];
+    $("cont").innerHTML='<span class="ci"><small>'+(done?'Stage '+(nx.s+1)+' · Step '+(nx.k+1)+' of '+STAGES[nx.s].steps.length:'Step 1 · Stage 1 of '+STAGES.length)+'</small><b>'+esc(st.t)+'</b></span><span class="arrow">'+ARROW+'</span>';
+    $("cont").setAttribute("data-s",nx.s); $("cont").setAttribute("data-k",nx.k); $("cont").hidden=false;
+    $("pathtitle").textContent=done?"Pick up where you left off":"Master the mental side step by step";
+  } else { $("cont").hidden=true; $("pathtitle").textContent="Guide complete. You know the traps."; }
+  $("stages").innerHTML=STAGES.map(function(st,i){
+    var n=st.steps.filter(function(_,k){return S.passed[sid(i,k)];}).length, open=stageOpen(i), dn=n===st.steps.length, cur=nx&&nx.s===i;
+    return '<li><button type="button" class="stage'+(dn?' done':'')+(cur?' cur':'')+'" data-stage="'+i+'"'+(open?'':' disabled')+'>'+
+      '<span class="snum">'+(dn?'✓':(i+1))+'</span><span class="sinfo"><b>'+esc(st.t)+'</b><span>'+esc(st.mod)+' · '+
+      (open?(dn?'Done · tap to review':n+' of '+st.steps.length+' steps'):'Finish stage '+i+' to unlock')+'</span>'+
+      (open?'<span class="sbar2"><i style="width:'+(n/st.steps.length*100)+'%"></i></span>':'')+'</span>'+(open?'':LOCK)+'</button></li>';
+  }).join("");
+}
+
+/* ---------- walk-through ---------- */
+var W={s:0,k:0,wrong:0};
+function shuffled(n,seed){var a=[];for(var i=0;i<n;i++)a.push(i);var x=seed;for(var j=n-1;j>0;j--){x=(x*9301+49297)%233280;var r=Math.floor(x/233280*(j+1));var t=a[j];a[j]=a[r];a[r]=t;}return a;}
+function vidHTML(key){
+  var keys=Array.isArray(key)?key:(key?[key]:[]), vs=keys.map(function(k){return VIDEOS[k];}).filter(Boolean);
+  if(!vs.length) return '<span class="soon">Sway\'s walkthrough clip for this lesson is coming soon</span>';
+  return vs.map(function(v){ return '<a class="vid" href="'+v.u+'" target="_blank" rel="noopener"><span class="play"><svg viewBox="0 0 12 12"><path d="M3 1.8v8.4L10 6z" fill="#06211a"/></svg></span><span>Watch: '+esc(v.t)+' <small>· '+esc(v.src)+'</small></span></a>'; }).join("");
+}
+/* ---------- Sway's two videos per section (Whop course). Paste each Whop lesson link into r (rundown) or w (walkthrough). ---------- */
+function swayHTML(i,kind){
+  var v=(SWAY[i]||{})[kind], r=kind==="r";
+  var lab=r?"Video 1 · Quick rundown":"Video 2 · Full walkthrough", sub=r?"Sway explains what you'll learn in this section":"Watch Sway do it start to finish";
+  var ico='<span class="play"><svg viewBox="0 0 12 12"><path d="M3 1.8v8.4L10 6z" fill="#1a1405"/></svg></span>';
+  return v?'<a class="sway" href="'+v+'" target="_blank" rel="noopener">'+ico+'<span><b>'+lab+'</b><small>'+sub+'</small></span><span class="sgo">Watch on Whop →</span></a>'
+          :'<div class="sway soonw">'+ico+'<span><b>'+lab+'</b><small>'+sub+' · in the Whop course soon</small></span></div>';
+}
+function openWalk(s,k){W.s=s;W.k=k;W.wrong=0;$("home").hidden=true;$("walk").hidden=false;paintWalk();window.scrollTo({top:0});}
+function closeWalk(){$("walk").hidden=true;$("home").hidden=false;paintPath();window.scrollTo({top:0});}
+function paintWalk(){
+  var stg=STAGES[W.s], st=stg.steps[W.k], id=sid(W.s,W.k), passed=!!S.passed[id], q=st.q;
+  var seed=0; for(var c=0;c<st.t.length;c++) seed+=st.t.charCodeAt(c)*(c+1);
+  var order=shuffled(q[1].length,seed);
+  var dots=stg.steps.map(function(_,i){return '<i class="'+(S.passed[sid(W.s,i)]?'ok':(i===W.k?'now':''))+'"></i>';}).join("");
+  $("walk").innerHTML=
+    '<div class="wtop"><button type="button" class="link" id="wback">← Back to the guide</button><span class="wstage">Stage '+(W.s+1)+' · '+esc(stg.t)+'</span></div>'+
+    '<div class="dots" aria-hidden="true">'+dots+'</div>'+
+    '<span class="wstep">STEP '+(W.k+1)+' OF '+stg.steps.length+'</span>'+
+    '<h2>'+esc(st.t)+'</h2>'+
+    st.p.map(function(p,i){return '<p class="'+(i===0?'def':'para')+'">'+esc(p)+'</p>';}).join("")+
+    '<div class="box"><div class="blab">On a trading day</div><p>'+esc(st.ex)+'</p></div>'+
+    '<div class="box fixb"><div class="blab">The fix</div><p>'+esc(st.fix)+'</p></div>'+
+    (W.k===0?'<div class="row">'+vidHTML(stg.v)+'<span class="mod">Replaces <b>'+esc(stg.mod)+'</b></span></div>':'')+
+    '<div class="check"><div class="blab">Quick check</div><p class="cq">'+esc(q[0])+'</p>'+
+      order.map(function(oi,pos){return '<button type="button" class="ans'+(passed&&oi===q[2]?' right':'')+'" data-a="'+oi+'"'+(passed?' disabled':'')+'><span class="k">'+"ABCD"[pos]+'</span>'+esc(q[1][oi])+'</button>';}).join("")+
+      '<p class="fb'+(passed?' ok':'')+'" id="fb">'+(passed?esc(q[3]):'')+'</p></div>'+
+    '<div class="wnav">'+(W.k>0?'<button type="button" class="prev" id="wprev">Back</button>':'')+
+      '<button type="button" class="next" id="wnext"'+(passed?'':' disabled')+'>'+(W.k===stg.steps.length-1?'Finish stage':'Next step')+' →</button></div>';
+}
+function paintDone(){
+  var nxt=W.s+1<STAGES.length?W.s+1:null;
+  $("walk").innerHTML='<div class="done-card"><span class="big">'+CHECK+'</span><span class="eyebrow">Stage '+(W.s+1)+' complete</span><h2>'+esc(STAGES[W.s].t)+'</h2>'+
+    '<p>'+(nxt===null?'That\'s the whole guide. You know the traps and how to beat them. Use the drill below to spot them fast.':'Next up: '+esc(STAGES[nxt].t)+'.')+'</p>'+
+    (nxt!==null?'<button type="button" class="next" id="wnextstage" style="margin:6px auto 0">Start stage '+(nxt+1)+' →</button>':'')+
+    '<button type="button" class="link" id="wback">Back to the guide</button></div>';
+}
+$("walk").addEventListener("click",function(e){
+  var t=e.target.closest("button"); if(!t) return;
+  if(t.id==="wback"){closeWalk();return;}
+  if(t.id==="wprev"){W.k--;W.wrong=0;paintWalk();window.scrollTo({top:0});return;}
+  if(t.id==="wnext"){ if(W.k<STAGES[W.s].steps.length-1){W.k++;W.wrong=0;paintWalk();}else paintDone(); window.scrollTo({top:0}); return; }
+  if(t.id==="wnextstage"){openWalk(W.s+1,0);return;}
+  if(t.classList.contains("ans")){
+    var q=STAGES[W.s].steps[W.k].q, a=+t.getAttribute("data-a"), fb=$("fb");
+    if(a===q[2]){
+      Array.prototype.forEach.call($("walk").querySelectorAll(".ans"),function(b){b.disabled=true;});
+      t.classList.add("right"); fb.className="fb ok"; fb.textContent="Right. "+q[3];
+      S.passed[sid(W.s,W.k)]=1; save(); $("wnext").disabled=false;
+      var d=$("walk").querySelectorAll(".dots i"); if(d[W.k]) d[W.k].className="ok";
+    } else {
+      W.wrong++; t.classList.add("wrong"); t.disabled=true; fb.className="fb no";
+      fb.textContent=W.wrong>1?"Not quite. Reread the first paragraph and the fix.":"Not quite. Try again.";
+    }
+  }
+});
+$("cont").addEventListener("click",function(){openWalk(+this.getAttribute("data-s"),+this.getAttribute("data-k"));});
+$("stages").addEventListener("click",function(e){
+  var b=e.target.closest(".stage"); if(!b||b.disabled) return;
+  var i=+b.getAttribute("data-stage"), k=0;
+  for(var j=0;j<STAGES[i].steps.length;j++){ if(!S.passed[sid(i,j)]){k=j;break;} }
+  openWalk(i,k);
+});
+
+/* ---------- drill: name that structure ---------- */
+var D={i:0,score:0,done:0,answered:false};
+function paintDrill(){
+  var d=DRILL[D.i];
+  $("d_fig").textContent=d.s;
+  $("d_n").textContent="Scenario "+(D.i+1)+" of "+DRILL.length+" · score "+D.score+"/"+D.done;
+  $("d_fb").textContent=""; $("d_fb").className="fb"; D.answered=false;
+  Array.prototype.forEach.call($("d_opts").querySelectorAll("button"),function(b){b.disabled=false;b.className="ans";});
+  $("d_next").hidden=true;
+}
+$("d_opts").addEventListener("click",function(e){
+  var b=e.target.closest("button"); if(!b||D.answered) return;
+  var d=DRILL[D.i], pick=b.getAttribute("data-a"); D.answered=true; D.done++;
+  Array.prototype.forEach.call($("d_opts").querySelectorAll("button"),function(x){x.disabled=true; if(x.getAttribute("data-a")===d.a) x.classList.add("right");});
+  if(pick===d.a){ D.score++; $("d_fb").className="fb ok"; $("d_fb").textContent="Right. "+DRILL_WHY[d.a]; }
+  else { b.classList.add("wrong"); $("d_fb").className="fb no"; $("d_fb").textContent="Not this time. "+DRILL_WHY[d.a]; }
+  $("d_n").textContent="Scenario "+(D.i+1)+" of "+DRILL.length+" · score "+D.score+"/"+D.done;
+  $("d_next").hidden=false; $("d_next").textContent=D.i<DRILL.length-1?"Next scenario →":"Start again ↺";
+});
+$("d_next").addEventListener("click",function(){ if(D.i<DRILL.length-1) D.i++; else {D.i=0;D.score=0;D.done=0;} paintDrill(); });
+
+$("count").textContent=TOTAL+" steps · "+STAGES.length+" lessons";
+paintPath(); paintDrill();
+
+/* ---------- deep link: #stage-N opens that stage (used by the Whop lessons) ---------- */
+function stageFromHash(){var m=/^#stage-(\d+)$/.exec(location.hash||"");if(!m)return -1;var i=+m[1]-1;return (i>=0&&i<STAGES.length)?i:-1;}
+function openStageHash(){var i=stageFromHash();if(i<0)return;var k=0;for(var j=0;j<STAGES[i].steps.length;j++){if(!S.passed[sid(i,j)]){k=j;break;}}openWalk(i,k);}
+openStageHash();window.addEventListener("hashchange",openStageHash);
+})();
+
+</script>
+</body></html>

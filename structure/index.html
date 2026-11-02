@@ -1,0 +1,987 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>FTA Structure Guide</title></head><body>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* One-column reference tool. Setup → search → start-here → term accordions → suggest.
+   FTA brand = the FLOW STACK desk: deep green, mint light, beams running through it. */
+:root{
+  color-scheme:dark;
+  --bg:#081d19; --panel:#0c2722; --panel2:#0f2e28; --card:rgba(255,255,255,.04); --card2:rgba(255,255,255,.065);
+  --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.17);
+  --fg:#eaf5f1; --muted:#8fb8ac; --dim:#628f82;
+  --mint:#3fdc9a; --mintdim:rgba(63,220,154,.14); --mintglow:rgba(63,220,154,.35);
+  --gold:#e8c468; --golddim:rgba(232,196,104,.13);
+  --coral:#f0736b;
+  --sans:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:17px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 72px;
+  position:relative;min-height:100vh}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:var(--mint)}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--mint);outline-offset:2px;border-radius:8px}
+
+/* ---------- background: glow, dot grid, light streaks ---------- */
+.fx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.fx .glow{position:absolute;inset:0;background:radial-gradient(900px 520px at 50% -6%,#13402f 0%,transparent 64%),radial-gradient(700px 500px at 100% 100%,rgba(63,220,154,.06),transparent 70%)}
+.fx .grid{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.055) 1px,transparent 1.2px);background-size:24px 24px;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.35) 60%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.35) 60%,transparent 100%)}
+.fx .track{position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,rgba(63,220,154,.07) 20%,rgba(63,220,154,.07) 80%,transparent)}
+.fx .track i{position:absolute;left:-1px;width:3px;height:200px;top:-220px;border-radius:3px;
+  background:linear-gradient(to bottom,transparent,rgba(63,220,154,.15) 30%,var(--mint) 85%,#fff 100%);
+  box-shadow:0 0 12px var(--mint),0 0 26px var(--mintglow);animation:fall var(--d,7s) linear infinite;animation-delay:var(--w,0s)}
+@keyframes fall{from{transform:translateY(0)}to{transform:translateY(calc(100vh + 440px))}}
+.wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+
+/* ---------- beams (FLOW STACK) ---------- */
+@property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes spin{to{--ang:360deg}}
+@keyframes breathe{0%,100%{box-shadow:0 0 0 1px rgba(63,220,154,.05),0 0 22px -6px var(--mintglow)}50%{box-shadow:0 0 0 1px rgba(63,220,154,.08),0 0 38px -4px var(--mintglow)}}
+.beam{border:1.5px solid transparent;
+  background:linear-gradient(var(--panel),var(--panel)) padding-box,
+    conic-gradient(from var(--ang),rgba(63,220,154,.16) 0 58%,var(--mint) 76%,#ffffff 80%,var(--mint) 84%,rgba(63,220,154,.16) 97%) border-box;
+  animation:spin 4.2s linear infinite,breathe 3.4s ease-in-out infinite;animation-delay:var(--delay,0s)}
+.beam.gold{background:linear-gradient(var(--panel),var(--panel)) padding-box,
+    conic-gradient(from var(--ang),rgba(232,196,104,.16) 0 58%,var(--gold) 76%,#fff 80%,var(--gold) 84%,rgba(232,196,104,.16) 97%) border-box}
+.rail{height:2px;border-radius:2px;background:linear-gradient(90deg,transparent 0%,rgba(63,220,154,.12) 20%,rgba(63,220,154,.12) 80%,transparent 100%);position:relative;overflow:hidden}
+.rail::after{content:"";position:absolute;top:0;bottom:0;width:22%;left:-22%;background:linear-gradient(90deg,transparent,var(--mint),#fff,var(--mint),transparent);
+  box-shadow:0 0 14px var(--mint);animation:run 3.6s cubic-bezier(.6,0,.4,1) infinite}
+@keyframes run{to{left:100%}}
+
+/* ---------- header ---------- */
+.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.mark{width:44px;height:44px;border-radius:13px;background:var(--mint);display:grid;place-items:center;flex:none;box-shadow:0 0 0 4px rgba(63,220,154,.12),0 0 28px var(--mintglow)}
+.mark svg{width:22px;height:22px}
+.brand{font-weight:800;font-size:25px;letter-spacing:-.025em;line-height:1.1}
+.brand span{color:var(--mint);text-shadow:0 0 22px var(--mintglow)}
+.brand small{display:block;font-size:13.5px;font-weight:600;color:var(--muted);letter-spacing:.02em;margin-top:3px}
+.count{margin-left:auto;font-family:var(--mono);font-size:13px;color:var(--mint);border:1px solid rgba(63,220,154,.35);border-radius:999px;padding:5px 12px;background:var(--mintdim)}
+
+/* ---------- setup ---------- */
+.setup{border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:22px}
+.setup h1{margin:0;font-size:clamp(27px,6vw,36px);font-weight:800;letter-spacing:-.03em;line-height:1.15;text-wrap:balance}
+.setup h1 em{font-style:normal;color:var(--mint);text-shadow:0 0 24px var(--mintglow)}
+.setup p{margin:0;color:var(--muted);max-width:58ch;font-size:17px}
+.q{display:flex;flex-direction:column;gap:10px}
+.qlab{font-size:12.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mint)}
+.opts{display:flex;flex-wrap:wrap;gap:10px}
+.opt{appearance:none;cursor:pointer;border:1px solid var(--line2);background:var(--card);color:var(--fg);border-radius:16px;padding:14px 18px;text-align:left;min-width:160px;flex:1 1 160px;transition:border-color .15s,background .15s,box-shadow .15s}
+.opt b{display:block;font-size:18px}
+.opt i{display:block;font-style:normal;font-size:14px;color:var(--muted);margin-top:3px}
+.opt:hover{border-color:rgba(63,220,154,.5)}
+.opt[aria-pressed="true"]{background:var(--mintdim);border-color:var(--mint);box-shadow:0 0 22px -6px var(--mintglow)}
+.opt[aria-pressed="true"] b{color:var(--mint)}
+.go{appearance:none;border:0;cursor:pointer;background:var(--mint);color:#06211a;font-weight:800;font-size:17px;padding:14px 26px;border-radius:999px;align-self:flex-start;box-shadow:0 0 26px -4px var(--mintglow)}
+.go:disabled{opacity:.35;cursor:default;box-shadow:none}
+
+/* ---------- profile, search ---------- */
+.profile{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:15px;color:var(--muted)}
+.pchip{font-weight:700;color:var(--fg);background:var(--card2);border:1px solid var(--line2);border-radius:999px;padding:5px 13px}
+.link{appearance:none;background:none;border:0;color:var(--mint);cursor:pointer;font-size:15px;font-weight:700;padding:4px 2px}
+.searchbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;padding-block:10px;display:flex;flex-direction:column;gap:12px;
+  background:var(--bg);box-shadow:0 14px 18px -6px var(--bg)}
+.search{display:flex;align-items:center;gap:12px;border-radius:16px;padding:0 16px}
+.search svg{width:20px;height:20px;color:var(--mint);flex:none}
+.search input{flex:1;min-width:0;background:transparent;border:0;color:var(--fg);font:inherit;font-size:18px;padding:15px 0}
+.search input::placeholder{color:var(--dim)}
+.search input:focus{outline:none}
+.cats{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.cats::-webkit-scrollbar{display:none}
+.cat{appearance:none;cursor:pointer;white-space:nowrap;border:1px solid var(--line2);background:rgba(8,29,25,.7);color:var(--muted);border-radius:999px;padding:8px 15px;font-size:14.5px;font-weight:600}
+.cat[aria-pressed="true"]{background:var(--mintdim);color:var(--mint);border-color:var(--mint);box-shadow:0 0 16px -4px var(--mintglow)}
+.prog{display:flex;align-items:center;gap:12px}
+.pbar{flex:1;height:7px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
+.pbar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#1fa673,var(--mint),#b9ffe0);border-radius:999px;box-shadow:0 0 12px var(--mint);transition:width .5s}
+.pnum{font-family:var(--mono);font-size:13.5px;color:var(--muted);white-space:nowrap}
+
+/* ---------- start here ---------- */
+.start{border-radius:20px;padding:20px;--delay:-1.4s}
+/* ---------- path + walk-through ---------- */
+.browse{display:flex;flex-direction:column;gap:20px}
+.path{border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:16px;--delay:-1.4s}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mint)}
+.path h2{margin:0;font-size:clamp(24px,5.5vw,30px);font-weight:800;letter-spacing:-.025em;line-height:1.2;text-wrap:balance}
+.path .sub{margin:0;color:var(--muted);font-size:16px}
+.cont{appearance:none;cursor:pointer;text-align:left;display:flex;align-items:center;gap:14px;width:100%;border:1px solid var(--mint);background:linear-gradient(135deg,rgba(63,220,154,.22),rgba(63,220,154,.07));color:var(--fg);border-radius:18px;padding:16px 18px;box-shadow:0 0 30px -8px var(--mintglow)}
+.cont .ci{flex:1;min-width:0}
+.cont small{display:block;font-size:13.5px;color:var(--mint);font-weight:700;letter-spacing:.04em}
+.cont b{display:block;font-size:20px;font-weight:800;letter-spacing:-.015em;margin-top:2px}
+.cont .arrow{width:44px;height:44px;border-radius:50%;background:var(--mint);display:grid;place-items:center;flex:none;box-shadow:0 0 18px var(--mintglow)}
+.cont .arrow svg{width:20px;height:20px}
+.stages{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.stage{appearance:none;width:100%;text-align:left;cursor:pointer;display:flex;align-items:center;gap:14px;border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--fg);border-radius:15px;padding:12px 14px}
+.stage:hover:not(:disabled){border-color:rgba(63,220,154,.5)}
+.stage:disabled{cursor:default;opacity:.55}
+.snum{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:14px;background:rgba(255,255,255,.07);color:var(--muted);border:1px solid var(--line2)}
+.stage.done .snum{background:var(--mint);color:#06211a;border-color:var(--mint);box-shadow:0 0 12px var(--mintglow)}
+.stage.cur .snum{border-color:var(--mint);color:var(--mint);box-shadow:0 0 0 3px var(--mintdim)}
+.sinfo{flex:1;min-width:0}
+.sinfo b{display:block;font-size:17px;font-weight:700}
+.sinfo span{display:block;font-size:13.5px;color:var(--muted)}
+.sbar2{height:4px;border-radius:4px;background:rgba(255,255,255,.08);margin-top:6px;overflow:hidden}
+.sbar2 i{display:block;height:100%;background:var(--mint);box-shadow:0 0 8px var(--mint)}
+.lock{width:18px;height:18px;color:var(--dim);flex:none}
+.divider{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;margin:8px 2px 2px}
+.divider::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(232,196,104,.4),transparent)}
+.lookup{margin:6px 0 0;font-size:20px;font-weight:800;letter-spacing:-.015em}
+.lookup span{display:block;font-size:14.5px;font-weight:500;color:var(--muted);letter-spacing:0;margin-top:2px}
+.walk{border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:18px}
+.wtop{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.wtop .link{font-size:15px}
+.wstage{margin-left:auto;font-size:13.5px;color:var(--muted);font-weight:600}
+.dots{display:flex;gap:5px}
+.dots i{flex:1;height:6px;border-radius:6px;background:rgba(255,255,255,.1)}
+.dots i.ok{background:var(--mint);box-shadow:0 0 8px var(--mintglow)}
+.dots i.now{background:rgba(63,220,154,.45)}
+.wstep{font-family:var(--mono);font-size:13.5px;color:var(--mint);letter-spacing:.06em}
+.walk h2{margin:-8px 0 0;font-size:clamp(28px,7vw,38px);font-weight:800;letter-spacing:-.03em;line-height:1.12;text-wrap:balance}
+.check{border:1px solid rgba(232,196,104,.4);border-radius:16px;padding:16px;background:rgba(232,196,104,.05);display:flex;flex-direction:column;gap:10px}
+.check .blab{margin:0}
+.check .cq{margin:0;font-size:18px;font-weight:700;line-height:1.45}
+.ans{appearance:none;cursor:pointer;text-align:left;border:1px solid var(--line2);background:rgba(0,0,0,.2);color:var(--fg);border-radius:13px;padding:13px 15px;font-size:16.5px;font-weight:600;display:flex;gap:10px;align-items:center}
+.ans:hover:not(:disabled){border-color:rgba(232,196,104,.6)}
+.ans:disabled{cursor:default}
+.ans .k{font-family:var(--mono);font-size:13px;color:var(--muted);width:24px;height:24px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;flex:none}
+.ans.right{border-color:var(--mint);background:var(--mintdim);color:var(--mint)}
+.ans.right .k{background:var(--mint);color:#06211a;border-color:var(--mint)}
+.ans.wrong{border-color:rgba(240,115,107,.6);background:rgba(240,115,107,.08);color:var(--coral)}
+.fb{font-size:15.5px;min-height:1.2em;margin:0}
+.fb.ok{color:var(--mint)} .fb.no{color:var(--coral)}
+.wnav{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.next{appearance:none;border:0;cursor:pointer;background:var(--mint);color:#06211a;font-weight:800;font-size:17px;padding:14px 26px;border-radius:999px;box-shadow:0 0 26px -4px var(--mintglow);margin-left:auto}
+.next:disabled{opacity:.3;cursor:default;box-shadow:none}
+.prev{appearance:none;cursor:pointer;background:none;border:1px solid var(--line2);color:var(--fg);border-radius:999px;padding:12px 20px;font-weight:700;font-size:15px}
+.done-card{text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center;padding:12px 4px}
+.done-card .big{width:72px;height:72px;border-radius:50%;background:var(--mint);display:grid;place-items:center;box-shadow:0 0 0 8px var(--mintdim),0 0 40px var(--mintglow)}
+.done-card .big svg{width:34px;height:34px}
+.done-card h2{margin:6px 0 0}
+.done-card p{margin:0;color:var(--muted);max-width:44ch}
+.shead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.shead b{font-size:19px;font-weight:800}
+.shead span{font-size:14.5px;color:var(--muted)}
+.steps{display:flex;flex-wrap:wrap;gap:9px;margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s}
+.step{appearance:none;cursor:pointer;display:flex;align-items:center;gap:9px;border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--fg);border-radius:999px;padding:7px 15px 7px 7px;font-size:15px;font-weight:600}
+.step:hover{border-color:rgba(63,220,154,.5)}
+.step::before{content:counter(s);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.step.done::before{content:"\2713";background:var(--mint);color:#06211a;box-shadow:0 0 10px var(--mintglow)}
+
+/* ---------- list ---------- */
+.group{display:flex;flex-direction:column;gap:10px}
+.ghead{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mint);margin:14px 2px 2px}
+.ghead::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(63,220,154,.35),transparent)}
+details.term{border:1.5px solid var(--line);border-radius:16px;background:rgba(12,39,34,.72);transition:border-color .15s;scroll-margin-top:170px}
+details.term:hover{border-color:rgba(63,220,154,.3)}
+details.term[open]{border-color:transparent;
+  background:linear-gradient(var(--panel),var(--panel)) padding-box,
+    conic-gradient(from var(--ang),rgba(63,220,154,.18) 0 58%,var(--mint) 76%,#fff 80%,var(--mint) 84%,rgba(63,220,154,.18) 97%) border-box;
+  animation:spin 4.2s linear infinite,breathe 3.4s ease-in-out infinite}
+details.term summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:16px 16px}
+details.term summary::-webkit-details-marker{display:none}
+.tname{font-weight:700;font-size:18.5px;min-width:0;letter-spacing:-.01em}
+.tname mark{background:var(--golddim);color:var(--gold);border-radius:3px;padding:0 1px}
+.tags{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
+.tag{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 9px;border:1px solid var(--line2);color:var(--muted);white-space:nowrap}
+.tag.lv{color:var(--mint);border-color:rgba(63,220,154,.35)}
+.tag.cf{color:var(--gold);border-color:rgba(232,196,104,.45)}
+@media (max-width:560px){.tag.mk{display:none}}
+.tick{width:11px;height:11px;border-radius:50%;flex:none;border:1.5px solid var(--dim)}
+.tick.on{background:var(--mint);border-color:var(--mint);box-shadow:0 0 10px var(--mint)}
+.chev{width:18px;height:18px;color:var(--muted);flex:none;transition:transform .2s}
+details.term[open] .chev{transform:rotate(180deg);color:var(--mint)}
+.body{padding:0 16px 18px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.def{margin:0;font-size:20px;font-weight:600;line-height:1.5;max-width:62ch;letter-spacing:-.01em}
+.box{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:rgba(0,0,0,.2);min-width:0}
+.blab{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+.box p{margin:0;max-width:64ch;font-size:16.5px}
+.box p+p{margin-top:9px;padding-top:9px;border-top:1px dashed var(--line)}
+.box p b{color:var(--gold);font-weight:700;font-family:var(--mono);font-size:.88em;letter-spacing:.02em;margin-right:4px}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.cmp{grid-template-columns:1fr}}
+.cmp .box .blab{color:var(--mint)}
+.calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end}
+.calc label{display:flex;flex-direction:column;gap:5px;font-size:13.5px;color:var(--muted);font-weight:600}
+.calc input,.calc select{background:var(--bg);border:1px solid var(--line2);color:var(--fg);border-radius:11px;padding:11px 12px;font:inherit;font-family:var(--mono);font-size:16px;min-width:0;width:100%}
+.calc input:focus,.calc select:focus{outline:none;border-color:var(--mint);box-shadow:0 0 0 3px var(--mintdim)}
+.out{grid-column:1/-1;font-family:var(--mono);font-size:16px;color:var(--mint);background:var(--mintdim);border:1px solid rgba(63,220,154,.3);border-radius:12px;padding:12px 14px;text-shadow:0 0 14px var(--mintglow)}
+.calcbox{border-color:rgba(63,220,154,.25)}
+.calcbox .blab{color:var(--mint)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.vid{display:inline-flex;align-items:center;gap:11px;text-decoration:none;border:1px solid rgba(63,220,154,.5);background:var(--mintdim);color:var(--fg);border-radius:14px;padding:10px 16px 10px 10px;font-weight:600;font-size:15.5px}
+.vid:hover{box-shadow:0 0 20px -4px var(--mintglow)}
+.vid .play{width:30px;height:30px;border-radius:50%;background:var(--mint);display:grid;place-items:center;flex:none;box-shadow:0 0 12px var(--mintglow)}
+.vid .play svg{width:12px;height:12px}
+.vid small{color:var(--muted);font-weight:500}
+.soon{font-size:15px;color:var(--muted);border:1px dashed var(--line2);border-radius:14px;padding:10px 16px}
+.mod{font-size:15px;color:var(--fg);border:1px solid var(--line2);border-radius:14px;padding:10px 16px;background:var(--card)}
+.mod b{color:var(--mint)}
+.rel{display:flex;flex-wrap:wrap;gap:7px;align-items:center;font-size:14px;color:var(--muted)}
+.rel button{appearance:none;cursor:pointer;border:1px solid var(--line2);background:transparent;color:var(--fg);border-radius:999px;padding:5px 12px;font-size:14px;font-weight:600}
+.rel button:hover{border-color:rgba(63,220,154,.5)}
+.rel button.cf{border-color:rgba(232,196,104,.55);color:var(--gold)}
+.learn{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--muted);cursor:pointer;width:fit-content}
+.learn input{width:19px;height:19px;accent-color:var(--mint)}
+.empty{color:var(--muted);text-align:center;padding:28px 12px;border:1px dashed var(--line2);border-radius:16px;font-size:16px}
+.all{appearance:none;cursor:pointer;background:rgba(8,29,25,.7);border:1px solid var(--line2);color:var(--fg);border-radius:999px;padding:10px 18px;font-weight:700;font-size:15px;align-self:center}
+
+.candlelink{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--fg);border-radius:18px;padding:16px 18px;--delay:-2s}
+.cl-ico{width:42px;height:42px;border-radius:12px;background:var(--gold);display:grid;place-items:center;flex:none}
+.cl-ico svg{width:20px;height:20px}
+.cl-txt{flex:1;min-width:0}.cl-txt b{display:block;font-size:18px}.cl-txt span{display:block;font-size:14.5px;color:var(--muted)}
+.cl-go{font-size:22px;color:var(--gold)}
+/* ---------- suggest ---------- */
+.suggest{border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:12px;--delay:-2.6s}
+.suggest b{font-size:20px}
+.suggest p{margin:0;color:var(--muted);font-size:16px}
+.sform{display:flex;gap:10px;flex-wrap:wrap}
+.sform input{flex:1 1 230px;min-width:0;background:var(--bg);border:1px solid var(--line2);color:var(--fg);border-radius:13px;padding:13px 14px;font:inherit;font-size:16.5px}
+.sform input:focus{outline:none;border-color:var(--mint)}
+.sform button{appearance:none;border:0;cursor:pointer;background:var(--mint);color:#06211a;font-weight:800;font-size:16px;border-radius:13px;padding:13px 22px;box-shadow:0 0 22px -6px var(--mintglow)}
+.sform button:disabled{opacity:.45;cursor:default}
+.smsg{font-size:15px;color:var(--mint);min-height:1em}
+.foot{text-align:center;color:var(--dim);font-size:13.5px;max-width:62ch;margin:0 auto}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important}
+  .beam,.walk,details.term[open],.rail::after,.fx .track i{animation:none!important}
+  .fx .track i{display:none}
+}
+
+.sway{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--fg);border:1px solid rgba(244,196,88,.55);background:linear-gradient(135deg,rgba(244,196,88,.14),rgba(244,196,88,.04));border-radius:16px;padding:12px 14px;margin:14px 0}
+.sway .play{width:34px;height:34px;border-radius:50%;background:var(--gold);display:grid;place-items:center;flex:none;box-shadow:0 0 14px rgba(244,196,88,.45)}
+.sway .play svg{width:13px;height:13px}
+.sway>span:nth-child(2){display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.sway b{font-size:15.5px}.sway small{color:var(--muted);font-size:13.5px}
+.sway .sgo{color:var(--gold);font-weight:700;font-size:14px;white-space:nowrap}
+.sway.soonw{border-style:dashed;opacity:.85}.sway.soonw .play{background:var(--line2);box-shadow:none}
+/* ===== candle guide additions ===== */
+.home{display:flex;flex-direction:column;gap:20px}
+.card{border:1px solid var(--line);border-radius:20px;padding:20px;background:rgba(12,39,34,.72);display:flex;flex-direction:column;gap:12px}
+.card.beam{border:1.5px solid transparent}
+.h2{margin:0;font-size:clamp(22px,5vw,27px);font-weight:800;letter-spacing:-.02em;line-height:1.2;text-wrap:balance}
+.eyebrow.gold{color:var(--gold)}
+.path .prog{margin-top:-4px}
+.figbox{margin:0;border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.22);padding:12px 10px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;overflow-x:auto}
+.figbox figcaption{font-size:14px;color:var(--muted);text-align:center;max-width:60ch}
+svg.fig{width:100%;height:auto;display:block}
+svg.fig text{font-family:var(--sans)}
+svg.fig .nt{font-size:11.5px;fill:#eaf5f1;font-weight:600}
+svg.fig .lvt{font-size:10.5px;fill:var(--gold);font-weight:700}
+svg.fig .tg{font-size:10.5px;fill:var(--muted);font-family:var(--mono)}
+svg.fig .glowc{filter:drop-shadow(0 0 6px rgba(63,220,154,.45))}
+.walk .para{margin:0;font-size:16.5px;color:#cfe3dc;max-width:64ch}
+.builder{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center}
+@media (max-width:620px){.builder{grid-template-columns:1fr}}
+.sliders{display:flex;flex-direction:column;gap:12px}
+.sliders label{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;font-size:14px;font-weight:700;color:var(--muted)}
+.sliders .sv{margin-left:auto;font-family:var(--mono);color:var(--fg);font-weight:600}
+.sliders input{width:100%;accent-color:var(--mint)}
+.read{border:1px solid rgba(63,220,154,.35);background:var(--mintdim);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.read b{color:var(--mint);font-size:16px}
+.read span{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.presets{display:flex;flex-wrap:wrap;gap:7px;align-items:center;font-size:14px;color:var(--muted)}
+.presets button,.btn{appearance:none;cursor:pointer;border:1px solid var(--line2);background:transparent;color:var(--fg);border-radius:999px;padding:7px 13px;font-size:14px;font-weight:600}
+.presets button:hover,.btn:hover{border-color:rgba(63,220,154,.5)}
+.btn{align-self:center;padding:11px 20px;font-size:15px;font-weight:700;background:var(--mintdim);border-color:rgba(63,220,154,.5)}
+.libwrap{display:flex;flex-direction:column;gap:12px}
+.lib{display:flex;flex-direction:column;gap:10px}
+details.pat{border:1.5px solid var(--line);border-radius:16px;background:rgba(12,39,34,.72)}
+details.pat[open]{border-color:transparent;background:linear-gradient(var(--panel),var(--panel)) padding-box,conic-gradient(from var(--ang),rgba(63,220,154,.18) 0 58%,var(--mint) 76%,#fff 80%,var(--mint) 84%,rgba(63,220,154,.18) 97%) border-box;animation:spin 4.2s linear infinite,breathe 3.4s ease-in-out infinite}
+details.pat summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:10px 14px}
+details.pat summary::-webkit-details-marker{display:none}
+.pmini{width:62px;flex:none}
+.pmini{display:flex;justify-content:center}
+.pmini svg{height:52px!important;width:auto!important;max-width:none!important}
+.pinfo{flex:1;min-width:0}
+.pinfo b{display:block;font-size:17.5px}
+.pinfo span{display:block;font-size:13.5px;color:var(--muted)}
+details.pat .chev{width:18px;height:18px;color:var(--muted);flex:none;transition:transform .2s}
+details.pat[open] .chev{transform:rotate(180deg);color:var(--mint)}
+.pbody{padding:0 14px 16px;display:flex;flex-direction:column;gap:12px}
+.pdl{margin:0;display:grid;grid-template-columns:150px minmax(0,1fr);gap:8px 14px;font-size:15.5px}
+@media (max-width:560px){.pdl{grid-template-columns:1fr;gap:2px}.pdl dd{margin-bottom:8px}}
+.pdl dt{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mint);padding-top:3px}
+.pdl dt.trap{color:var(--coral)}
+.pdl dd{margin:0}
+.gl{align-items:flex-start}
+.gl b{font-size:18px}
+.glink{font-weight:700;text-decoration:none;border:1px solid rgba(63,220,154,.5);background:var(--mintdim);border-radius:999px;padding:9px 16px}
+@media (prefers-reduced-motion:reduce){details.pat[open]{animation:none}}
+svg.fig .nb{font-size:10px;font-weight:800;fill:#06211a;font-family:var(--mono)}
+ol.leg{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;font-size:14.5px;font-weight:600}
+ol.leg li{display:flex;align-items:center;gap:7px}
+ol.leg li span{width:20px;height:20px;border-radius:50%;background:#eaf5f1;color:#06211a;font-family:var(--mono);font-size:11px;font-weight:800;display:grid;place-items:center;flex:none}
+ol.leg li.lvl span{width:20px;height:0;border-radius:0;border-top:2px dashed var(--gold);background:none}
+ol.leg li.lvl{color:var(--gold)}
+svg.fig{max-height:300px}
+
+svg.fig .swl{font-size:11px;font-weight:800;font-family:var(--mono)}
+ol.leg li.bos span{background:none;color:var(--gold);font-size:14px}
+ol.leg li.vwl span{width:20px;height:0;border-radius:0;border-top:2px dotted #b9a7ff;background:none}
+ol.leg li.vwl{color:#b9a7ff}
+.dopts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-family:var(--mono);font-size:13.5px;color:var(--muted)}
+.dfoot .btn{align-self:auto}
+
+.sway{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--fg);border:1px solid rgba(244,196,88,.55);background:linear-gradient(135deg,rgba(244,196,88,.14),rgba(244,196,88,.04));border-radius:16px;padding:12px 14px;margin:14px 0}
+.sway .play{width:34px;height:34px;border-radius:50%;background:var(--gold);display:grid;place-items:center;flex:none;box-shadow:0 0 14px rgba(244,196,88,.45)}
+.sway .play svg{width:13px;height:13px}
+.sway>span:nth-child(2){display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.sway b{font-size:15.5px}.sway small{color:var(--muted);font-size:13.5px}
+.sway .sgo{color:var(--gold);font-weight:700;font-size:14px;white-space:nowrap}
+.sway.soonw{border-style:dashed;opacity:.85}.sway.soonw .play{background:var(--line2);box-shadow:none}
+</style>
+<div class="fx" aria-hidden="true">
+  <div class="glow"></div><div class="grid"></div>
+  <span class="track" style="left:7%"><i style="--d:8.5s;--w:-1s"></i></span>
+  <span class="track" style="left:23%"><i style="--d:11s;--w:-6s"></i></span>
+  <span class="track" style="left:41%"><i style="--d:9.5s;--w:-3.5s"></i></span>
+  <span class="track" style="left:62%"><i style="--d:12s;--w:-8s"></i></span>
+  <span class="track" style="left:80%"><i style="--d:7.5s;--w:-2.5s"></i></span>
+  <span class="track" style="left:94%"><i style="--d:10.5s;--w:-5s"></i></span>
+</div>
+
+<div class="wrap">
+  <header class="top">
+    <span class="mark" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M1.5 12.5 5 7l3 3 3.5-6 3 4" stroke="#06211a" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="brand">FTA <span>Structure Guide</span><small>Flow Trading Academy · Module 5</small></span>
+    <span class="count" id="count"></span>
+  </header>
+  <div class="rail" aria-hidden="true"></div>
+
+  <section class="walk beam" id="walk" hidden aria-live="polite"></section>
+
+  <div class="home" id="home">
+    <section class="path beam" id="start">
+      <span class="eyebrow">Start here</span>
+      <h2 id="pathtitle">Learn market structure step by step</h2>
+      <p class="sub">Everything you need to read structure: swings, trends, breaks, key levels, pullbacks, timeframes, and what makes a setup A+. One question at a time: read it, look at the drawing, answer the quick check, and the next step unlocks.</p>
+      <div class="prog"><span class="pbar"><span id="pfill"></span></span><span class="pnum" id="pnum"></span></div>
+      <button type="button" class="cont" id="cont"></button>
+      <ol class="stages" id="stages"></ol>
+    </section>
+
+    <section class="card beam gold" style="--delay:-1.2s">
+      <span class="eyebrow gold">Drill</span>
+      <h2 class="h2">Name that structure</h2>
+      <p class="sub">Eight charts. Call each one before you trade it: uptrend, downtrend, range, or chop.</p>
+      <figure class="figbox" id="d_fig"></figure>
+      <div class="dopts" id="d_opts">
+        <button type="button" class="ans" data-a="up">Uptrend</button><button type="button" class="ans" data-a="down">Downtrend</button><button type="button" class="ans" data-a="range">Range</button><button type="button" class="ans" data-a="chop">Chop</button>
+      </div>
+      <p class="fb" id="d_fb" aria-live="polite"></p>
+      <div class="dfoot"><span id="d_n"></span><button type="button" class="btn" id="d_next" hidden>Next chart →</button></div>
+    </section>
+
+    <section class="card">
+      <span class="eyebrow">Cheat sheet</span>
+      <h2 class="h2">The labels</h2>
+      <dl class="pdl">
+        <dt>HH</dt><dd>Higher high: a swing high above the last swing high.</dd>
+        <dt>HL</dt><dd>Higher low: a swing low above the last swing low.</dd>
+        <dt class="trap">LH</dt><dd>Lower high: a swing high below the last swing high.</dd>
+        <dt class="trap">LL</dt><dd>Lower low: a swing low below the last swing low.</dd>
+        <dt>BOS</dt><dd>Break of structure: a candle body closes past the last swing. Wicks don't count.</dd>
+        <dt>CHoCH</dt><dd>Change of character: a break against the trend. Stop trading the old direction.</dd>
+        <dt>A+</dt><dd>Structure so clean and obvious that anyone would label it the same way, plus a pullback into a key level.</dd>
+      </dl>
+    </section>
+
+    <section class="card gl">
+      <b>Keep going</b>
+      <p class="sub">Candles come before structure, and terms like pip or drawdown live in the glossary.</p>
+      <div class="row"><a class="glink" href="../candles/" target="_blank" rel="noopener">FTA Candle Guide →</a><a class="glink" href="../glossary/" target="_blank" rel="noopener">FTA Glossary →</a><a class="glink" href="../tools/" target="_blank" rel="noopener">FTA Tools Guide →</a></div>
+    </section>
+
+    <p class="foot">Drawings use gold prices for illustration. In this course 1 pip = $0.10 on gold. Structure tells you who is in control; it never guarantees what happens next.</p>
+  </div>
+</div>
+<script>
+/* ================= FTA MARKET STRUCTURE GUIDE — CONTENT =================
+   Figures: g = {p:[pivot prices], n: candles per leg} draws a price path through the pivots.
+   sw = labels for each pivot (HH, HL, LH, LL, H, L or ""), zz = draw the swing line,
+   lv = levels {v,t}, zone = {a,b,t}, notes = {i,on,t} (candle index), tags = labels under candles,
+   bos = {v, t} draws a break-of-structure marker, c = explicit candles [o,h,l,c] (overrides g).
+   q = [question, [answers], right index, why]. */
+
+var VIDEOS={
+  ms:{u:"https://www.youtube.com/watch?v=MYKfwEOC-Ew",t:"Market structure, animated",src:"chartlogiclab"},
+  trends:{u:"https://www.youtube.com/watch?v=0NaERvcQBho",t:"What are trends and channels?",src:"trading.com"},
+  bos:{u:"https://www.youtube.com/watch?v=JNynIAlfPsw",t:"CHoCH vs BOS: what's the difference?",src:"How to Online"},
+  sr:{u:"https://www.youtube.com/watch?v=nbhd3p_0qeE",t:"What are support and resistance?",src:"trading.com"},
+  fib:{u:"https://www.youtube.com/watch?v=LsY1II4LOZI",t:"Fibonacci retracement: trading dips and rips",src:"TradingView"},
+  vwap:{u:"https://www.youtube.com/watch?v=b7w68Dq4s5U",t:"How to use the VWAP indicator",src:"TradingView"},
+  topdown:{u:"https://www.youtube.com/watch?v=qvV-Abvk59s",t:"Top-down trading explained",src:"Smart Risk"}
+};
+
+var STAGES=[
+/* ---------------------------------------------------------------- 1 */
+{t:"Market Structure",mod:"Module 5 · Lesson 1",v:"ms",steps:[
+ {t:"What is market structure?",
+  p:["Market structure is the shape price makes as it moves: a series of swing highs and swing lows. Read in order, those swings tell you whether buyers or sellers are in control.",
+     "Candles tell you what happened in one period. Structure tells you the story across many periods. It is the first thing you read on any chart."],
+  fig:{g:{p:[4100,4124,4112,4138,4126,4152],n:3},sw:["L","H","HL","HH","HL","HH"],zz:true},
+  cap:"Price doesn't move in a straight line. It moves in swings.",
+  ex:"Gold climbs from 4,100 to 4,152 in steps: up, pull back, up again. Each step is a swing.",
+  q:["What is market structure?",["The pattern of swing highs and lows price makes","The color of the last candle","The spread your broker charges"],0,"Structure = the sequence of swings."]},
+ {t:"What is a swing high?",
+  p:["A swing high is a peak: a candle whose high is higher than the candles on both sides of it. Price pushed up, stopped, and turned down.",
+     "In this guide a swing high needs at least two lower highs on each side. That keeps it a rule, not a feeling, so two traders looking at the same chart mark the same swing."],
+  fig:{c:[[4110,4114,4108,4113],[4113,4118,4112,4117],[4117,4126,4116,4122],[4122,4123,4115,4116],[4116,4118,4110,4112]],notes:[{i:2,on:"h",t:"Swing high 4,126"}],tags:["lower","lower","peak","lower","lower"]},
+  cap:"The middle high is above the two highs on each side.",
+  ex:"Highs of 4,114, 4,118, 4,126, 4,123, 4,118. The 4,126 candle is the swing high.",
+  q:["A swing high is a candle whose high is…",["Higher than the candles on both sides","Lower than the candles on both sides","The same as the previous candle"],0,"It's a peak with lower highs either side."]},
+ {t:"What is a swing low?",
+  p:["A swing low is the mirror: a candle whose low is lower than the candles on both sides. Price dropped, stopped, and turned up.",
+     "Same rule: at least two higher lows on each side."],
+  fig:{c:[[4130,4131,4124,4125],[4125,4126,4119,4120],[4120,4122,4110,4116],[4116,4121,4114,4120],[4120,4126,4118,4125]],notes:[{i:2,on:"l",t:"Swing low 4,110"}],tags:["higher","higher","trough","higher","higher"]},
+  cap:"The middle low is below the two lows on each side.",
+  ex:"Lows of 4,124, 4,119, 4,110, 4,114, 4,118. The 4,110 candle is the swing low.",
+  q:["How many higher lows does this guide need on each side of a swing low?",["None","At least two","At least five"],1,"Two on each side keeps it a rule everyone marks the same way."]},
+ {t:"Reading swings in order",
+  p:["Once the swings are marked, compare each one to the one before it of the same kind: each high to the last high, each low to the last low.",
+     "Higher than the last = H for higher. Lower than the last = L for lower. That gives you four labels: HH (higher high), HL (higher low), LH (lower high), LL (lower low)."],
+  fig:{g:{p:[4140,4126,4134,4114,4124,4104],n:3},sw:["H","L","LH","LL","LH","LL"],zz:true},
+  cap:"Each high is lower than the last, each low is lower than the last.",
+  ex:"Highs 4,140 → 4,134 → 4,124 are lower highs. Lows 4,126 → 4,114 → 4,104 are lower lows.",
+  q:["A swing high at 4,134 comes after a swing high at 4,140. It is a…",["Higher high","Lower high","Higher low"],1,"It's a high, and it's lower than the last high."]},
+ {t:"Why the 1-hour chart",
+  p:["Structure exists on every timeframe, but in this course you read it on the 1-hour chart. It's slow enough to ignore noise and fast enough to matter inside one New York session.",
+     "The lower timeframes (15, 5 and 3 minute) are for timing the entry inside that 1-hour structure, never for deciding direction."],
+  fig:{g:{p:[4100,4124,4112,4138,4126,4152],n:2},sw:["","","HL","HH","HL","HH"],zz:true,tags:["1H"]},
+  cap:"Direction comes from here.",
+  ex:"If the 1-hour is making higher highs and higher lows, you're only interested in buys on the 5-minute.",
+  q:["In this course, where do you read structure for direction?",["1-minute chart","1-hour chart","Weekly chart"],1,"1-hour for direction; 15, 5 and 3 minute to time the entry."]}
+]},
+/* ---------------------------------------------------------------- 2 */
+{t:"Trend vs Range",mod:"Module 5 · Lesson 2",v:"trends",steps:[
+ {t:"What is an uptrend?",
+  p:["An uptrend is a series of higher highs and higher lows. Each push up goes further than the last, and each pullback stops above the last pullback.",
+     "Buyers are in control as long as the higher lows hold."],
+  fig:{g:{p:[4100,4120,4110,4134,4122,4148,4136,4160],n:2},sw:["","H","HL","HH","HL","HH","HL","HH"],zz:true},
+  cap:"HH, HL, HH, HL: an uptrend.",
+  ex:"Lows at 4,110 → 4,122 → 4,136 and highs at 4,120 → 4,134 → 4,148 → 4,160.",
+  q:["An uptrend is made of…",["Higher highs and higher lows","Lower highs and lower lows","Equal highs and lows"],0,"Both the highs and the lows step up."]},
+ {t:"What is a downtrend?",
+  p:["A downtrend is a series of lower highs and lower lows. Each bounce stops below the last bounce, and each drop goes further than the last.",
+     "Sellers are in control as long as the lower highs hold."],
+  fig:{g:{p:[4160,4140,4150,4126,4138,4112,4124,4100],n:2},sw:["","L","LH","LL","LH","LL","LH","LL"],zz:true},
+  cap:"LH, LL, LH, LL: a downtrend.",
+  ex:"Highs at 4,150 → 4,138 → 4,124 and lows at 4,140 → 4,126 → 4,112 → 4,100.",
+  q:["In a downtrend, sellers stay in control as long as…",["The lower highs hold","The higher lows hold","Volume is high"],0,"A break above the last lower high is the first crack."]},
+ {t:"What is a range?",
+  p:["A range is when price bounces between a ceiling and a floor without making higher highs or lower lows. Highs are roughly equal, lows are roughly equal.",
+     "Neither side is in control. Range trading is a different game from trend trading, and most losses come from treating one like the other."],
+  fig:{g:{p:[4110,4130,4112,4129,4111,4131,4113],n:2},sw:["L","H","L","H","L","H","L"],zz:true,lv:[{v:4131,t:"Ceiling ~4,130"},{v:4110,t:"Floor ~4,110"}],zone:{a:4131,b:4109}},
+  cap:"Equal highs, equal lows: a range.",
+  ex:"Gold bounces between about 4,110 and 4,130 for hours. No new highs, no new lows.",
+  q:["A range shows…",["Neither side in control","Buyers in full control","Sellers in full control"],0,"Price is boxed in."]},
+ {t:"What is chop?",
+  p:["Chop is a messy range: candles overlapping, swings that aren't clean, wicks both ways, no clear ceiling or floor. You can't even label the structure with confidence.",
+     "In Sway's 50-session New York dataset, 76% of days were chop or range days and only 24% were clean trend days. Most days, the best trade is waiting."],
+  fig:{c:[[4120,4125,4116,4123],[4123,4126,4117,4118],[4118,4124,4115,4122],[4122,4127,4119,4120],[4120,4123,4114,4121],[4121,4126,4118,4119],[4119,4124,4116,4123],[4123,4125,4117,4118]]},
+  cap:"Overlapping candles, no clean swings: chop.",
+  ex:"Gold drifts 4,114 to 4,127 for two hours with every candle overlapping the last.",
+  q:["What should you do in chop?",["Trade every bounce","Mostly wait","Size up to make it worth it"],1,"No clean structure, no clean trade."]},
+ {t:"How to tell which one you're in",
+  p:["Use a simple test on the 1-hour: do you have at least two higher highs AND two higher lows (or two lower highs AND two lower lows) in a row? That's a trend.",
+     "Highs and lows roughly flat? Range. Can't label it confidently? Chop. If you have to squint, it isn't a trend."],
+  fig:{g:{p:[4100,4116,4108,4124,4115,4132],n:2},sw:["","H","HL","HH","HL","HH"],zz:true},
+  cap:"Two higher highs and two higher lows: it passes the trend test.",
+  ex:"HL 4,108 → HL 4,115 and HH 4,124 → HH 4,132. That's a trend.",
+  q:["What's the minimum this guide needs to call it a trend?",["One higher high","Two higher highs and two higher lows in a row","Three green candles"],1,"Two of each, in sequence."]},
+ {t:"Trends turn into ranges and back",
+  p:["Markets cycle: trend, then range while it rests, then trend again (either way). A trend that stops making new highs is often turning into a range, not reversing.",
+     "When structure goes flat, switch your expectations: no more buying every dip just because it was trending an hour ago."],
+  fig:{g:{p:[4100,4120,4110,4134,4124,4135,4123,4134,4124],n:2},sw:["","","HL","HH","HL","H","L","H","L"],zz:true,zone:{a:4135,b:4123}},
+  cap:"Uptrend, then it stops making new highs and goes sideways.",
+  ex:"Gold trends to 4,134, then spends the next hours between 4,123 and 4,135.",
+  q:["An uptrend stops making new highs and the swings go flat. It's most likely…",["Turning into a range","A guaranteed reversal","Still a strong uptrend"],0,"Flat swings = range until proven otherwise."]}
+]},
+/* ---------------------------------------------------------------- 3 */
+{t:"Break of Structure",mod:"Module 5 · Lesson 3",v:"bos",steps:[
+ {t:"What is a break of structure (BOS)?",
+  p:["A break of structure is when a candle BODY closes past the last swing point. In an uptrend that's a close above the last swing high; in a downtrend, a close below the last swing low.",
+     "In this system, a wick through does not count. Only a body close."],
+  fig:{g:{p:[4100,4124,4112,4140],n:3},sw:["","H","HL",""],zz:true,lv:[{v:4124,t:"Last swing high"}],bos:{v:4124,t:"BOS"}},
+  cap:"A candle closes above the last swing high: structure breaks higher.",
+  ex:"The last swing high was 4,124. A 1-hour candle closes at 4,130. That's a bullish BOS.",
+  q:["In this system, what counts as a break of structure?",["A wick through the swing","A candle body closing past the swing","Price touching the swing"],1,"Body close only."]},
+ {t:"BOS with the trend: continuation",
+  p:["When the break goes the same way as the trend (a new higher high in an uptrend, a new lower low in a downtrend), it confirms the trend is still alive.",
+     "Each continuation BOS moves the line in the sand: the most recent higher low (or lower high) is now the level that must hold."],
+  fig:{g:{p:[4100,4120,4110,4134,4122,4148],n:2},sw:["","H","HL","HH","HL","HH"],zz:true,lv:[{v:4134,t:"Previous high"}],bos:{v:4134,t:"BOS"}},
+  cap:"Breaking the previous high confirms the uptrend.",
+  ex:"Gold closes above 4,134. The new line in the sand is the 4,122 higher low.",
+  q:["After a bullish BOS in an uptrend, which level must hold?",["The most recent higher low","The very first low of the day","The round number above"],0,"The latest higher low is now the trend's floor."]},
+ {t:"BOS against the trend: change of character",
+  p:["When price closes past a swing AGAINST the trend (below the last higher low in an uptrend, or above the last lower high in a downtrend), it's the first sign the trend is ending. Many traders call it a change of character (CHoCH).",
+     "It doesn't mean flip and trade the other way immediately. It means stop trading with the old trend."],
+  fig:{g:{p:[4100,4120,4110,4134,4122,4140,4114],n:2},sw:["","H","HL","HH","HL","HH",""],zz:true,lv:[{v:4122,t:"Last higher low"}],bos:{v:4122,t:"CHoCH"}},
+  cap:"The last higher low breaks on a close: the uptrend is in question.",
+  ex:"Gold's last higher low was 4,122. A 1-hour candle closes at 4,116. Stop looking for buys.",
+  q:["In an uptrend, a candle closes below the last higher low. What should you do?",["Keep buying dips","Stop looking for buys","Double your long"],1,"The trend's floor broke. Stand aside from buys."]},
+ {t:"Wick through is not a break",
+  p:["Price often stabs through a swing point with a wick, takes the stops sitting there, and closes back inside. That's a sweep, not a break.",
+     "The body close is your filter. It saves you from buying the top of a fake breakout or selling the bottom of a stop hunt."],
+  fig:{c:[[4110,4116,4108,4115],[4115,4124,4114,4122],[4122,4123,4114,4116],[4116,4120,4113,4118],[4118,4129,4117,4121],[4121,4122,4112,4114]],lv:[{v:4124,t:"Swing high 4,124"}],notes:[{i:4,on:"h",t:"Wick above, close below"}],tags:["","","","","sweep",""]},
+  cap:"The wick broke 4,124. The close didn't.",
+  ex:"Gold wicks to 4,129, closes at 4,121 below the 4,124 swing high, then drops.",
+  q:["Price wicks above the swing high but closes below it. Is that a BOS?",["Yes","No, it's a sweep","Only on Fridays"],1,"No body close above, no break."]},
+ {t:"What happens after a break",
+  p:["After a clean break, price often pulls back to the level it just broke before continuing. Old resistance becomes support (or old support becomes resistance).",
+     "If price comes back and closes back inside, the break failed. Failed breaks often run hard the other way."],
+  fig:{g:{p:[4110,4124,4114,4136,4125,4146],n:2},sw:["","H","HL","","",""],zz:true,lv:[{v:4124,t:"Broken high → support"}]},
+  cap:"Break, pull back to the broken level, continue.",
+  ex:"Gold breaks 4,124, pulls back to 4,125, holds, and runs to 4,146.",
+  q:["After a bullish break, price pulls back and closes back below the broken level. That means…",["The break failed","The break is confirmed","Nothing"],0,"Back inside on a close = failed break."]}
+]},
+/* ---------------------------------------------------------------- 4 */
+{t:"Key Levels",mod:"Module 5 · Lesson 4",v:"sr",steps:[
+ {t:"What is a key level?",
+  p:["A key level is a price where the market has reacted before, where lots of orders tend to sit. Price often stalls, bounces or speeds up when it gets there.",
+     "Structure tells you direction. Key levels tell you where to look for a trade."],
+  fig:{g:{p:[4100,4130,4112,4130,4116,4140],n:2},zz:true,lv:[{v:4130,t:"Rejected twice at 4,130"}]},
+  cap:"4,130 stopped price twice before it broke.",
+  ex:"Gold stalls at 4,130 twice, then breaks it. 4,130 is a key level both before and after.",
+  q:["What makes a price a key level?",["The market has reacted there before","It's a nice-looking number","Your broker marks it"],0,"Past reactions = orders waiting there."]},
+ {t:"Yesterday's high and low",
+  p:["The previous day's high and low are two of the most watched levels in any market. Stops pile up just beyond them.",
+     "Expect a reaction the first time price gets there: either a rejection or a sweep, sometimes a clean break."],
+  fig:{g:{p:[4120,4141,4118,4136,4106,4126],n:2},lv:[{v:4141,t:"Yesterday's high 4,141"},{v:4106.5,t:"Yesterday's low 4,106.52"}],zz:true},
+  cap:"Yesterday's range frames today.",
+  ex:"Yesterday gold traded 4,106.52 to 4,141.82. Today those two prices are the first levels on the chart.",
+  q:["Why do yesterday's high and low matter?",["Lots of stops sit just beyond them","They always hold","They're set by the exchange"],0,"Crowded stops = big reactions."]},
+ {t:"Session highs and lows",
+  p:["Each session leaves its own high and low: Asia, then London. By the time New York opens, the Asia range and the London high and low are on the chart.",
+     "New York often runs one of those levels before choosing a direction."],
+  fig:{g:{p:[4118,4126,4116,4125,4117,4134,4112,4130],n:2},zone:{a:4126,b:4116},lv:[{v:4134,t:"London high"},{v:4112,t:"London low"}],tags:["Asia","","","","London","","",""]},
+  cap:"Asia builds a range, London stretches it.",
+  ex:"Asia holds 4,116 to 4,126. London runs to 4,134 then down to 4,112. Those are New York's reference levels.",
+  q:["Which levels are on the chart by the New York open?",["Asia and London highs and lows","Only tomorrow's high","None"],0,"Earlier sessions leave levels behind."]},
+ {t:"Round numbers",
+  p:["Big round prices (4,100, 4,150, 4,200) act like magnets. Traders place orders there because they're easy to remember.",
+     "On gold, the $50 and $100 marks matter most."],
+  fig:{g:{p:[4120,4148,4136,4151,4138,4149],n:2},lv:[{v:4150,t:"4,150 round number"}],zz:true},
+  cap:"Price keeps stalling just around 4,150.",
+  ex:"Gold tags 4,148, 4,151 and 4,149 and can't close above 4,150.",
+  q:["On gold, which round numbers matter most?",["Every $1","The $50 and $100 marks","Only $1,000 marks"],1,"4,100, 4,150, 4,200: the big ones."]},
+ {t:"Flips: old resistance becomes support",
+  p:["When a level breaks, it often swaps roles. Old resistance becomes support; old support becomes resistance. This flip is one of the cleanest places to look for a trade with the trend."],
+  fig:{g:{p:[4110,4130,4118,4130,4120,4144,4131,4156],n:2},lv:[{v:4130,t:"Resistance → support"}],zz:true},
+  cap:"4,130 was the ceiling. After the break, it's the floor.",
+  ex:"Gold breaks 4,130, pulls back to 4,131 and bounces to 4,156.",
+  q:["After a level breaks, it often…",["Swaps roles","Disappears","Gets stronger in the same direction"],0,"Resistance becomes support, support becomes resistance."]},
+ {t:"Levels are zones, not lines",
+  p:["Price rarely turns at the exact cent. Think of each level as a small zone, a few dollars wide on gold.",
+     "Mark the zone where the wicks and bodies cluster, and judge reactions by closes in and out of it."],
+  fig:{g:{p:[4110,4131,4116,4128,4114,4133,4118],n:2},zone:{a:4133,b:4128},lv:[{v:4130.5,t:"Zone 4,128–4,133"}],zz:true},
+  cap:"Three highs at 4,131, 4,128 and 4,133: one zone, not one line.",
+  ex:"Treat 4,128 to 4,133 as the resistance zone instead of the single price 4,130.",
+  q:["How should you mark a level?",["As a zone a few dollars wide","As one exact price","Only on the 1-minute chart"],0,"Zones catch how price really behaves."]}
+]},
+/* ---------------------------------------------------------------- 5 */
+{t:"Pullbacks",mod:"Module 5 · Lesson 5",v:["fib","vwap"],steps:[
+ {t:"Why pullbacks matter",
+  p:["Trends move in pushes and pullbacks. The pullback is where you get a better price in the direction of the trend, instead of chasing the push.",
+     "Buy the pullback in an uptrend, sell the pullback in a downtrend. The question is always: where will the pullback end?"],
+  fig:{g:{p:[4100,4124,4112,4140],n:3},sw:["","","HL",""],zz:true,notes:[{i:5,on:"l",t:"Pullback: better price"}]},
+  cap:"The pullback is the entry; the push is the reward.",
+  ex:"Buying the pullback at 4,112 instead of chasing at 4,124 gives you $12 more room.",
+  q:["Why wait for a pullback?",["Better price in the trend's direction","Pullbacks never fail","It's faster"],0,"You stop chasing."]},
+ {t:"Shallow vs deep pullbacks",
+  p:["A shallow pullback gives back only a small part of the last push, roughly a third or less. It shows the trend is strong.",
+     "A deep pullback gives back half or more. The trend is still alive as long as the higher low holds, but buyers are less aggressive."],
+  fig:{g:{p:[4100,4130,4122,4150,4126,4160],n:2},sw:["","","shallow","","deep",""],zz:true},
+  cap:"First pullback: 8 of 30 (shallow). Second: 24 of 28 (deep).",
+  ex:"Gold pushes $30 and pulls back $8 (shallow), then pushes $28 and pulls back $24 (deep).",
+  q:["A pullback gives back about a quarter of the last push. It's…",["Shallow","Deep","A reversal"],0,"Less than a third = shallow."]},
+ {t:"Pullback into a key level",
+  p:["The best pullbacks end at something: a flipped level, yesterday's high or low, a session high or low, a round number.",
+     "When a pullback and a key level line up, you have a reason for price to turn there, not just hope."],
+  fig:{g:{p:[4110,4130,4118,4144,4130,4156],n:2},lv:[{v:4130,t:"Old high = key level"}],zz:true,notes:[{i:7,on:"l",t:"Pullback ends at the level"}]},
+  cap:"The pullback stops at the old high it broke.",
+  ex:"Gold breaks 4,130, pulls back exactly to 4,130 and resumes to 4,156.",
+  q:["What makes a pullback level strong?",["It lines up with a key level","It's the deepest pullback","It happens at lunch"],0,"Pullback + key level = a reason to turn."]},
+ {t:"Fibonacci pullback zones",
+  p:["Fibonacci levels measure how much of the last push a pullback has given back. The 50% to 61.8% zone is a common place for pullbacks in a healthy trend to end.",
+     "Draw it from the swing low to the swing high of the last push. It's a guide, not a guarantee: always pair it with structure and a level."],
+  fig:{g:{p:[4100,4140,4117,4156],n:3},zone:{a:4120,b:4115.3},lv:[{v:4120,t:"50%: 4,120"},{v:4115.3,t:"61.8%: 4,115.28"}],zz:true},
+  cap:"Push from 4,100 to 4,140. The pullback ends inside the 50–61.8% zone.",
+  ex:"A $40 push: 50% back is 4,120, 61.8% back is 4,115.28. Gold pulls back to 4,117 and turns.",
+  q:["A push runs from 4,100 to 4,140. Where is the 50% pullback?",["4,110","4,120","4,130"],1,"Halfway between 4,100 and 4,140 is 4,120."]},
+ {t:"Pullback into VWAP or a moving average",
+  p:["Some pullbacks end at a moving level: the daily VWAP (reset at 6 PM ET) or a moving average. In a strong uptrend, price often dips to VWAP and bounces.",
+     "These levels move with price, so they're dynamic support or resistance, not fixed prices."],
+  fig:{c:[[4110,4116,4109,4115],[4115,4121,4114,4120],[4120,4122,4114,4116],[4116,4118,4113,4117],[4117,4125,4116,4124],[4124,4130,4123,4129],[4129,4130,4120,4122],[4122,4124,4119,4123],[4123,4134,4122,4133]],notes:[{i:3,on:"l",t:"Dips to VWAP"},{i:7,on:"l",t:"Dips to VWAP again"}],vw:[4110,4113,4115,4115.5,4117,4119,4120,4120.5,4122]},
+  cap:"The dotted line is VWAP. Pullbacks keep finding it.",
+  ex:"Gold dips to VWAP near 4,115 and again near 4,120, bouncing both times.",
+  q:["Why is VWAP called a dynamic level?",["It moves with price over the day","It never changes","It's set by the exchange each morning"],0,"It's recalculated as the day trades."]},
+ {t:"When a pullback becomes a reversal",
+  p:["A pullback is only a pullback while structure holds. In an uptrend, once a candle closes below the last higher low, it isn't a pullback anymore: structure has broken.",
+     "Set that level before you trade. If it breaks, you're out or you stand aside."],
+  fig:{g:{p:[4100,4124,4112,4136,4106],n:2},sw:["","","HL","HH",""],zz:true,lv:[{v:4112,t:"Last higher low 4,112"}],bos:{v:4112,t:"Broken"}},
+  cap:"The pullback ran through the last higher low and closed below it.",
+  ex:"Gold's higher low was 4,112. The pullback closes at 4,108. That's no longer a pullback.",
+  q:["In an uptrend, when does a pullback stop being a pullback?",["When it closes below the last higher low","When it's 3 candles long","When it turns red"],0,"Structure broke."]}
+]},
+/* ---------------------------------------------------------------- 6 */
+{t:"Multi-Timeframe",mod:"Module 5 · Lesson 6",v:"topdown",steps:[
+ {t:"Higher timeframe for direction",
+  p:["The 1-hour chart answers one question: which way? If it's making higher highs and higher lows, you look for buys. Lower highs and lower lows, sells. Neither, you wait.",
+     "You don't take a trade the 1-hour chart disagrees with."],
+  fig:{g:{p:[4100,4120,4110,4134,4122,4148],n:2},sw:["","H","HL","HH","HL","HH"],zz:true,tags:["1H"]},
+  cap:"1-hour: uptrend. Only buys today.",
+  ex:"The 1-hour shows HL 4,110 → 4,122. Direction: up.",
+  q:["The 1-hour chart is making lower highs and lower lows. You look for…",["Buys","Sells","Both"],1,"Trade with the 1-hour."]},
+ {t:"Lower timeframes for the entry",
+  p:["Once the 1-hour gives direction and price pulls back into a level, drop to the 15-, 5- or 3-minute chart to time the entry.",
+     "The lower timeframe shows the pullback ending in detail: it stops making lower lows and starts making higher lows again."],
+  fig:{g:{p:[4130,4124,4127,4120,4124,4118,4126,4122,4131],n:2},sw:["","","LH","","LH","LL","","HL",""],zz:true,tags:["5m"]},
+  cap:"5-minute: the pullback's lower lows stop and a higher low forms.",
+  ex:"On the 5-minute, the pullback bottoms at 4,118, holds a higher low at 4,122 and pushes up.",
+  q:["What is the lower timeframe used for?",["Deciding direction","Timing the entry","Nothing"],1,"Direction from the 1-hour, timing from the lower chart."]},
+ {t:"A lower-timeframe break is your confirmation",
+  p:["Inside a 1-hour pullback, the 5-minute chart is in a small downtrend. When the 5-minute closes above its last lower high, its own structure breaks back in the 1-hour's direction.",
+     "That 5-minute break is the confirmation that the pullback is likely done."],
+  fig:{g:{p:[4130,4122,4126,4118,4123,4116,4128],n:2},sw:["","","LH","","LH","",""],zz:true,lv:[{v:4123,t:"5m lower high"}],bos:{v:4123,t:"5m BOS"},tags:["5m"]},
+  cap:"5-minute closes above its last lower high: the pullback is turning.",
+  ex:"The 5-minute's last lower high is 4,123. A 5-minute candle closes at 4,126: confirmation for the 1-hour buy idea.",
+  q:["In a 1-hour uptrend pullback, what confirms on the 5-minute?",["A close above the 5-minute's last lower high","A close below the 5-minute's low","Any green candle"],0,"Lower timeframe structure flips back in the trend's direction."]},
+ {t:"When timeframes disagree",
+  p:["If the 1-hour is up but the 5-minute is making clean lower lows that don't stop at a level, the pullback isn't done. Wait.",
+     "If the 1-hour itself is flat or messy, no lower-timeframe signal is good enough. That's a no-trade day for this model."],
+  fig:{g:{p:[4140,4130,4134,4122,4127,4114,4119,4106],n:2},sw:["","","LH","LL","LH","LL","LH","LL"],zz:true,tags:["5m"]},
+  cap:"The 5-minute keeps falling, no sign of turning.",
+  ex:"Even with a 1-hour uptrend, these 5-minute lower lows mean the pullback is still running.",
+  q:["The 1-hour is up, but the 5-minute keeps making lower lows. You…",["Buy now","Wait for the 5-minute to turn","Sell"],1,"Wait for the lower timeframe to agree."]},
+ {t:"Top-down routine",
+  p:["Every session, in this order: 1) mark the 1-hour structure and decide direction, 2) mark the key levels, 3) wait for price to pull back into a level, 4) drop to the 15, 5 or 3 minute and wait for its structure to turn, 5) only then look at the trade.",
+     "Same order every day. Skipping steps is how B-setups sneak in."],
+  fig:{g:{p:[4100,4124,4112,4140,4126,4152],n:2},sw:["","H","HL","HH","HL","HH"],zz:true,lv:[{v:4124,t:"Key level"}]},
+  cap:"Structure, levels, pullback, lower-timeframe turn, trade.",
+  ex:"1-hour up, key level 4,124, pullback reaches 4,126, 5-minute turns, now it's a setup.",
+  q:["What do you do first every session?",["Look for an entry on the 3-minute","Mark the 1-hour structure","Check your P&L"],1,"Direction first, always."]}
+]},
+/* ---------------------------------------------------------------- 7 */
+{t:"A+ Setups",mod:"Module 5 · Lesson 7",steps:[
+ {t:"What makes a setup A+?",
+  p:["In this system, an A+ setup starts with one thing: the market structure is clean and obvious. Clear higher highs and higher lows (or clear lower highs and lower lows) forming one after another, so plain that anyone looking at the chart would label it the same way.",
+     "If you have to argue with yourself about the structure, it's not A+."],
+  fig:{g:{p:[4100,4120,4110,4132,4121,4144,4133,4156],n:2},sw:["","H","HL","HH","HL","HH","HL","HH"],zz:true},
+  cap:"Clean, obvious, step after step. This is the picture you wait for.",
+  ex:"Gold's 1-hour prints HL 4,110 → 4,121 → 4,133 and HH 4,132 → 4,144 → 4,156. No debate.",
+  q:["What's the first thing an A+ setup needs?",["Clean, obvious structure","A big candle","A news release"],0,"Super clear HH/HL or LH/LL."]},
+ {t:"Clean vs messy structure",
+  p:["Clean structure: swings are spaced out, pushes are clearly bigger than pullbacks, highs and lows are easy to mark.",
+     "Messy structure: swings overlap, pullbacks are as big as pushes, wicks stab both ways. It might technically be a trend, but it's not clear, so it's not A+."],
+  fig:{g:{p:[4110,4126,4114,4129,4113,4131,4117,4130],n:2},sw:["","","HL?","HH?","LL?","HH?","HL?",""],zz:true},
+  cap:"Is it a trend? You can't say for sure. That's your answer: not A+.",
+  ex:"Gold's swings overlap between 4,113 and 4,131. You could argue uptrend; you could argue range. Skip it.",
+  q:["You can argue the structure either way. The setup is…",["A+","Not A+","A+ if the candle is big"],1,"Arguable means not clear."]},
+ {t:"Where A+ trades happen",
+  p:["With clean structure in place, the trade comes on the pullback: price pulls back into a key level, holds the last higher low (or lower high), and the lower timeframe turns.",
+     "Clean structure + pullback to a level + lower-timeframe confirmation is the full picture."],
+  fig:{g:{p:[4100,4120,4110,4134,4122,4148,4135],n:2},sw:["","H","HL","HH","HL","HH",""],zz:true,lv:[{v:4134,t:"Old high = key level"}],notes:[{i:11,on:"l",t:"Pullback into the level"}]},
+  cap:"Clean uptrend, pullback lands on the old high.",
+  ex:"Gold pulls back to 4,135, right on the 4,134 old high, above the 4,122 higher low.",
+  q:["In a clean uptrend, where does the A+ trade come?",["On the pullback into a key level","At the top of the push","In the middle of a range"],0,"Pullback + level, in clean structure."]},
+ {t:"What is NOT A+",
+  p:["Not A+: chop, overlapping swings, a trend that just broke structure against itself, price in the middle of nowhere far from any level, or inside the 15-minute news window.",
+     "B and C setups lose more often and cost the most. The edge comes from saying no."],
+  fig:{c:[[4120,4125,4116,4123],[4123,4126,4117,4118],[4118,4124,4115,4122],[4122,4127,4119,4120],[4120,4123,4114,4121],[4121,4126,4118,4119]],tags:["not","A+","","","",""]},
+  cap:"Chop: no A+ here, no matter how good one candle looks.",
+  ex:"Gold churning 4,114 to 4,127 for hours: zero A+ setups.",
+  q:["Which of these is NOT an A+ condition?",["Overlapping, choppy swings","Clean higher highs and higher lows","A pullback into a key level"],0,"Chop disqualifies a setup."]},
+ {t:"The A+ checklist",
+  p:["Before any trade, answer yes to each: 1) Is the 1-hour structure clean and obvious? 2) Is price pulling back, not chasing? 3) Is the pullback at a key level? 4) Is the last higher low (or lower high) still holding? 5) Has the lower timeframe turned? 6) Are you outside the news window and before 11:00 ET?",
+     "Six yeses: A+. Anything less: wait."],
+  fig:{g:{p:[4100,4120,4110,4134,4122,4148,4135,4160],n:2},sw:["","H","HL","HH","HL","HH","HL","HH"],zz:true,lv:[{v:4134,t:"Key level"}]},
+  cap:"All six yeses, then the trade.",
+  ex:"Clean 1-hour uptrend, pullback to 4,135 at the 4,134 level, 4,122 holds, 5-minute turns at 9:40: A+.",
+  q:["You have five of the six A+ yeses. You…",["Take it at full size","Wait","Take it at double size"],1,"Six out of six or no trade."]}
+]},
+/* ---------------------------------------------------------------- 8 */
+{t:"Live Breakdown",mod:"Module 5 · Lesson 8",steps:[
+ {t:"Step 1: read the 1-hour",
+  p:["Here's a full worked example on gold, the way you'll do it every morning. Start on the 1-hour and label the swings.",
+     "Higher lows at 4,108 and 4,118, higher highs at 4,138 and 4,148. Two of each: clean uptrend. Direction: buys only."],
+  fig:{g:{p:[4096,4126,4108,4138,4118,4148],n:2},sw:["","H","HL","HH","HL","HH"],zz:true,tags:["1H"]},
+  cap:"1-hour: clean HH and HL.",
+  ex:"Direction for the session: up.",
+  q:["What's the direction from this 1-hour chart?",["Buys only","Sells only","No direction"],0,"Clean HH/HL = buys only."]},
+ {t:"Step 2: mark the key levels",
+  p:["Mark the levels price might pull back into: the old high at 4,138 (now potential support after the break), the 4,118 higher low (the trend's floor), and the 4,150 round number above."],
+  fig:{g:{p:[4096,4126,4108,4138,4118,4148],n:2},sw:["","H","HL","HH","HL","HH"],zz:true,lv:[{v:4150,t:"Round number 4,150"},{v:4138,t:"Old high 4,138"},{v:4118,t:"Last HL 4,118"}]},
+  cap:"Three levels: target area, pullback level, invalidation.",
+  ex:"Pullback zone: around 4,138. If 4,118 breaks on a close, the idea is dead.",
+  q:["Which level kills the buy idea if it breaks on a close?",["4,150","4,138","4,118, the last higher low"],2,"The last higher low is the trend's floor."]},
+ {t:"Step 3: wait for the pullback",
+  p:["Don't chase the push to 4,148. Wait for price to come back toward 4,138.",
+     "On this day it takes about two hours. Waiting is the job."],
+  fig:{g:{p:[4096,4126,4108,4138,4118,4148,4139],n:2},sw:["","H","HL","HH","HL","HH",""],zz:true,lv:[{v:4138,t:"Old high 4,138"}],notes:[{i:11,on:"l",t:"Pullback reaches the level"}]},
+  cap:"Price pulls back to 4,139, right at the old high.",
+  ex:"Gold pulls back from 4,148 to 4,139.",
+  q:["Price is still at 4,148 and hasn't pulled back. You…",["Buy now before it runs","Wait for the pullback to 4,138","Sell it"],1,"No pullback, no entry."]},
+ {t:"Step 4: watch the lower timeframe turn",
+  p:["Drop to the 5-minute. The pullback is a small downtrend there: lower highs and lower lows into 4,139.",
+     "Then a 5-minute candle closes above the last lower high at 4,143. The 5-minute structure has turned back up."],
+  fig:{g:{p:[4148,4141,4145,4139,4143,4140,4147],n:2},sw:["","","LH","","LH","HL",""],zz:true,lv:[{v:4143,t:"5m lower high 4,143"}],bos:{v:4143,t:"5m BOS"},tags:["5m"]},
+  cap:"5-minute breaks back up from the level.",
+  ex:"5-minute closes at 4,145, above 4,143. Confirmation.",
+  q:["What just happened on the 5-minute?",["Its structure broke back up","It made a lower low","Nothing"],0,"A close above the last lower high flips it back up."]},
+ {t:"Step 5: run the A+ checklist",
+  p:["1-hour clean? Yes. Pullback, not chasing? Yes. At a key level? Yes, 4,138. Last higher low holding? Yes, 4,118 untouched. Lower timeframe turned? Yes. News window and time? No red folder, 9:52 ET. Six yeses.",
+     "Only now do you size the trade, from the stop distance, with the same dollar risk as always."],
+  fig:{g:{p:[4096,4126,4108,4138,4118,4148,4139,4158],n:2},sw:["","H","HL","HH","HL","HH","HL","HH"],zz:true,lv:[{v:4138,t:"Key level"},{v:4118,t:"Invalidation"}]},
+  cap:"All six boxes checked. The push to 4,158 follows.",
+  ex:"Six out of six at 9:52 ET. This is what an A+ day looks like. Most days won't.",
+  q:["In this breakdown, what did you do while price ran from 4,138 to 4,148?",["Chased it","Waited for the pullback","Sold it"],1,"The trade came from patience, not speed."]}
+]}
+];
+
+/* ---------- drill charts: "Name that structure" ---------- */
+var DRILL=[
+ {g:{p:[4100,4118,4108,4128,4116,4140],n:2},a:"up"},
+ {g:{p:[4150,4134,4142,4124,4132,4110],n:2},a:"down"},
+ {g:{p:[4110,4128,4111,4127,4112,4129],n:2},a:"range"},
+ {c:[[4120,4125,4116,4123],[4123,4126,4117,4118],[4118,4124,4115,4122],[4122,4127,4119,4120],[4120,4123,4114,4121],[4121,4126,4118,4119],[4119,4124,4116,4123]],a:"chop"},
+ {g:{p:[4120,4132,4126,4142,4134,4152,4146,4160],n:2},a:"up"},
+ {g:{p:[4140,4124,4136,4120,4132,4114],n:2},a:"down"},
+ {g:{p:[4120,4136,4121,4135,4119,4136],n:2},a:"range"},
+ {g:{p:[4160,4140,4152,4146,4150,4141,4151],n:2},a:"range"}
+];
+var DRILL_WHY={up:"Higher highs and higher lows.",down:"Lower highs and lower lows.",range:"Highs and lows going sideways: no clean trend.",chop:"Overlapping candles: you can't label clean swings."};
+
+var SWAY=[{r:"",w:""},{r:"",w:""},{r:"",w:""},{r:"",w:""},{r:"",w:""},{r:"",w:""},{r:"",w:""},{r:"",w:""}];
+
+(function(){
+"use strict";
+function $(id){return document.getElementById(id);}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function fmt(v){return Number(v).toLocaleString("en-US",{minimumFractionDigits:0,maximumFractionDigits:2});}
+
+/* ---------- drawing candles ---------- */
+var MINT="#3fdc9a", CORAL="#f0736b", MUTE="#9db8b0", GOLD="#e8c468";
+function gen(p,n){
+  var C=[],piv=[],prev=p[0],k=0;
+  var W=[0.6,0.9,1.2,0.8,1.0];
+  for(var j=1;j<p.length;j++){
+    var a=p[j-1],b=p[j],up=b>a;
+    for(var t=0;t<n;t++){
+      var o=prev,c=a+(b-a)*(t+1)/n,w=W[k%5],last=(t===n-1);
+      if(last) c=up?b-1.5:b+1.5;
+      var h=Math.max(o,c)+w,l=Math.min(o,c)-w;
+      if(last){ if(up) h=b; else l=b; }
+      if(j===1&&t===0){ if(up) l=Math.min(l,a); else h=Math.max(h,a); }
+      C.push([o,h,l,c]); prev=c; k++;
+    }
+    piv.push({i:j*n-1,v:b,hi:up});
+  }
+  piv.unshift({i:0,v:p[0],hi:p[1]<p[0]});
+  return {C:C,piv:piv};
+}
+function draw(f,opt){
+  opt=opt||{};
+  var G=f.g&&!f.c?gen(f.g.p,f.g.n):null, C=G?G.C:f.c, piv=G?G.piv:[], n=C.length, notes=f.notes||[], lv=f.lv||[], tags=f.tags||[], hl=f.hl||null;
+  var vals=[]; C.forEach(function(c){vals.push(c[1],c[2]);}); lv.forEach(function(l){vals.push(l.v);});
+  var mx=Math.max.apply(null,vals), mn=Math.min.apply(null,vals), pad=(mx-mn)*0.12||2; mx+=pad; mn-=pad;
+  var hasN=notes.length>0, small=opt.small;
+  var slot=small?30:(n>8?26:Math.max(40,Math.min(70,300/n)));
+  var left=small?10:16, plotW=slot*n, right=hasN?40:16;
+  var sw=f.sw||[], W=left+plotW+right, top=small?8:(sw.length?28:16), bottom=(tags.length&&!small)?28:(sw.length?24:10), H=small?120:(f.h||(sw.length?240:210));
+  var ph=H-top-bottom;
+  function y(v){return top+(mx-v)/(mx-mn)*ph;}
+  var bw=Math.max(6,Math.min(22,slot*0.56));
+  var o=['<svg class="fig" viewBox="0 0 '+W.toFixed(0)+' '+H+'" role="img" aria-label="'+esc(opt.label||"Candlestick diagram")+'" style="max-width:'+Math.round(W*1.7)+'px">'];
+  if(f.zone){ o.push('<rect x="'+left+'" y="'+y(f.zone.a)+'" width="'+plotW+'" height="'+(y(f.zone.b)-y(f.zone.a))+'" fill="rgba(232,196,104,.10)"/>'); }
+  lv.forEach(function(l){ var yy=y(l.v);
+    o.push('<line x1="'+(left-6)+'" x2="'+(left+plotW+right-6)+'" y1="'+yy+'" y2="'+yy+'" stroke="'+GOLD+'" stroke-width="1.2" stroke-dasharray="5 4" opacity=".85"/>');
+  });
+  var xs=[];
+  C.forEach(function(c,i){
+    var x=left+slot*i+slot/2; xs.push(x);
+    var col=c[3]>c[0]?MINT:(c[3]<c[0]?CORAL:MUTE), dim=hl&&hl.indexOf(i)<0;
+    var bt=y(Math.max(c[0],c[3])), bb=y(Math.min(c[0],c[3])), bh=Math.max(1.6,bb-bt);
+    o.push('<g opacity="'+(dim?0.32:1)+'"'+(hl&&!dim?' class="glowc"':'')+'>');
+    o.push('<line x1="'+x+'" x2="'+x+'" y1="'+y(c[1])+'" y2="'+y(c[2])+'" stroke="'+col+'" stroke-width="'+(small?1.4:1.8)+'" stroke-linecap="round"/>');
+    o.push('<rect x="'+(x-bw/2)+'" y="'+(bh<=1.6?bt-0.8:bt)+'" width="'+bw+'" height="'+bh+'" rx="2" fill="'+col+'"/>');
+    o.push('</g>');
+    if(tags[i]&&!small) o.push('<text x="'+x+'" y="'+(H-8)+'" class="tg" text-anchor="middle">'+esc(tags[i])+'</text>');
+  });
+  if(f.vw&&!small){ o.push('<polyline fill="none" stroke="#b9a7ff" stroke-width="1.6" stroke-dasharray="2 4" points="'+f.vw.map(function(v,i){return xs[i]+","+y(v);}).join(" ")+'"/>'); }
+  if(f.zz&&piv.length&&!small){ o.push('<polyline fill="none" stroke="rgba(234,245,241,.55)" stroke-width="1.4" stroke-dasharray="4 3" points="'+piv.map(function(p){return xs[p.i]+","+y(p.v);}).join(" ")+'"/>'); }
+  if(sw.length&&!small) piv.forEach(function(p,j){ var t=sw[j]; if(!t) return;
+    var col=/^(HH|HL)/.test(t)?MINT:(/^(LH|LL)/.test(t)?CORAL:"#cfe3dc");
+    o.push('<text x="'+xs[p.i]+'" y="'+(p.hi?y(p.v)-8:y(p.v)+17)+'" text-anchor="middle" class="swl" fill="'+col+'">'+esc(t)+'</text>'); });
+  var legend=[];
+  if(f.bos&&!small){ var use=-1;
+    for(var q4=C.length-1;q4>0;q4--){ if((C[q4][3]-f.bos.v)*(C[q4-1][3]-f.bos.v)<0){ use=q4; break; } }
+    if(use>=0){ var bx=xs[use], by=y(f.bos.v);
+      o.push('<path d="M'+bx+' '+(by-7)+' L'+(bx+7)+' '+by+' L'+bx+' '+(by+7)+' L'+(bx-7)+' '+by+' Z" fill="'+GOLD+'" stroke="#06211a" stroke-width="1.2"/>');
+      legend.push('<li class="bos"><span>◆</span>'+esc(f.bos.t)+': candle closes past the level</li>'); } }
+  if(hasN&&!small){
+    var pts=notes.map(function(nt,ix){
+      var c=C[nt.i], v;
+      switch(nt.on){case "o":v=c[0];break;case "c":v=c[3];break;case "h":v=c[1];break;case "l":v=c[2];break;
+        case "body":v=(c[0]+c[3])/2;break;case "uw":v=(c[1]+Math.max(c[0],c[3]))/2;break;case "lw":v=(c[2]+Math.min(c[0],c[3]))/2;break;default:v=c[3];}
+      var wick=(nt.on==="h"||nt.on==="l"||nt.on==="uw"||nt.on==="lw");
+      return {ax:xs[nt.i]+(wick?1:bw/2),ay:y(v),ly:y(v),bx:xs[nt.i]+bw/2+16,t:nt.t,num:ix+1};
+    });
+    var byY=pts.slice().sort(function(a,b){return a.ly-b.ly;});
+    for(var k=1;k<byY.length;k++){ if(Math.abs(byY[k].bx-byY[k-1].bx)<20&&byY[k].ly-byY[k-1].ly<18) byY[k].ly=byY[k-1].ly+18; }
+    pts.forEach(function(p){
+      p.ly=Math.max(top+8,Math.min(H-bottom-6,p.ly));
+      o.push('<path d="M'+(p.ax+2)+' '+p.ay+' L'+(p.bx-8)+' '+p.ly+'" stroke="rgba(234,245,241,.45)" stroke-width="1" fill="none"/>');
+      o.push('<circle cx="'+p.bx+'" cy="'+p.ly+'" r="8" fill="#eaf5f1"/><text x="'+p.bx+'" y="'+(p.ly+3.6)+'" class="nb" text-anchor="middle">'+p.num+'</text>');
+      legend.push('<li><span>'+p.num+'</span>'+esc(p.t)+'</li>');
+    });
+  }
+  if(f.vw&&!small) legend.push('<li class="vwl"><span></span>VWAP</li>');
+  if(lv.length&&!small) lv.forEach(function(l){ legend.push('<li class="lvl"><span></span>'+esc(l.t)+'</li>'); });
+  o.push('</svg>');
+  return o.join("")+(legend.length?'<ol class="leg">'+legend.join("")+'</ol>':"");
+}
+
+/* ---------- state ---------- */
+var K="fta.structure.v1", S={passed:{}};
+try{var raw=localStorage.getItem(K); if(raw){var ob=JSON.parse(raw); if(ob&&ob.passed) S.passed=ob.passed;}}catch(e){}
+function save(){try{localStorage.setItem(K,JSON.stringify(S));}catch(e){}}
+function sid(s,k){return s+"."+k;}
+function stageDone(s){return STAGES[s].steps.every(function(_,k){return S.passed[sid(s,k)];});}
+function stageOpen(s){return s===0||stageDone(s-1);}
+function nextStep(){for(var s=0;s<STAGES.length;s++)for(var k=0;k<STAGES[s].steps.length;k++)if(!S.passed[sid(s,k)])return {s:s,k:k};return null;}
+var TOTAL=0; STAGES.forEach(function(st){TOTAL+=st.steps.length;});
+
+var LOCK='<svg class="lock" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>';
+var ARROW='<svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#06211a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+var CHECK='<svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#06211a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function paintPath(){
+  var nx=nextStep(), done=Object.keys(S.passed).length;
+  $("pfill").style.width=(done/TOTAL*100)+"%";
+  $("pnum").textContent=done+" of "+TOTAL+" steps";
+  if(nx){
+    var st=STAGES[nx.s].steps[nx.k];
+    $("cont").innerHTML='<span class="ci"><small>'+(done?'Stage '+(nx.s+1)+' · Step '+(nx.k+1)+' of '+STAGES[nx.s].steps.length:'Step 1 · Stage 1 of '+STAGES.length)+'</small><b>'+esc(st.t)+'</b></span><span class="arrow">'+ARROW+'</span>';
+    $("cont").setAttribute("data-s",nx.s); $("cont").setAttribute("data-k",nx.k); $("cont").hidden=false;
+    $("pathtitle").textContent=done?"Pick up where you left off":"Learn market structure step by step";
+  } else { $("cont").hidden=true; $("pathtitle").textContent="Guide complete. You can read structure."; }
+  $("stages").innerHTML=STAGES.map(function(st,i){
+    var n=st.steps.filter(function(_,k){return S.passed[sid(i,k)];}).length, open=stageOpen(i), dn=n===st.steps.length, cur=nx&&nx.s===i;
+    return '<li><button type="button" class="stage'+(dn?' done':'')+(cur?' cur':'')+'" data-stage="'+i+'"'+(open?'':' disabled')+'>'+
+      '<span class="snum">'+(dn?'✓':(i+1))+'</span><span class="sinfo"><b>'+esc(st.t)+'</b><span>'+esc(st.mod)+' · '+
+      (open?(dn?'Done · tap to review':n+' of '+st.steps.length+' steps'):'Finish stage '+i+' to unlock')+'</span>'+
+      (open?'<span class="sbar2"><i style="width:'+(n/st.steps.length*100)+'%"></i></span>':'')+'</span>'+(open?'':LOCK)+'</button></li>';
+  }).join("");
+}
+
+/* ---------- walk-through ---------- */
+var W={s:0,k:0,wrong:0};
+function shuffled(n,seed){var a=[];for(var i=0;i<n;i++)a.push(i);var x=seed;for(var j=n-1;j>0;j--){x=(x*9301+49297)%233280;var r=Math.floor(x/233280*(j+1));var t=a[j];a[j]=a[r];a[r]=t;}return a;}
+function vidHTML(key){
+  var keys=Array.isArray(key)?key:(key?[key]:[]), vs=keys.map(function(k){return VIDEOS[k];}).filter(Boolean);
+  if(!vs.length) return '<span class="soon">Sway\'s walkthrough clip for this lesson is coming soon</span>';
+  return vs.map(function(v){ return '<a class="vid" href="'+v.u+'" target="_blank" rel="noopener"><span class="play"><svg viewBox="0 0 12 12"><path d="M3 1.8v8.4L10 6z" fill="#06211a"/></svg></span><span>Watch: '+esc(v.t)+' <small>· '+esc(v.src)+'</small></span></a>'; }).join("");
+}
+/* ---------- Sway's two videos per section (Whop course). Paste each Whop lesson link into r (rundown) or w (walkthrough). ---------- */
+function swayHTML(i,kind){
+  var v=(SWAY[i]||{})[kind], r=kind==="r";
+  var lab=r?"Video 1 · Quick rundown":"Video 2 · Full walkthrough", sub=r?"Sway explains what you'll learn in this section":"Watch Sway do it start to finish";
+  var ico='<span class="play"><svg viewBox="0 0 12 12"><path d="M3 1.8v8.4L10 6z" fill="#1a1405"/></svg></span>';
+  return v?'<a class="sway" href="'+v+'" target="_blank" rel="noopener">'+ico+'<span><b>'+lab+'</b><small>'+sub+'</small></span><span class="sgo">Watch on Whop →</span></a>'
+          :'<div class="sway soonw">'+ico+'<span><b>'+lab+'</b><small>'+sub+' · in the Whop course soon</small></span></div>';
+}
+function openWalk(s,k){W.s=s;W.k=k;W.wrong=0;$("home").hidden=true;$("walk").hidden=false;paintWalk();window.scrollTo({top:0});}
+function closeWalk(){$("walk").hidden=true;$("home").hidden=false;paintPath();window.scrollTo({top:0});}
+function paintWalk(){
+  var stg=STAGES[W.s], st=stg.steps[W.k], id=sid(W.s,W.k), passed=!!S.passed[id], q=st.q;
+  var seed=0; for(var c=0;c<st.t.length;c++) seed+=st.t.charCodeAt(c)*(c+1);
+  var order=shuffled(q[1].length,seed);
+  var dots=stg.steps.map(function(_,i){return '<i class="'+(S.passed[sid(W.s,i)]?'ok':(i===W.k?'now':''))+'"></i>';}).join("");
+  $("walk").innerHTML=
+    '<div class="wtop"><button type="button" class="link" id="wback">← Back to the guide</button><span class="wstage">Stage '+(W.s+1)+' · '+esc(stg.t)+'</span></div>'+
+    '<div class="dots" aria-hidden="true">'+dots+'</div>'+
+    '<span class="wstep">STEP '+(W.k+1)+' OF '+stg.steps.length+'</span>'+
+    '<h2>'+esc(st.t)+'</h2>'+
+    st.p.map(function(p,i){return '<p class="'+(i===0?'def':'para')+'">'+esc(p)+'</p>';}).join("")+
+    '<figure class="figbox">'+draw(st.fig,{label:st.cap})+'<figcaption>'+esc(st.cap)+'</figcaption></figure>'+
+    '<div class="box"><div class="blab">On gold</div><p>'+esc(st.ex)+'</p></div>'+
+    (W.k===0?'<div class="row">'+vidHTML(stg.v)+'<span class="mod">Replaces <b>'+esc(stg.mod)+'</b></span></div>':'')+
+    '<div class="check"><div class="blab">Quick check</div><p class="cq">'+esc(q[0])+'</p>'+
+      order.map(function(oi,pos){return '<button type="button" class="ans'+(passed&&oi===q[2]?' right':'')+'" data-a="'+oi+'"'+(passed?' disabled':'')+'><span class="k">'+"ABCD"[pos]+'</span>'+esc(q[1][oi])+'</button>';}).join("")+
+      '<p class="fb'+(passed?' ok':'')+'" id="fb">'+(passed?esc(q[3]):'')+'</p></div>'+
+    '<div class="wnav">'+(W.k>0?'<button type="button" class="prev" id="wprev">Back</button>':'')+
+      '<button type="button" class="next" id="wnext"'+(passed?'':' disabled')+'>'+(W.k===stg.steps.length-1?'Finish stage':'Next step')+' →</button></div>';
+}
+function paintDone(){
+  var nxt=W.s+1<STAGES.length?W.s+1:null;
+  $("walk").innerHTML='<div class="done-card"><span class="big">'+CHECK+'</span><span class="eyebrow">Stage '+(W.s+1)+' complete</span><h2>'+esc(STAGES[W.s].t)+'</h2>'+
+    '<p>'+(nxt===null?'That\'s the whole guide. You can now read structure on any chart. Use the drill below to keep your eye sharp.':'Next up: '+esc(STAGES[nxt].t)+'.')+'</p>'+
+    (nxt!==null?'<button type="button" class="next" id="wnextstage" style="margin:6px auto 0">Start stage '+(nxt+1)+' →</button>':'')+
+    '<button type="button" class="link" id="wback">Back to the guide</button></div>';
+}
+$("walk").addEventListener("click",function(e){
+  var t=e.target.closest("button"); if(!t) return;
+  if(t.id==="wback"){closeWalk();return;}
+  if(t.id==="wprev"){W.k--;W.wrong=0;paintWalk();window.scrollTo({top:0});return;}
+  if(t.id==="wnext"){ if(W.k<STAGES[W.s].steps.length-1){W.k++;W.wrong=0;paintWalk();}else paintDone(); window.scrollTo({top:0}); return; }
+  if(t.id==="wnextstage"){openWalk(W.s+1,0);return;}
+  if(t.classList.contains("ans")){
+    var q=STAGES[W.s].steps[W.k].q, a=+t.getAttribute("data-a"), fb=$("fb");
+    if(a===q[2]){
+      Array.prototype.forEach.call($("walk").querySelectorAll(".ans"),function(b){b.disabled=true;});
+      t.classList.add("right"); fb.className="fb ok"; fb.textContent="Right. "+q[3];
+      S.passed[sid(W.s,W.k)]=1; save(); $("wnext").disabled=false;
+      var d=$("walk").querySelectorAll(".dots i"); if(d[W.k]) d[W.k].className="ok";
+    } else {
+      W.wrong++; t.classList.add("wrong"); t.disabled=true; fb.className="fb no";
+      fb.textContent=W.wrong>1?"Not quite. Look at the drawing again and reread the first paragraph.":"Not quite. Try again.";
+    }
+  }
+});
+$("cont").addEventListener("click",function(){openWalk(+this.getAttribute("data-s"),+this.getAttribute("data-k"));});
+$("stages").addEventListener("click",function(e){
+  var b=e.target.closest(".stage"); if(!b||b.disabled) return;
+  var i=+b.getAttribute("data-stage"), k=0;
+  for(var j=0;j<STAGES[i].steps.length;j++){ if(!S.passed[sid(i,j)]){k=j;break;} }
+  openWalk(i,k);
+});
+
+/* ---------- drill: name that structure ---------- */
+var D={i:0,score:0,done:0,answered:false};
+function paintDrill(){
+  var d=DRILL[D.i];
+  $("d_fig").innerHTML=draw(d.c?{c:d.c}:{g:d.g},{label:"Mystery chart"});
+  $("d_n").textContent="Chart "+(D.i+1)+" of "+DRILL.length+" · score "+D.score+"/"+D.done;
+  $("d_fb").textContent=""; $("d_fb").className="fb"; D.answered=false;
+  Array.prototype.forEach.call($("d_opts").querySelectorAll("button"),function(b){b.disabled=false;b.className="ans";});
+  $("d_next").hidden=true;
+}
+$("d_opts").addEventListener("click",function(e){
+  var b=e.target.closest("button"); if(!b||D.answered) return;
+  var d=DRILL[D.i], pick=b.getAttribute("data-a"); D.answered=true; D.done++;
+  Array.prototype.forEach.call($("d_opts").querySelectorAll("button"),function(x){x.disabled=true; if(x.getAttribute("data-a")===d.a) x.classList.add("right");});
+  if(pick===d.a){ D.score++; $("d_fb").className="fb ok"; $("d_fb").textContent="Right. "+DRILL_WHY[d.a]; }
+  else { b.classList.add("wrong"); $("d_fb").className="fb no"; $("d_fb").textContent="Not this time. "+DRILL_WHY[d.a]; }
+  $("d_n").textContent="Chart "+(D.i+1)+" of "+DRILL.length+" · score "+D.score+"/"+D.done;
+  $("d_next").hidden=false; $("d_next").textContent=D.i<DRILL.length-1?"Next chart →":"Start again ↺";
+});
+$("d_next").addEventListener("click",function(){ if(D.i<DRILL.length-1) D.i++; else {D.i=0;D.score=0;D.done=0;} paintDrill(); });
+
+$("count").textContent=TOTAL+" steps · 8 lessons";
+paintPath(); paintDrill();
+
+/* ---------- deep link: #stage-N opens that stage (used by the Whop lessons) ---------- */
+function stageFromHash(){var m=/^#stage-(\d+)$/.exec(location.hash||"");if(!m)return -1;var i=+m[1]-1;return (i>=0&&i<STAGES.length)?i:-1;}
+function openStageHash(){var i=stageFromHash();if(i<0)return;var k=0;for(var j=0;j<STAGES[i].steps.length;j++){if(!S.passed[sid(i,j)]){k=j;break;}}openWalk(i,k);}
+openStageHash();window.addEventListener("hashchange",openStageHash);
+})();
+
+</script>
+
+</body></html>

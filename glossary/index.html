@@ -357,6 +357,7 @@ var MGC="https://www.cmegroup.com/education/courses/understanding-micro-futures-
 function yt(id,title){return {k:"yt",u:"https://www.youtube.com/watch?v="+id,t:title};}
 function cme(slug,title,base){return {k:"cme",u:(base||C)+slug,t:title};}
 var OWN={k:"own"};
+function sway(id,title){return {k:"sway",u:"https://www.youtube.com/watch?v="+id,t:title};}
 
 var CATS=[
  {k:"basics",n:"Market basics"},{k:"price",n:"Price & movement"},{k:"size",n:"Position size"},
@@ -372,11 +373,11 @@ var TERMS=[
 {id:"forex",n:"Forex",aka:["fx","foreign exchange","currency market"],c:"basics",lv:"B",m:"fx",
  d:"The market where currencies are traded against each other, 24 hours a day, five days a week.",
  ex:["EURUSD|At 1.0850, one euro costs 1.0850 US dollars. If you think the euro will strengthen, you buy EURUSD.","Gold|XAUUSD trades on forex platforms the same way: gold (XAU) priced in US dollars (USD)."],
- v:yt("RK56JhZq1Kw","What is forex?"),rel:["majors","base-quote","pip","lot"]},
+ v:sway("ZlhJUQUVJFg","Laying down the fundamentals"),rel:["majors","base-quote","pip","lot"]},
 {id:"majors",n:"Major pairs",aka:["majors","major currency pairs","eurusd","gbpusd","usdjpy","usdchf","usdcad","audusd","nzdusd","minors","crosses"],c:"basics",lv:"B",m:"fx",
  d:"The seven most-traded currency pairs. Each one has the US dollar on one side.",
  ex:["The 7|EURUSD (euro), GBPUSD (pound, \"cable\"), USDJPY (yen), USDCHF (Swiss franc), USDCAD (Canadian dollar), AUDUSD (Aussie), NZDUSD (kiwi).","Why it matters|Majors have the tightest spreads and the most liquidity. Pairs without the dollar, like EURJPY or GBPJPY, are called crosses."],
- v:yt("RK56JhZq1Kw","What is forex?"),rel:["forex","base-quote","spread","liquidity"]},
+ v:sway("-t0qqejMsuA","Understanding currency pairs"),rel:["forex","base-quote","spread","liquidity"]},
 {id:"futures",n:"Futures contract",aka:["futures","future"],c:"basics",lv:"B",m:"fut",
  d:"A standardized agreement to buy or sell something at a set price on a future date, traded on an exchange.",
  ex:["Gold|One GC contract is 100 troy ounces of gold.","Indices|One ES contract tracks the S&P 500 at $50 per index point. Day traders close before expiration and keep only the profit or loss."],
@@ -401,7 +402,7 @@ var TERMS=[
 {id:"base-quote",n:"Base and quote currency",aka:["base currency","quote currency","currency pair"],c:"basics",lv:"B",m:"fx",
  d:"In a pair, the first currency is the base and the second is the quote. The price tells you how much of the quote currency buys one unit of the base.",
  ex:["EURUSD|EUR is the base, USD is the quote. 1.0850 means 1 euro = 1.0850 dollars.","USDJPY|USD is the base, JPY is the quote. 150.00 means 1 dollar = 150 yen. Buying USDJPY means you think the dollar will rise against the yen."],
- v:OWN,rel:["forex","majors","pip-value"]},
+ v:sway("-t0qqejMsuA","Understanding currency pairs"),rel:["forex","majors","pip-value"]},
 {id:"long-short",n:"Long and short",aka:["going long","going short","buy","sell","short selling"],c:"basics",lv:"B",m:"both",
  d:"Long means you buy and profit if price rises. Short means you sell first and profit if price falls.",
  ex:["Gold|Short gold at 4,150 and buy it back at 4,130, and you make the $20 drop.","EURUSD|Short at 1.0850, buy back at 1.0820, and you make 30 pips."],
@@ -583,7 +584,7 @@ var TERMS=[
 {id:"market-order",n:"Market order",aka:["market","buy at market","market execution"],c:"orders",lv:"B",m:"both",cf:"limit-order",
  d:"Buy or sell right now at the best available price.",
  ex:["Example|Fast and certain to fill, but in a fast move you may get a worse price than the one on your screen."],
- v:cme("futures-order-types","Futures order types",T),rel:["limit-order","slippage","bid-ask"]},
+ v:sway("P3JB-rM6XDI","Understanding market orders"),rel:["limit-order","slippage","bid-ask"]},
 {id:"limit-order",n:"Limit order",aka:["limit","buy limit","sell limit"],c:"orders",lv:"B",m:"both",cf:"market-order",
  d:"Buy or sell only at your price or better.",
  ex:["Example|EURUSD is at 1.0880 and you want to buy the pullback: a buy limit at 1.0850 fills only if price comes down to you."],
@@ -665,7 +666,7 @@ var TERMS=[
 {id:"sessions",n:"Trading sessions",aka:["asia","london","new york","sydney","session","ny open","london open"],c:"charts",lv:"I",m:"both",
  d:"The four overlapping market sessions: Sydney, Asia (Tokyo), London and New York. Each has its own personality.",
  ex:["Forex|AUD, NZD and JPY pairs are most active in Asia. EUR and GBP pairs come alive at the London open.","Futures|ES and NQ trade nearly 24 hours, but the big volume starts at the 9:30 am New York stock open."],
- v:OWN,rel:["liquidity","volatility","news"]},
+ v:sway("FSicNlCFfsE","Forex sessions"),rel:["liquidity","volatility","news"]},
 {id:"news",n:"News events (CPI, NFP, FOMC)",aka:["cpi","nfp","fomc","fed","news","high impact"],c:"charts",lv:"I",m:"both",
  d:"Scheduled US economic releases that can move markets hard in seconds. CPI is inflation, NFP is jobs, FOMC is the Fed's interest rate decision.",
  ex:["Example|CPI and NFP come out at 8:30 am New York time. FOMC decisions come at 2:00 pm. Every major pair, gold, ES and NQ can jump on them. In this course: no new entries 15 minutes either side of a high-impact release."],
@@ -691,7 +692,7 @@ var TERMS=[
 {id:"funded",n:"Funded account",aka:["funded","pa","performance account","fa"],c:"prop",lv:"B",m:"both",
  d:"The account you get after passing an eval. You trade the firm's account and keep a share of the profit.",
  ex:["Example|Pass a 50K eval, trade the funded 50K, and request payouts once you meet the firm's rules."],
- v:OWN,rel:["eval","payout","sim-live"]},
+ v:sway("cvm2j0W4gtA","Account types: demo, real and funded"),rel:["eval","payout","sim-live"]},
 {id:"sim-live",n:"Sim vs live",aka:["simulated","sim funded","live account","demo"],c:"prop",lv:"B",m:"both",
  d:"Many prop firms run funded accounts on a simulated feed and pay you from their own money. Live means real orders in the real market.",
  ex:["Example|Fills on a sim account can be cleaner than real fills. Trade it like it's live."],
@@ -789,7 +790,7 @@ var TERMS=[
 {id:"demo",n:"Demo account",aka:["paper trading","demo","practice account"],c:"slang",lv:"B",m:"both",
  d:"A practice account with fake money and real prices.",
  ex:["Example|Prove your rules on a demo before you pay for an eval."],
- v:OWN,rel:["backtesting","sim-live"]}
+ v:sway("cvm2j0W4gtA","Account types: demo, real and funded"),rel:["backtesting","sim-live"]}
 ];
 
 var BY={}; TERMS.forEach(function(t){BY[t.id]=t;});
@@ -931,7 +932,7 @@ function runCalc(box){
 
 function vidHTML(v){
   if(!v||v.k==="own") return '<span class="soon">Sway\'s 60-second clip is coming soon</span>';
-  var src=v.k==="yt"?"YouTube":"CME Group lesson";
+  var src=v.k==="sway"?"Sway · FTA":(v.k==="yt"?"YouTube":"CME Group lesson");
   return '<a class="vid" href="'+v.u+'" target="_blank" rel="noopener"><span class="play"><svg viewBox="0 0 12 12"><path d="M3 1.8v8.4L10 6z" fill="#06211a"/></svg></span><span>Watch: '+esc(v.t)+' <small>· '+src+'</small></span></a>';
 }
 function exHTML(ex){

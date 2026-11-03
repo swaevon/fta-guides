@@ -534,7 +534,7 @@ var TERMS=[
 {id:"lev-margin",n:"Leverage vs margin",aka:[],c:"risk",lv:"B",m:"both",cf:"leverage",
  d:"Margin is the money you put up. Leverage is how many times bigger your position is than that money. Two sides of the same coin.",
  ex:["Gold|Put up $4,150 to control $415,000 of gold. The $4,150 is margin; 100 to 1 is the leverage."],
- v:OWN,rel:["leverage","margin"]},
+ v:yt("w5IuFs6-NKI","Margin vs leverage in futures trading"),rel:["leverage","margin"]},
 {id:"init-maint",n:"Initial vs maintenance margin",aka:["initial margin","maintenance margin"],c:"risk",lv:"I",m:"fut",
  d:"Initial margin is what you need to open a futures trade. Maintenance margin is the lower level you must stay above to keep it open.",
  ex:["Example|If losses drag your account below maintenance margin, your broker asks for more money or closes you out."],
@@ -574,7 +574,7 @@ var TERMS=[
 {id:"swap",n:"Swap (overnight fee)",aka:["rollover fee","overnight fee","financing","carry"],c:"risk",lv:"I",m:"fx",
  d:"A fee or credit your forex broker applies when you hold a position past the daily cutoff (usually 5 pm New York).",
  ex:["Example|It depends on the interest rates of the two currencies. Holding the higher-yielding one can earn a small credit; the other side pays. Wednesday's swap is usually triple to cover the weekend. Futures have no swap; the cost is built into the price."],
- v:OWN,rel:["gold","forex"]},
+ v:yt("eaJCkrDycW8","Forex financing costs and overnight swaps"),rel:["gold","forex"]},
 
 /* ---------- orders ---------- */
 {id:"order",n:"Order",aka:["orders","order types"],c:"orders",lv:"B",m:"both",
@@ -782,7 +782,7 @@ var TERMS=[
 {id:"journal",n:"Trading journal",aka:["journal","trade log"],c:"slang",lv:"B",m:"both",
  d:"A record of every trade: setup, entry, exit, result, and whether you followed your rules.",
  ex:["Example|Screenshot each trade and grade it on three questions: Was it my setup? Was my size right? Did I leave my stop alone?"],
- v:OWN,mod:"Section 2: Process Over Outcome",rel:["process","backtesting"]},
+ v:yt("p4jEr3k5344","Trading journal: what it is and why you need it"),mod:"Section 2: Process Over Outcome",rel:["process","backtesting"]},
 {id:"backtesting",n:"Backtesting",aka:["backtest","replay","bar replay"],c:"slang",lv:"B",m:"both",
  d:"Testing your strategy on past price data to see how it would have performed.",
  ex:["Example|Replay 50 New York sessions and log every A+ setup your rules find."],
@@ -931,7 +931,7 @@ function runCalc(box){
 }
 
 function vidHTML(v){
-  if(!v||v.k==="own") return '<span class="soon">Sway\'s 60-second clip is coming soon</span>';
+  if(!v||v.k==="own") return '';
   var src=v.k==="sway"?"Sway · FTA":(v.k==="yt"?"YouTube":"CME Group lesson");
   return '<a class="vid" href="'+v.u+'" target="_blank" rel="noopener"><span class="play"><svg viewBox="0 0 12 12"><path d="M3 1.8v8.4L10 6z" fill="#06211a"/></svg></span><span>Watch: '+esc(v.t)+' <small>· '+src+'</small></span></a>';
 }
@@ -952,7 +952,7 @@ function termHTML(t,nq){
   h+='<div class="box"><div class="blab">Example</div>'+exHTML(t.ex)+'</div>';
   if(t.cmp) h+='<div class="cmp"><div class="box"><div class="blab">Forex</div><p>'+esc(t.cmp[0])+'</p></div><div class="box"><div class="blab">Futures</div><p>'+esc(t.cmp[1])+'</p></div></div>';
   if(t.calc) h+=calcHTML(t.calc,t.id,t.cd);
-  h+='<div class="row">'+vidHTML(t.v)+(t.mod?'<span class="mod">In the course: <b>'+esc(t.mod)+'</b></span>':'')+'</div>';
+  h+='<div class="row"'+((!t.v||t.v.k==="own")&&!t.mod?' hidden':'')+'>'+vidHTML(t.v)+(t.mod?'<span class="mod">In the course: <b>'+esc(t.mod)+'</b></span>':'')+'</div>';
   if(t.rel.length||t.cf){
     h+='<div class="rel">Related:';
     if(t.cf&&BY[t.cf]) h+='<button type="button" class="cf" data-go="'+t.cf+'">vs '+esc(BY[t.cf].n)+'</button>';
@@ -1148,7 +1148,7 @@ function paintWalk(){
     '<p class="def">'+esc(t.d)+'</p>'+
     '<div class="box"><div class="blab">Example</div>'+exHTML(t.ex)+'</div>'+
     (t.cmp?'<div class="cmp"><div class="box"><div class="blab">Forex</div><p>'+esc(t.cmp[0])+'</p></div><div class="box"><div class="blab">Futures</div><p>'+esc(t.cmp[1])+'</p></div></div>':'')+
-    '<div class="row">'+vidHTML(t.v)+(t.mod?'<span class="mod">In the course: <b>'+esc(t.mod)+'</b></span>':'')+'</div>'+
+    '<div class="row"'+((!t.v||t.v.k==="own")&&!t.mod?' hidden':'')+'>'+vidHTML(t.v)+(t.mod?'<span class="mod">In the course: <b>'+esc(t.mod)+'</b></span>':'')+'</div>'+
     '<div class="check"><div class="blab">Quick check</div><p class="cq">'+esc(z[1])+'</p>'+
     W.order.map(function(oi,pos){ return '<button type="button" class="ans'+(passed&&oi===z[3]?' right':'')+'" data-a="'+oi+'"'+(passed?' disabled':'')+'><span class="k">'+"ABC"[pos]+'</span>'+esc(z[2][oi])+'</button>'; }).join("")+
     '<p class="fb'+(passed?' ok':'')+'" id="fb">'+(passed?'You got this one.':'')+'</p></div>'+

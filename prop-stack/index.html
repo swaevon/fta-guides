@@ -1,0 +1,177 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>FTA Prop Stack</title>
+<meta name="description" content="Four futures prop firms, five 50K accounts each, traded together on a copier.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap">
+<style>
+:root{color-scheme:dark;--bg:#081d19;--panel:#0c2722;--panel2:#0f2f29;--line:rgba(255,255,255,.12);--fg:#eaf5f1;--muted:#8fb8ac;--mint:#3fdc9a;--ink:#06211a;--red:#f0736b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:"Plus Jakarta Sans",system-ui,sans-serif;font-size:16.5px;line-height:1.55;padding:40px max(16px,env(safe-area-inset-right,0px)) 72px max(16px,env(safe-area-inset-left,0px));background-image:radial-gradient(900px 520px at 50% -6%,#13402f 0%,transparent 64%)}
+.w{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.top{display:flex;align-items:center;gap:14px}
+.mark{width:44px;height:44px;border-radius:13px;background:var(--mint);color:var(--ink);display:grid;place-items:center;font-weight:800;font-size:22px;box-shadow:0 0 0 6px rgba(63,220,154,.12),0 0 30px rgba(63,220,154,.4);flex:none}
+.top small{display:block;font-size:12.5px;letter-spacing:.18em;color:var(--mint);font-weight:700}
+h1{margin:0;font-size:clamp(28px,6vw,40px);line-height:1.1;letter-spacing:-.025em;text-wrap:balance}h1 span{color:var(--mint)}
+h2{margin:26px 0 4px;font-size:22px;letter-spacing:-.01em}
+p{margin:0;color:var(--muted)}b{color:var(--fg)}
+.note{background:rgba(63,220,154,.07);border:1px solid rgba(63,220,154,.3);border-radius:14px;padding:12px 16px;font-size:15px;color:var(--fg)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px}.stat b{display:block;font-size:24px;color:var(--mint)}.stat span{font-size:13.5px;color:var(--muted)}
+.firms{display:flex;flex-direction:column;gap:12px}
+.firm{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 16px;align-items:start}
+.wk{grid-row:span 3;width:58px;height:58px;border-radius:14px;border:1px solid var(--mint);color:var(--mint);display:grid;place-items:center;text-align:center;font-weight:800;font-size:12px;line-height:1.1;letter-spacing:.06em}
+.wk i{display:block;font-style:normal;font-size:22px}
+.firm h3{margin:0;font-size:19px}.firm .plan{color:var(--muted);font-size:14.5px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:14px;color:var(--muted);margin-top:4px}.meta b{color:var(--fg)}
+.act{grid-column:2;display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.code{display:flex;align-items:center;gap:10px;background:var(--panel2);border:1px dashed rgba(63,220,154,.55);border-radius:12px;padding:8px 8px 8px 14px;font-weight:800;letter-spacing:.08em}
+.code small{font-weight:600;letter-spacing:0;color:var(--muted);font-size:12.5px}
+button,.btn{font:inherit;font-weight:800;font-size:14.5px;border-radius:10px;border:0;cursor:pointer;padding:9px 14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.copy{background:transparent;color:var(--mint);border:1px solid var(--mint)}
+.btn{background:var(--mint);color:var(--ink);box-shadow:0 0 22px -6px rgba(63,220,154,.7)}
+.btn:hover,.copy:hover{filter:brightness(1.08)}
+.tip{grid-column:2;font-size:13.5px;color:var(--muted);margin-top:6px}
+ul{margin:6px 0 0;padding-left:20px}li{margin:4px 0;color:var(--fg)}li span{color:var(--muted)}
+.checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.chk{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;gap:10px;font-size:15px}.chk:before{content:"✓";color:var(--mint);font-weight:800}
+.warn{background:rgba(240,115,107,.08);border:1px solid rgba(240,115,107,.35);border-radius:14px;padding:12px 16px;font-size:15px}
+details{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:4px 16px}
+details+details{margin-top:10px}summary{cursor:pointer;font-weight:700;padding:10px 0;list-style:none;display:flex;justify-content:space-between}
+summary::-webkit-details-marker{display:none}summary:after{content:"+";color:var(--mint);font-size:20px;line-height:1}details[open] summary:after{content:"–"}
+details ul{padding-bottom:12px}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14.5px}th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line)}th{color:var(--muted);font-weight:600;font-size:13px}tr:last-child td{border-bottom:0}tr.pick td{color:var(--mint);font-weight:700}
+.list{display:flex;flex-direction:column;gap:8px}
+.list label{display:flex;gap:12px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer}
+.list input{accent-color:var(--mint);width:18px;height:18px;margin-top:2px;flex:none}
+.list input:checked+span{color:var(--muted);text-decoration:line-through}
+.foot{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;margin-top:10px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--mint);color:var(--ink);font-weight:800;padding:10px 18px;border-radius:999px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+@media (max-width:560px){.stat{padding:12px}.stat b{font-size:18px}.stat span{font-size:12.5px}.checks{grid-template-columns:1fr}.firm{grid-template-columns:1fr}.wk{grid-row:auto;width:auto;height:auto;padding:6px 10px;justify-self:start;display:inline-flex;gap:6px;align-items:center}.wk i{display:inline;font-size:14px;margin-left:4px}.act,.tip{grid-column:1}}
+</style></head><body><div class="w">
+
+<div class="top"><div class="mark">F</div><div><small>FLOW TRADING ACADEMY</small><h1>Prop Stack <span>· 20 Accounts</span></h1></div></div>
+<p>The plan: four futures prop firms with rules as close to LucidFlex as possible, five 50K accounts at each, all traded together on a copier.</p>
+<div class="note">Prices, rules and codes change often. <b>Confirm everything at checkout</b> before you buy. Last checked November 2026.</div>
+
+<div class="stats">
+<div class="stat"><b>20</b><span>funded accounts</span></div>
+<div class="stat"><b>4</b><span>firms, one per week</span></div>
+<div class="stat"><b>$450–$580</b><span>per week for 5 evals</span></div>
+</div>
+
+<h2>The lineup</h2>
+<p>Buy one firm a week, five 50K accounts each. Use the code at checkout.</p>
+<div class="firms" id="firms"></div>
+
+<h2>Why these four</h2>
+<p>Each one matches the LucidFlex rule set a copier needs:</p>
+<div class="checks">
+<div class="chk">End-of-day trailing drawdown, not intraday</div>
+<div class="chk">No consistency rule once funded</div>
+<div class="chk">No daily loss limit once funded, or none that fails the account</div>
+<div class="chk">Up to 5 funded accounts allowed</div>
+</div>
+<div class="warn"><b>Why not Apex:</b> its funded accounts need 50% consistency on every payout and have a daily loss limit. One big copied day could block Apex payouts while the other firms pay.</div>
+
+<h2>Rules by firm (50K)</h2>
+<details open><summary>Lucid · LucidFlex</summary><ul>
+<li>Profit target <b>$3,000</b> · Max loss <b>$2,000 EOD trailing</b>, locks at $50,100</li>
+<li>Eval: 50% consistency <span>(40% default, 50% add-on available)</span></li>
+<li>Funded: 90/10 split, no consistency, no daily loss limit</li>
+<li>Payouts: up to 50% of profit, $500 min, $2,000 max per payout, up to 5 payouts, 5 qualifying days between</li>
+<li>No activation fee, no monthly fee</li></ul></details>
+<details><summary>MyFundedFutures · Rapid EOD</summary><ul>
+<li>Max loss <b>$2,000 EOD</b>, stays EOD once funded <span>(regular Rapid switches to intraday, avoid it)</span></li>
+<li>Funded: 90/10 split, no consistency, daily payouts, $500 min, no published per-payout cap</li>
+<li>5 accounts allowed while all are 25K or 50K</li>
+<li>No activation fees on any plan</li>
+<li><b>Avoid Builder:</b> only one 50K Builder account allowed, 80/20, $2,000 cap, 50% consistency</li></ul></details>
+<details><summary>Tradeify · Select Flex</summary><ul>
+<li>Profit target <b>$3,000</b> · Max loss <b>$2,000 EOD</b></li>
+<li>Funded: no daily loss limit, no consistency rule</li>
+<li>Up to 5 accounts</li></ul></details>
+<details><summary>FundedNext · Futures Flex</summary><ul>
+<li>Profit target <b>$2,500</b> · EOD max loss, no fixed daily loss cap</li>
+<li>Confirm activation fees and funded payout rules before buying</li></ul></details>
+<details><summary>Backup · Take Profit Trader</summary><ul>
+<li>No payout caps, no consistency once funded</li>
+<li><b>Note:</b> PRO funded accounts trail intraday</li></ul></details>
+
+<h2>Risk plan</h2>
+<ul>
+<li><b>Evals:</b> $300 risk per trade</li>
+<li><b>Funded:</b> $200 per trade, scaling to $350 once each account has about a $1,000 cushion</li>
+<li><b>Setup:</b> V1 trend (break of low) with order-flow confirmation, NY session 8–11 AM ET</li>
+<li><b>Stop</b> after two losses in a day</li>
+</ul>
+
+<h2>Simulation results</h2>
+<p>40,000 simulated runs using Sway's backtest stats: 43.9% win rate, 2.13R average winner.</p>
+<div class="tbl"><table>
+<tr><th>Setup</th><th>Pass rate</th><th>Trades to pass</th><th>Avg payout / account</th><th>Return per $1 spent</th></tr>
+<tr class="pick"><td>50K @ $300 risk</td><td>78%</td><td>~18</td><td>$5,200</td><td>~51x</td></tr>
+<tr><td>150K @ $675 risk</td><td>77%</td><td>~26</td><td>$7,200</td><td>~32x</td></tr>
+<tr><td>150K @ $900 risk</td><td>66%</td><td>~17</td><td>$5,200</td><td>~22x</td></tr>
+</table></div>
+<p><b>Decision: 50K accounts.</b> Best return per dollar and the fastest to pass. Revisit 150Ks once live results match the backtest.</p>
+<div class="warn">A simulation is not a promise. It assumes your live trading matches the backtest. Your results will differ, and you can lose the full cost of every eval.</div>
+
+<h2>Copier</h2>
+<ul>
+<li><b>Lucid:</b> free built-in copier for the first 5 accounts</li>
+<li><b>Across firms:</b> Traders Connect, about $25/month</li>
+<li><b>The risk:</b> every account passes or fails together. One bad stretch hits all of them at once.</li>
+</ul>
+
+<h2>Before you buy</h2>
+<p>Tick these off. Your checks save on this device.</p>
+<div class="list" id="list">
+<label><input type="checkbox" data-k="c1"><span>Confirm the current price and code at checkout</span></label>
+<label><input type="checkbox" data-k="c2"><span>Confirm the EOD drawdown version (MFF: Rapid EOD, not Rapid)</span></label>
+<label><input type="checkbox" data-k="c3"><span>Confirm there's no activation fee</span></label>
+<label><input type="checkbox" data-k="c4"><span>Confirm the funded payout cap and consistency rules</span></label>
+<label><input type="checkbox" data-k="c5"><span>Log every trade for your first 20–30 trades and re-check your stats</span></label>
+</div>
+
+<div class="foot">Some links on this page may be affiliate links, so FTA may earn a commission at no extra cost to you. This is education, not financial advice. Futures trading carries substantial risk of loss, and past or simulated results don't guarantee future results.</div>
+</div>
+<div class="toast" id="toast">Code copied</div>
+
+<script>
+/* ===== EDIT YOUR CODES AND LINKS HERE =====
+   code: the coupon code students type at checkout
+   link: your affiliate link (or the firm's site)
+   Change these values, save, and push. Nothing else needs touching. */
+const FIRMS = [
+  { week: 1, firm: "Lucid",           plan: "LucidFlex 50K",     price: "~$90",                       accounts: 5, code: "VAULT", link: "https://lucidtrading.com",        tip: "" },
+  { week: 2, firm: "MyFundedFutures", plan: "Rapid EOD 50K",     price: "~$112",                      accounts: 5, code: "CLUB",  link: "https://myfundedfutures.com",     tip: "Pick Rapid EOD, not regular Rapid. Check the code applies to Rapid EOD." },
+  { week: 3, firm: "Tradeify",        plan: "Select Flex 50K",   price: "~$107–$116 ($99 with code)", accounts: 5, code: "DAN",   link: "https://tradeify.co",             tip: "" },
+  { week: 4, firm: "FundedNext",      plan: "Futures Flex 50K",  price: "Check at checkout",          accounts: 5, code: "",      link: "https://fundednext.com/futures",  tip: "Confirm activation fees and payout rules before buying." }
+];
+/* ========================================== */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+document.getElementById('firms').innerHTML = FIRMS.map(f => `
+<div class="firm">
+  <div class="wk">WEEK<i>${f.week}</i></div>
+  <h3>${esc(f.firm)}</h3>
+  <div class="plan">${esc(f.plan)}</div>
+  <div class="meta"><span>Price <b>${esc(f.price)}</b></span><span>Accounts <b>${f.accounts}</b></span></div>
+  <div class="act">
+    ${f.code ? `<div class="code">${esc(f.code)} <small>code</small><button class="copy" data-code="${esc(f.code)}">Copy</button></div>` : `<div class="code"><small>Code coming soon</small></div>`}
+    <a class="btn" href="${esc(f.link)}" target="_blank" rel="noopener">Get ${esc(f.firm)} →</a>
+  </div>
+  ${f.tip ? `<div class="tip">${esc(f.tip)}</div>` : ``}
+</div>`).join('');
+const toast = document.getElementById('toast');
+document.addEventListener('click', async e => {
+  const b = e.target.closest('.copy'); if (!b) return;
+  try { await navigator.clipboard.writeText(b.dataset.code); } catch (_) {}
+  toast.textContent = b.dataset.code + ' copied'; toast.classList.add('on'); setTimeout(() => toast.classList.remove('on'), 1400);
+});
+document.querySelectorAll('#list input').forEach(i => {
+  try { i.checked = localStorage.getItem('fta-ps-' + i.dataset.k) === '1'; } catch (_) {}
+  i.addEventListener('change', () => { try { localStorage.setItem('fta-ps-' + i.dataset.k, i.checked ? '1' : '0'); } catch (_) {} });
+});
+</script>
+</body></html>

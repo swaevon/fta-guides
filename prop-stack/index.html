@@ -57,7 +57,7 @@ table{border-collapse:collapse;width:100%;min-width:520px;font-size:14.5px}th,td
 <div class="stats">
 <div class="stat"><b>20</b><span>funded accounts</span></div>
 <div class="stat"><b>4</b><span>firms, one per week</span></div>
-<div class="stat"><b>$450–$580</b><span>per week for 5 evals</span></div>
+<div class="stat"><b>$20K</b><span>monthly goal at full stack</span></div>
 </div>
 
 <h2>The lineup</h2>
@@ -98,29 +98,35 @@ table{border-collapse:collapse;width:100%;min-width:520px;font-size:14.5px}th,td
 <li>No payout caps, no consistency once funded</li>
 <li><b>Note:</b> PRO funded accounts trail intraday</li></ul></details>
 
-<h2>Risk plan</h2>
+<h2>The plan, step by step</h2>
+<div class="list">
+<label><input type="checkbox" data-k="p0"><span><b>Step 0 · Practice account.</b> Start with one small account (a 25K) and learn the mechanics before you scale: entries and exits on TradingView, bracket orders, fills and contract sizing. Don't buy the 5-pack until placing a trade feels automatic.</span></label>
+<label><input type="checkbox" data-k="p1"><span><b>Step 1 · Pass the Lucid 5-pack.</b> All five accounts run on the copier, so they pass or fail together. One trade a day, so each win lands on its own day. Pick a pass plan from the table below.</span></label>
+<label><input type="checkbox" data-k="p2"><span><b>Step 2 · Once funded, drop to 0.5% risk.</b> That's $250 a trade on a 50K. Stop after two losses in a day.</span></label>
+<label><input type="checkbox" data-k="p3"><span><b>Step 3 · Payout target: $2,000 profit per account.</b> Lucid pays up to 50% of your profit per request (capped at $2,000), so $2,000 profit means a $1,000 payout. You also need 5 days of $150+ profit between payouts. The half you leave in stays as your cushion.</span></label>
+<label><input type="checkbox" data-k="p4"><span><b>Step 4 · Payouts buy the next firm.</b> Use Lucid payouts to buy Week 2's five accounts, then Week 3's, then Week 4's. The stack grows on profits, not on your own money.</span></label>
+<label><input type="checkbox" data-k="p5"><span><b>Step 5 · Full stack.</b> 20 accounts at about $1,000 per account per month is about <b>$20,000 a month</b> before splits.</span></label>
+</div>
 <ul>
-<li><b>Evals:</b> $300 risk per trade</li>
-<li><b>Funded:</b> $200 per trade, scaling to $350 once each account has about a $1,000 cushion</li>
-<li><b>Setup:</b> V1 trend (break of low) with order-flow confirmation, NY session 8–11 AM ET</li>
-<li><b>Stop</b> after two losses in a day</li>
+<li><b>Setup:</b> V1 trend (break of low) with order-flow confirmation, NY session</li>
 </ul>
 
-<h2>Simulation results</h2>
-<p>40,000 simulated runs using Sway's backtest stats: 43.9% win rate, 2.13R average winner.</p>
+<h2>Passing the Lucid eval</h2>
+<p>200,000 simulated runs at a 45% win rate and 2R, one trade a day, with Lucid's end-of-day drawdown.</p>
 <div class="tbl"><table>
-<tr><th>Setup</th><th>Pass rate</th><th>Trades to pass</th><th>Avg payout / account</th><th>Return per $1 spent</th></tr>
-<tr class="pick"><td>50K @ $300 risk</td><td>78%</td><td>~18</td><td>$5,200</td><td>~51x</td></tr>
-<tr><td>150K @ $675 risk</td><td>77%</td><td>~26</td><td>$7,200</td><td>~32x</td></tr>
-<tr><td>150K @ $900 risk</td><td>66%</td><td>~17</td><td>$5,200</td><td>~22x</td></tr>
+<tr><th>Plan</th><th>Risk per trade</th><th>Losses you can take</th><th>Pass rate</th><th>Trades to pass</th></tr>
+<tr class="pick"><td>40% rule (default)</td><td>$500 · wins of $1,000</td><td>3</td><td>~76%</td><td>~12</td></tr>
+<tr><td>50% add-on (+~$10/account)</td><td>$750 · wins of $1,500</td><td>2</td><td>~70%</td><td>~6</td></tr>
 </table></div>
-<p><b>Decision: 50K accounts.</b> Best return per dollar and the fastest to pass. Revisit 150Ks once live results match the backtest.</p>
-<div class="warn">A simulation is not a promise. It assumes your live trading matches the backtest. Your results will differ, and you can lose the full cost of every eval.</div>
+<p><b>Default rule</b> passes more often but takes about twice as many trades. <b>The add-on</b> is the fast lane: two wins on two different days can pass, but there's less room for losses.</p>
+<div class="warn">A simulation is not a promise. It assumes your live trading matches these stats. Your results will differ, and you can lose the full cost of every eval.</div>
 
 <h2>Copier</h2>
 <ul>
+<li><b>How it runs:</b> chart and place the trade on one lead account in TradingView. The copier sends it to every other account.</li>
 <li><b>Lucid:</b> free built-in copier for the first 5 accounts</li>
-<li><b>Across firms:</b> Traders Connect, about $25/month</li>
+<li><b>Across firms:</b> Traders Connect (about $25/month), PickMyTrade, CrossTrade, or Tradecopia (runs on Mac)</li>
+<li><b>Test it first:</b> run the copier on two accounts before adding the rest</li>
 <li><b>The risk:</b> every account passes or fails together. One bad stretch hits all of them at once.</li>
 </ul>
 
@@ -128,6 +134,7 @@ table{border-collapse:collapse;width:100%;min-width:520px;font-size:14.5px}th,td
 <p>Tick these off. Your checks save on this device.</p>
 <div class="list" id="list">
 <label><input type="checkbox" data-k="c1"><span>Confirm the current price and code at checkout</span></label>
+<label><input type="checkbox" data-k="c6"><span>Pick your Lucid pass plan: default 40% rule or the 50% add-on</span></label>
 <label><input type="checkbox" data-k="c2"><span>Confirm the EOD drawdown version (MFF: Rapid EOD, not Rapid)</span></label>
 <label><input type="checkbox" data-k="c3"><span>Confirm there's no activation fee</span></label>
 <label><input type="checkbox" data-k="c4"><span>Confirm the funded payout cap and consistency rules</span></label>
@@ -144,7 +151,7 @@ table{border-collapse:collapse;width:100%;min-width:520px;font-size:14.5px}th,td
    link: your affiliate link (or the firm's site)
    Change these values, save, and push. Nothing else needs touching. */
 const FIRMS = [
-  { week: 1, firm: "Lucid",           plan: "LucidFlex 50K",     price: "~$90",                       accounts: 5, code: "VAULT", link: "https://lucidtrading.com",        tip: "" },
+  { week: 1, firm: "Lucid",           plan: "LucidFlex 50K",     price: "~$76 each ($382 for 5 with VAULT + bulk discount)", accounts: 5, code: "VAULT", link: "https://lucidtrading.com", tip: "Buying all 5 at once adds a 5% bulk discount on top of the code. The 50% consistency add-on brings the 5-pack to about $431." },
   { week: 2, firm: "MyFundedFutures", plan: "Rapid EOD 50K",     price: "~$112",                      accounts: 5, code: "CLUB",  link: "https://myfundedfutures.com",     tip: "Pick Rapid EOD, not regular Rapid. Check the code applies to Rapid EOD." },
   { week: 3, firm: "Tradeify",        plan: "Select Flex 50K",   price: "~$107–$116 ($99 with code)", accounts: 5, code: "DAN",   link: "https://tradeify.co",             tip: "" },
   { week: 4, firm: "FundedNext",      plan: "Futures Flex 50K",  price: "Check at checkout",          accounts: 5, code: "",      link: "https://fundednext.com/futures",  tip: "Confirm activation fees and payout rules before buying." }
@@ -169,7 +176,7 @@ document.addEventListener('click', async e => {
   try { await navigator.clipboard.writeText(b.dataset.code); } catch (_) {}
   toast.textContent = b.dataset.code + ' copied'; toast.classList.add('on'); setTimeout(() => toast.classList.remove('on'), 1400);
 });
-document.querySelectorAll('#list input').forEach(i => {
+document.querySelectorAll('.list input[data-k]').forEach(i => {
   try { i.checked = localStorage.getItem('fta-ps-' + i.dataset.k) === '1'; } catch (_) {}
   i.addEventListener('change', () => { try { localStorage.setItem('fta-ps-' + i.dataset.k, i.checked ? '1' : '0'); } catch (_) {} });
 });

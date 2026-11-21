@@ -481,11 +481,27 @@ ol.leg li.vwl{color:#b9a7ff}
    Each step: t = title, p = [main idea, more], ex = what it looks like in real life,
    fix = what to do, q = [question, [answers], right index, why]. */
 
-var VIDEOS={};
+var VIDEOS={
+  biz:{u:"https://www.youtube.com/watch?v=nq3Jsg35pnw",t:"How I day trade like a business",src:"Umar Ashraf"},
+  llc:{u:"https://www.youtube.com/watch?v=LK6ADlg-h0k",t:"How to start an LLC for day trading (fast and cheap)",src:"BizGuide"},
+  ein:{u:"https://www.youtube.com/watch?v=1rer1EGlCSY",t:"How to get an EIN online for free (official IRS steps)",src:"YouTube"},
+  tools:{u:"https://www.youtube.com/watch?v=KohkZJx7iG8",t:"5 day trading tools I actually use every day",src:"YouTube"},
+  payout:{u:"https://www.youtube.com/watch?v=6-LSmnQNFDw",t:"What to avoid after your first prop firm payout",src:"YouTube"},
+  buffer:{u:"https://www.youtube.com/watch?v=WSwCVn0thFI",t:"Take the max payout or build a buffer?",src:"YouTube"},
+  tax:{u:"https://www.youtube.com/watch?v=xV7aD9e9xNM",t:"Prop firm day trading taxes explained",src:"Money Spence"},
+  qb:{u:"https://www.youtube.com/watch?v=wJ82MXMkERQ",t:"QuickBooks Online tutorial for beginners",src:"YouTube"},
+  hours:{u:"https://www.youtube.com/watch?v=jUhWUKjBXqs",t:"The best time to day trade? It's probably less than you think",src:"YouTube"},
+  pre:{u:"https://www.youtube.com/watch?v=LnWjrlMb9ns",t:"The day trading morning routine that wins before the open",src:"YouTube"},
+  journal:{u:"https://www.youtube.com/watch?v=7VJQAfzz3jU",t:"How to journal your trades like a pro",src:"YouTube"},
+  risk:{u:"https://www.youtube.com/watch?v=AXlnQWyaZeg",t:"The only video on risk management you need",src:"NBBTRADER"},
+  review:{u:"https://www.youtube.com/watch?v=ggf6sX_DqbQ",t:"How to do your trading performance review step by step",src:"YouTube"},
+  edge:{u:"https://www.youtube.com/watch?v=3wZmu97wMRw",t:"How to make money in trading: edge and expectancy",src:"YouTube"},
+  wr:{u:"https://www.youtube.com/watch?v=icskMfEBQvY",t:"You don't need a 70% win rate to be profitable",src:"YouTube"}
+};
 
 var STAGES=[
 /* 1 */
-{t:"Trading Is a Business",mod:"Business · Lesson 1",steps:[
+{t:"Trading Is a Business",mod:"Business · Lesson 1",v:"biz",steps:[
  {t:"Business or hobby?",
   p:["A hobby is something you do when you feel like it. A business has hours, a budget, records and goals. Most traders lose because they treat trading like a hobby with real money.",
      "Funded traders who last run their trading the same way a small company runs: they track money in and money out, they follow a schedule, and they review results every week."],
@@ -506,7 +522,7 @@ var STAGES=[
   q:["$2,000 payout, $1,400 in evals and resets. What's the real profit?",["$600","$2,000","$3,400"],0,"Revenue minus costs: 2,000 − 1,400 = 600."]}
 ]},
 /* 2 */
-{t:"Business Setup: LLC, EIN and Bank",mod:"Business · Lesson 2",steps:[
+{t:"Business Setup: LLC, EIN and Bank",mod:"Business · Lesson 2",v:["llc","ein"],steps:[
  {t:"What is an LLC?",
   p:["An LLC (limited liability company) is a simple business structure. It separates your trading business from you as a person on paper.",
      "You form one through your state's website (usually the Secretary of State). It costs a filing fee and an annual renewal. Many traders start with a single-member LLC."],
@@ -527,7 +543,7 @@ var STAGES=[
   q:["Where should prop firm payouts go?",["The business bank account","Your personal savings","Whatever account is easiest that day"],0,"One account for the business keeps everything clean."]}
 ]},
 /* 3 */
-{t:"Your Trading Tech Stack",mod:"Business · Lesson 3",steps:[
+{t:"Your Trading Tech Stack",mod:"Business · Lesson 3",v:"tools",steps:[
  {t:"The tools a trading business runs on",
   p:["Every business has tools it pays for. Yours are your charting platform, your trading platform, market data, a trade copier if you run multiple accounts, your journal and your accounting software.",
      "Know what each one costs per month and what it does for you. If a tool doesn't help you make or keep money, cut it."],
@@ -542,7 +558,7 @@ var STAGES=[
   q:["Your internet dies with a trade open. What saves you?",["A hotspot and the mobile app you already set up","Waiting for it to come back","Restarting your router and hoping"],0,"Plan the backup before you need it."]}
 ]},
 /* 4 */
-{t:"Your Payout Plan",mod:"Business · Lesson 4",steps:[
+{t:"Your Payout Plan",mod:"Business · Lesson 4",v:["payout","buffer"],steps:[
  {t:"Decide before the money arrives",
   p:["A payout plan is a set split for every dollar that comes in. You decide it once, before the money arrives, so emotion never decides where it goes.",
      "Without a plan, payouts disappear into spending and the business never grows."],
@@ -563,7 +579,7 @@ var STAGES=[
   q:["How should you pay yourself from the business?",["A set amount on a schedule","Whatever's left after a big day","Withdraw everything each payout"],0,"A set paycheck keeps life calm when trading isn't."]}
 ]},
 /* 5 */
-{t:"Expenses, Receipts and Taxes",mod:"Business · Lesson 5",steps:[
+{t:"Expenses, Receipts and Taxes",mod:"Business · Lesson 5",v:["tax","qb"],steps:[
  {t:"Track every expense",
   p:["Evals, resets, data, platforms, software, courses, a trading computer, monitors and part of your internet can be business expenses.",
      "Pay them with the business card and keep every receipt. An expense you can't prove is an expense you can't use."],
@@ -584,7 +600,7 @@ var STAGES=[
   q:["Do prop firms usually withhold taxes from payouts?",["No, you're responsible for setting it aside","Yes, always","Only on weekends"],0,"Plan for taxes yourself. A CPA tells you exactly how."]}
 ]},
 /* 6 */
-{t:"Your Trading Hours",mod:"Business · Lesson 6",steps:[
+{t:"Your Trading Hours",mod:"Business · Lesson 6",v:"hours",steps:[
  {t:"Set fixed hours",
   p:["A business opens and closes at set times. Pick the window you trade, put it on your calendar, and don't trade outside it.",
      "Fixed hours stop boredom trades and protect your energy for the moves that matter."],
@@ -599,7 +615,7 @@ var STAGES=[
   q:["What happens when your trading window closes?",["Log the day and close the platform","Keep one eye on the chart","Take one last trade"],0,"Closed means closed."]}
 ]},
 /* 7 */
-{t:"Your Pre-Market Routine",mod:"Business · Lesson 7",steps:[
+{t:"Your Pre-Market Routine",mod:"Business · Lesson 7",v:"pre",steps:[
  {t:"Prepare before the open",
   p:["Businesses prepare before customers walk in. Your preparation is your pre-market routine: news check, key levels marked, plan written.",
      "If you skip prep, you're reacting instead of executing a plan."],
@@ -614,7 +630,7 @@ var STAGES=[
   q:["You're exhausted and stressed. What's the business move?",["Sit out or trade smaller","Trade bigger to finish early","Skip prep and jump in"],0,"Protecting the account includes protecting the trader."]}
 ]},
 /* 8 */
-{t:"Journal Every Trade",mod:"Business · Lesson 8",steps:[
+{t:"Journal Every Trade",mod:"Business · Lesson 8",v:"journal",steps:[
  {t:"Your trade records",
   p:["A journal is your business's record of every trade: date, setup, entry, stop, target, result, and whether you followed your rules.",
      "Without records you can't measure anything. With them you can see exactly what works."],
@@ -629,7 +645,7 @@ var STAGES=[
   q:["A trade broke your rules but won. How should you see it?",["As a warning, not a success","As proof the rules don't matter","As a reason to size up"],0,"Rewarding broken rules builds bad habits."]}
 ]},
 /* 9 */
-{t:"Risk Management: Protect the Account",mod:"Business · Lesson 9",steps:[
+{t:"Risk Management: Protect the Account",mod:"Business · Lesson 9",v:"risk",steps:[
  {t:"The account is your inventory",
   p:["A store can't sell without inventory. You can't trade without an account. Protecting it comes before making money.",
      "Risk management means deciding ahead how much you can lose on a trade, in a day and in a week, and stopping when you hit it."],
@@ -650,7 +666,7 @@ var STAGES=[
   q:["How should your own limits compare to the firm's?",["Tighter, so you stay well inside them","Exactly the same","Looser, the firm is too strict"],0,"Your limits are the buffer that keeps the account alive."]}
 ]},
 /* 10 */
-{t:"The Weekly Review",mod:"Business · Lesson 10",steps:[
+{t:"The Weekly Review",mod:"Business · Lesson 10",v:"review",steps:[
  {t:"The weekly business meeting",
   p:["Once a week, hold a meeting with yourself. Go through your journal, your numbers and your expenses.",
      "This is where you find what's working, what's costing you, and what to change next week."],
@@ -665,7 +681,7 @@ var STAGES=[
   q:["After a bad week, how many things should you change?",["One, and test it","Everything","Nothing ever"],0,"One change at a time shows you what works."]}
 ]},
 /* 11 */
-{t:"Know Your Numbers (KPIs)",mod:"Business · Lesson 11",steps:[
+{t:"Know Your Numbers (KPIs)",mod:"Business · Lesson 11",v:["edge","wr"],steps:[
  {t:"What is a KPI?",
   p:["A KPI (key performance indicator) is a number that tells you how the business is doing. Businesses track a handful of them every week.",
      "Your main trading KPIs: win rate, average win, average loss, expectancy, rule-follow rate and net profit after costs."],

@@ -1,4 +1,5 @@
-<!doctype html><html lang="en"><head><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>FTA Business Guide</title></head><body>
+<!doctype html><html lang="en"><head><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}.parthead{list-style:none;margin:14px 0 2px;padding:0 4px}.parthead:first-child{margin-top:4px}.parthead span{font-size:12.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--mint)}
+</style><title>FTA Business Guide</title></head><body>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
@@ -397,7 +398,6 @@ ol.leg li.vwl{color:#b9a7ff}
     <section class="path beam" id="start">
       <span class="eyebrow">Start here</span>
       <h2 id="pathtitle">Run your trading like a business</h2>
-      <p class="sub">Set up and run your trading like a real business: LLC, business name, EIN, bank account, business card and bookkeeping, then your payout plan, expenses, taxes, routine, journal, weekly review and numbers. 14 lessons in 4 parts: the mindset, setting up the business, running it, and growing it. One lesson at a time: read it, see it in real life, do the action step, and answer the quick check to unlock the next one.</p>
       <div class="prog"><span class="pbar"><span id="pfill"></span></span><span class="pnum" id="pnum"></span></div>
       <button type="button" class="cont" id="cont"></button>
       <ol class="stages" id="stages"></ol>
@@ -784,8 +784,10 @@ function paintPath(){
   } else { $("cont").hidden=true; $("pathtitle").textContent="Guide complete. You run a trading business."; }
   $("stages").innerHTML=STAGES.map(function(st,i){
     var n=st.steps.filter(function(_,k){return S.passed[sid(i,k)];}).length, open=stageOpen(i), dn=n===st.steps.length, cur=nx&&nx.s===i;
-    return '<li><button type="button" class="stage'+(dn?' done':'')+(cur?' cur':'')+'" data-stage="'+i+'"'+(open?'':' disabled')+'>'+
-      '<span class="snum">'+(dn?'✓':(i+1))+'</span><span class="sinfo"><b>'+esc(st.t)+'</b><span>'+esc(st.mod)+' · '+
+    var part=st.mod.split(' · Lesson')[0], prev=i?STAGES[i-1].mod.split(' · Lesson')[0]:'';
+    var head=part!==prev?'<li class="parthead"><span>'+esc(part.replace(' · ',': '))+'</span></li>':'';
+    return head+'<li><button type="button" class="stage'+(dn?' done':'')+(cur?' cur':'')+'" data-stage="'+i+'"'+(open?'':' disabled')+'>'+
+      '<span class="snum">'+(dn?'✓':(i+1))+'</span><span class="sinfo"><b>'+esc(st.t)+'</b><span>Lesson '+(i+1)+' · '+
       (open?(dn?'Done · tap to review':n+' of '+st.steps.length+' steps'):'Finish stage '+i+' to unlock')+'</span>'+
       (open?'<span class="sbar2"><i style="width:'+(n/st.steps.length*100)+'%"></i></span>':'')+'</span>'+(open?'':LOCK)+'</button></li>';
   }).join("");

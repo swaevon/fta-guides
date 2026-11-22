@@ -1,5 +1,6 @@
 <!doctype html><html lang="en"><head><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}.parthead{list-style:none;margin:14px 0 2px;padding:0 4px}.parthead:first-child{margin-top:4px}.parthead span{font-size:12.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--mint)}
 #cont{display:none!important}
+#pathtitle .pop{color:var(--mint);text-shadow:0 0 18px rgba(63,220,154,.45)}
 </style><title>FTA Business Guide</title></head><body>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
@@ -398,7 +399,7 @@ ol.leg li.vwl{color:#b9a7ff}
   <div class="home" id="home">
     <section class="path beam" id="start">
       <span class="eyebrow">Start here</span>
-      <h2 id="pathtitle">Run your trading like a business</h2>
+      <h2 id="pathtitle">Run Your <span class="pop">Trading</span> Like A <span class="pop">Business</span></h2>
       <div class="prog"><span class="pbar"><span id="pfill"></span></span><span class="pnum" id="pnum"></span></div>
       <button type="button" class="cont" id="cont"></button>
       <ol class="stages" id="stages"></ol>
@@ -781,8 +782,8 @@ function paintPath(){
     var st=STAGES[nx.s].steps[nx.k];
     $("cont").innerHTML='<span class="ci"><small>'+(done?'Stage '+(nx.s+1)+' · Step '+(nx.k+1)+' of '+STAGES[nx.s].steps.length:'Step 1 · Stage 1 of '+STAGES.length)+'</small><b>'+esc(st.t)+'</b></span><span class="arrow">'+ARROW+'</span>';
     $("cont").setAttribute("data-s",nx.s); $("cont").setAttribute("data-k",nx.k); $("cont").hidden=false;
-    $("pathtitle").textContent=done?"Pick up where you left off":"Run your trading like a business";
-  } else { $("cont").hidden=true; $("pathtitle").textContent="Guide complete. You run a trading business."; }
+    $("pathtitle").innerHTML="Run Your <span class=\"pop\">Trading</span> Like A <span class=\"pop\">Business</span>";
+  } else { $("cont").hidden=true; $("pathtitle").innerHTML="Guide Complete. You Run A <span class=\"pop\">Trading Business</span>."; }
   $("stages").innerHTML=STAGES.map(function(st,i){
     var n=st.steps.filter(function(_,k){return S.passed[sid(i,k)];}).length, open=stageOpen(i), dn=n===st.steps.length, cur=nx&&nx.s===i;
     var part=st.mod.split(' · Lesson')[0], prev=i?STAGES[i-1].mod.split(' · Lesson')[0]:'';

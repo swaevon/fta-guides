@@ -482,17 +482,11 @@ ol.leg li.vwl{color:#b9a7ff}
 /* ================= FTA BUSINESS GUIDE v2 — CONTENT =================
    Each step: t = title, p = [main idea, more], ex = real life, fix = do this, q = [question, answers, right index, why]. */
 
-var VIDEOS={
-  casino:{u:"https://www.youtube.com/watch?v=mPrNlyK2J5I",t:"Mark Douglas: the trader's edge, think like a casino",src:"Trading Mind Unlocked"},
-  ein:{u:"https://www.youtube.com/watch?v=1rer1EGlCSY",t:"How to get an EIN online for free (official IRS steps)",src:"Paper Trail Guide"},
-  payout:{u:"https://www.youtube.com/watch?v=6-LSmnQNFDw",t:"What to avoid after your first prop firm payout",src:"KyleX"},
-  esttax:{u:"https://www.youtube.com/watch?v=sQnShUMBrcU",t:"How to make quarterly estimated tax payments on IRS.gov",src:"Boyer Robinson CPA"},
-  ev:{u:"https://www.youtube.com/watch?v=qafPcWNUiM8",t:"Expected value, explained",src:"Khan Academy"}
-};
+var VIDEOS={};
 
 var STAGES=[
 /* PART 1 — THE MINDSET */
-{t:"Mindset: Treat Trading Like a Business",mod:"Part 1 · The Mindset · Lesson 1",v:"casino",steps:[
+{t:"Mindset: Treat Trading Like a Business",mod:"Part 1 · The Mindset · Lesson 1",steps:[
  {t:"The business owner mindset",
   p:["Before the LLC, the bank account or the payout plan, the first thing that changes is how you think. You stop being someone who trades and start being someone who owns a trading business.",
      "An owner thinks long term. One trade, one day or one payout doesn't define the business. Consistency, discipline and clean records do."],
@@ -548,7 +542,7 @@ var STAGES=[
   fix:"File, then secure the domain and handles the same day. Use the exact legal name everywhere.",
   q:["What name goes on your bank account and tax forms?",["The exact legal LLC name","A nickname","Your trading handle"],0,"Exact legal name everywhere keeps paperwork clean."]}
 ]},
-{t:"How to Get Your EIN",mod:"Part 2 · Set Up the Business · Lesson 4",v:"ein",steps:[
+{t:"How to Get Your EIN",mod:"Part 2 · Set Up the Business · Lesson 4",steps:[
  {t:"What an EIN is",
   p:["An EIN (Employer Identification Number) is like a Social Security number for your business. You need it to open a business bank account and for business tax forms.",
      "It also lets you give your business number on forms instead of your personal SSN."],
@@ -606,7 +600,7 @@ var STAGES=[
 ]},
 
 /* PART 3 — RUN THE BUSINESS */
-{t:"Your Payout Plan",mod:"Part 3 · Run the Business · Lesson 8",v:"payout",steps:[
+{t:"Your Payout Plan",mod:"Part 3 · Run the Business · Lesson 8",steps:[
  {t:"Decide before the money arrives",
   p:["A payout plan is a set split for every dollar that comes in. You decide it once, before the money arrives, so emotion never decides where it goes.",
      "Without a plan, payouts disappear into spending and the business never grows."],
@@ -640,7 +634,7 @@ var STAGES=[
   fix:"Make a Receipts folder today. Save every receipt the day you pay.",
   q:["When should you save a receipt?",["The day you pay","At tax time","Only for big purchases"],0,"Same day, every time."]}
 ]},
-{t:"Taxes 101",mod:"Part 3 · Run the Business · Lesson 10",v:"esttax",steps:[
+{t:"Taxes 101",mod:"Part 3 · Run the Business · Lesson 10",steps:[
  {t:"Nobody is holding taxes for you",
   p:["Prop firm payouts are usually treated as income, and firms usually don't withhold taxes. That means it's on you to set money aside.",
      "That's why the tax bucket in your payout plan comes out first, every time."],
@@ -694,7 +688,7 @@ var STAGES=[
   fix:"Add two fields to every entry: 'Why I took it' and 'Did I follow my rules? Y/N.'",
   q:["A trade broke your rules but won. How should you see it?",["As a warning, not a success","As proof the rules don't matter","As a reason to size up"],0,"Rewarding broken rules builds bad habits."]}
 ]},
-{t:"The Weekly Review and Your Numbers",mod:"Part 3 · Run the Business · Lesson 13",v:"ev",steps:[
+{t:"The Weekly Review and Your Numbers",mod:"Part 3 · Run the Business · Lesson 13",steps:[
  {t:"The weekly business meeting",
   p:["Once a week, hold a meeting with yourself. Go through your journal, your numbers and your expenses.",
      "End every review with one change to test next week. Changing everything at once means you never know what helped."],

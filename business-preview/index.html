@@ -1,0 +1,1024 @@
+<!doctype html><html lang="en"><head><meta name="robots" content="noindex"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>FTA Business Guide</title></head><body>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* One-column reference tool. Setup → search → start-here → term accordions → suggest.
+   FTA brand = the FLOW STACK desk: deep green, mint light, beams running through it. */
+:root{
+  color-scheme:dark;
+  --bg:#081d19; --panel:#0c2722; --panel2:#0f2e28; --card:rgba(255,255,255,.04); --card2:rgba(255,255,255,.065);
+  --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.17);
+  --fg:#eaf5f1; --muted:#8fb8ac; --dim:#628f82;
+  --mint:#3fdc9a; --mintdim:rgba(63,220,154,.14); --mintglow:rgba(63,220,154,.35);
+  --gold:#e8c468; --golddim:rgba(232,196,104,.13);
+  --coral:#f0736b;
+  --sans:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:17px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 72px;
+  position:relative;min-height:100vh}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:var(--mint)}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--mint);outline-offset:2px;border-radius:8px}
+
+/* ---------- background: glow, dot grid, light streaks ---------- */
+.fx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.fx .glow{position:absolute;inset:0;background:radial-gradient(900px 520px at 50% -6%,#13402f 0%,transparent 64%),radial-gradient(700px 500px at 100% 100%,rgba(63,220,154,.06),transparent 70%)}
+.fx .grid{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.055) 1px,transparent 1.2px);background-size:24px 24px;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.35) 60%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.35) 60%,transparent 100%)}
+.fx .track{position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,rgba(63,220,154,.07) 20%,rgba(63,220,154,.07) 80%,transparent)}
+.fx .track i{position:absolute;left:-1px;width:3px;height:200px;top:-220px;border-radius:3px;
+  background:linear-gradient(to bottom,transparent,rgba(63,220,154,.15) 30%,var(--mint) 85%,#fff 100%);
+  box-shadow:0 0 12px var(--mint),0 0 26px var(--mintglow);animation:fall var(--d,7s) linear infinite;animation-delay:var(--w,0s)}
+@keyframes fall{from{transform:translateY(0)}to{transform:translateY(calc(100vh + 440px))}}
+.wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+
+/* ---------- beams (FLOW STACK) ---------- */
+@property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes spin{to{--ang:360deg}}
+@keyframes breathe{0%,100%{box-shadow:0 0 0 1px rgba(63,220,154,.05),0 0 22px -6px var(--mintglow)}50%{box-shadow:0 0 0 1px rgba(63,220,154,.08),0 0 38px -4px var(--mintglow)}}
+.beam{border:1.5px solid transparent;
+  background:linear-gradient(var(--panel),var(--panel)) padding-box,
+    conic-gradient(from var(--ang),rgba(63,220,154,.16) 0 58%,var(--mint) 76%,#ffffff 80%,var(--mint) 84%,rgba(63,220,154,.16) 97%) border-box;
+  animation:spin 4.2s linear infinite,breathe 3.4s ease-in-out infinite;animation-delay:var(--delay,0s)}
+.beam.gold{background:linear-gradient(var(--panel),var(--panel)) padding-box,
+    conic-gradient(from var(--ang),rgba(232,196,104,.16) 0 58%,var(--gold) 76%,#fff 80%,var(--gold) 84%,rgba(232,196,104,.16) 97%) border-box}
+.rail{height:2px;border-radius:2px;background:linear-gradient(90deg,transparent 0%,rgba(63,220,154,.12) 20%,rgba(63,220,154,.12) 80%,transparent 100%);position:relative;overflow:hidden}
+.rail::after{content:"";position:absolute;top:0;bottom:0;width:22%;left:-22%;background:linear-gradient(90deg,transparent,var(--mint),#fff,var(--mint),transparent);
+  box-shadow:0 0 14px var(--mint);animation:run 3.6s cubic-bezier(.6,0,.4,1) infinite}
+@keyframes run{to{left:100%}}
+
+/* ---------- header ---------- */
+.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.mark{width:44px;height:44px;border-radius:13px;background:var(--mint);display:grid;place-items:center;flex:none;box-shadow:0 0 0 4px rgba(63,220,154,.12),0 0 28px var(--mintglow)}
+.mark svg{width:22px;height:22px}
+.brand{font-weight:800;font-size:25px;letter-spacing:-.025em;line-height:1.1}
+.brand span{color:var(--mint);text-shadow:0 0 22px var(--mintglow)}
+.brand small{display:block;font-size:13.5px;font-weight:600;color:var(--muted);letter-spacing:.02em;margin-top:3px}
+.count{margin-left:auto;font-family:var(--mono);font-size:13px;color:var(--mint);border:1px solid rgba(63,220,154,.35);border-radius:999px;padding:5px 12px;background:var(--mintdim)}
+
+/* ---------- setup ---------- */
+.setup{border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:22px}
+.setup h1{margin:0;font-size:clamp(27px,6vw,36px);font-weight:800;letter-spacing:-.03em;line-height:1.15;text-wrap:balance}
+.setup h1 em{font-style:normal;color:var(--mint);text-shadow:0 0 24px var(--mintglow)}
+.setup p{margin:0;color:var(--muted);max-width:58ch;font-size:17px}
+.q{display:flex;flex-direction:column;gap:10px}
+.qlab{font-size:12.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mint)}
+.opts{display:flex;flex-wrap:wrap;gap:10px}
+.opt{appearance:none;cursor:pointer;border:1px solid var(--line2);background:var(--card);color:var(--fg);border-radius:16px;padding:14px 18px;text-align:left;min-width:160px;flex:1 1 160px;transition:border-color .15s,background .15s,box-shadow .15s}
+.opt b{display:block;font-size:18px}
+.opt i{display:block;font-style:normal;font-size:14px;color:var(--muted);margin-top:3px}
+.opt:hover{border-color:rgba(63,220,154,.5)}
+.opt[aria-pressed="true"]{background:var(--mintdim);border-color:var(--mint);box-shadow:0 0 22px -6px var(--mintglow)}
+.opt[aria-pressed="true"] b{color:var(--mint)}
+.go{appearance:none;border:0;cursor:pointer;background:var(--mint);color:#06211a;font-weight:800;font-size:17px;padding:14px 26px;border-radius:999px;align-self:flex-start;box-shadow:0 0 26px -4px var(--mintglow)}
+.go:disabled{opacity:.35;cursor:default;box-shadow:none}
+
+/* ---------- profile, search ---------- */
+.profile{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:15px;color:var(--muted)}
+.pchip{font-weight:700;color:var(--fg);background:var(--card2);border:1px solid var(--line2);border-radius:999px;padding:5px 13px}
+.link{appearance:none;background:none;border:0;color:var(--mint);cursor:pointer;font-size:15px;font-weight:700;padding:4px 2px}
+.searchbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;padding-block:10px;display:flex;flex-direction:column;gap:12px;
+  background:var(--bg);box-shadow:0 14px 18px -6px var(--bg)}
+.search{display:flex;align-items:center;gap:12px;border-radius:16px;padding:0 16px}
+.search svg{width:20px;height:20px;color:var(--mint);flex:none}
+.search input{flex:1;min-width:0;background:transparent;border:0;color:var(--fg);font:inherit;font-size:18px;padding:15px 0}
+.search input::placeholder{color:var(--dim)}
+.search input:focus{outline:none}
+.cats{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.cats::-webkit-scrollbar{display:none}
+.cat{appearance:none;cursor:pointer;white-space:nowrap;border:1px solid var(--line2);background:rgba(8,29,25,.7);color:var(--muted);border-radius:999px;padding:8px 15px;font-size:14.5px;font-weight:600}
+.cat[aria-pressed="true"]{background:var(--mintdim);color:var(--mint);border-color:var(--mint);box-shadow:0 0 16px -4px var(--mintglow)}
+.prog{display:flex;align-items:center;gap:12px}
+.pbar{flex:1;height:7px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
+.pbar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#1fa673,var(--mint),#b9ffe0);border-radius:999px;box-shadow:0 0 12px var(--mint);transition:width .5s}
+.pnum{font-family:var(--mono);font-size:13.5px;color:var(--muted);white-space:nowrap}
+
+/* ---------- start here ---------- */
+.start{border-radius:20px;padding:20px;--delay:-1.4s}
+/* ---------- path + walk-through ---------- */
+.browse{display:flex;flex-direction:column;gap:20px}
+.path{border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:16px;--delay:-1.4s}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mint)}
+.path h2{margin:0;font-size:clamp(24px,5.5vw,30px);font-weight:800;letter-spacing:-.025em;line-height:1.2;text-wrap:balance}
+.path .sub{margin:0;color:var(--muted);font-size:16px}
+.cont{appearance:none;cursor:pointer;text-align:left;display:flex;align-items:center;gap:14px;width:100%;border:1px solid var(--mint);background:linear-gradient(135deg,rgba(63,220,154,.22),rgba(63,220,154,.07));color:var(--fg);border-radius:18px;padding:16px 18px;box-shadow:0 0 30px -8px var(--mintglow)}
+.cont .ci{flex:1;min-width:0}
+.cont small{display:block;font-size:13.5px;color:var(--mint);font-weight:700;letter-spacing:.04em}
+.cont b{display:block;font-size:20px;font-weight:800;letter-spacing:-.015em;margin-top:2px}
+.cont .arrow{width:44px;height:44px;border-radius:50%;background:var(--mint);display:grid;place-items:center;flex:none;box-shadow:0 0 18px var(--mintglow)}
+.cont .arrow svg{width:20px;height:20px}
+.stages{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.stage{appearance:none;width:100%;text-align:left;cursor:pointer;display:flex;align-items:center;gap:14px;border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--fg);border-radius:15px;padding:12px 14px}
+.stage:hover:not(:disabled){border-color:rgba(63,220,154,.5)}
+.stage:disabled{cursor:default;opacity:.55}
+.snum{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:14px;background:rgba(255,255,255,.07);color:var(--muted);border:1px solid var(--line2)}
+.stage.done .snum{background:var(--mint);color:#06211a;border-color:var(--mint);box-shadow:0 0 12px var(--mintglow)}
+.stage.cur .snum{border-color:var(--mint);color:var(--mint);box-shadow:0 0 0 3px var(--mintdim)}
+.sinfo{flex:1;min-width:0}
+.sinfo b{display:block;font-size:17px;font-weight:700}
+.sinfo span{display:block;font-size:13.5px;color:var(--muted)}
+.sbar2{height:4px;border-radius:4px;background:rgba(255,255,255,.08);margin-top:6px;overflow:hidden}
+.sbar2 i{display:block;height:100%;background:var(--mint);box-shadow:0 0 8px var(--mint)}
+.lock{width:18px;height:18px;color:var(--dim);flex:none}
+.divider{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;margin:8px 2px 2px}
+.divider::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(232,196,104,.4),transparent)}
+.lookup{margin:6px 0 0;font-size:20px;font-weight:800;letter-spacing:-.015em}
+.lookup span{display:block;font-size:14.5px;font-weight:500;color:var(--muted);letter-spacing:0;margin-top:2px}
+.walk{border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:18px}
+.wtop{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.wtop .link{font-size:15px}
+.wstage{margin-left:auto;font-size:13.5px;color:var(--muted);font-weight:600}
+.dots{display:flex;gap:5px}
+.dots i{flex:1;height:6px;border-radius:6px;background:rgba(255,255,255,.1)}
+.dots i.ok{background:var(--mint);box-shadow:0 0 8px var(--mintglow)}
+.dots i.now{background:rgba(63,220,154,.45)}
+.wstep{font-family:var(--mono);font-size:13.5px;color:var(--mint);letter-spacing:.06em}
+.walk h2{margin:-8px 0 0;font-size:clamp(28px,7vw,38px);font-weight:800;letter-spacing:-.03em;line-height:1.12;text-wrap:balance}
+.check{border:1px solid rgba(232,196,104,.4);border-radius:16px;padding:16px;background:rgba(232,196,104,.05);display:flex;flex-direction:column;gap:10px}
+.check .blab{margin:0}
+.check .cq{margin:0;font-size:18px;font-weight:700;line-height:1.45}
+.ans{appearance:none;cursor:pointer;text-align:left;border:1px solid var(--line2);background:rgba(0,0,0,.2);color:var(--fg);border-radius:13px;padding:13px 15px;font-size:16.5px;font-weight:600;display:flex;gap:10px;align-items:center}
+.ans:hover:not(:disabled){border-color:rgba(232,196,104,.6)}
+.ans:disabled{cursor:default}
+.ans .k{font-family:var(--mono);font-size:13px;color:var(--muted);width:24px;height:24px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;flex:none}
+.ans.right{border-color:var(--mint);background:var(--mintdim);color:var(--mint)}
+.ans.right .k{background:var(--mint);color:#06211a;border-color:var(--mint)}
+.ans.wrong{border-color:rgba(240,115,107,.6);background:rgba(240,115,107,.08);color:var(--coral)}
+.fb{font-size:15.5px;min-height:1.2em;margin:0}
+.fb.ok{color:var(--mint)} .fb.no{color:var(--coral)}
+.wnav{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.next{appearance:none;border:0;cursor:pointer;background:var(--mint);color:#06211a;font-weight:800;font-size:17px;padding:14px 26px;border-radius:999px;box-shadow:0 0 26px -4px var(--mintglow);margin-left:auto}
+.next:disabled{opacity:.3;cursor:default;box-shadow:none}
+.prev{appearance:none;cursor:pointer;background:none;border:1px solid var(--line2);color:var(--fg);border-radius:999px;padding:12px 20px;font-weight:700;font-size:15px}
+.done-card{text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center;padding:12px 4px}
+.done-card .big{width:72px;height:72px;border-radius:50%;background:var(--mint);display:grid;place-items:center;box-shadow:0 0 0 8px var(--mintdim),0 0 40px var(--mintglow)}
+.done-card .big svg{width:34px;height:34px}
+.done-card h2{margin:6px 0 0}
+.done-card p{margin:0;color:var(--muted);max-width:44ch}
+.shead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.shead b{font-size:19px;font-weight:800}
+.shead span{font-size:14.5px;color:var(--muted)}
+.steps{display:flex;flex-wrap:wrap;gap:9px;margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s}
+.step{appearance:none;cursor:pointer;display:flex;align-items:center;gap:9px;border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--fg);border-radius:999px;padding:7px 15px 7px 7px;font-size:15px;font-weight:600}
+.step:hover{border-color:rgba(63,220,154,.5)}
+.step::before{content:counter(s);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.step.done::before{content:"\2713";background:var(--mint);color:#06211a;box-shadow:0 0 10px var(--mintglow)}
+
+/* ---------- list ---------- */
+.group{display:flex;flex-direction:column;gap:10px}
+.ghead{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mint);margin:14px 2px 2px}
+.ghead::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(63,220,154,.35),transparent)}
+details.term{border:1.5px solid var(--line);border-radius:16px;background:rgba(12,39,34,.72);transition:border-color .15s;scroll-margin-top:170px}
+details.term:hover{border-color:rgba(63,220,154,.3)}
+details.term[open]{border-color:transparent;
+  background:linear-gradient(var(--panel),var(--panel)) padding-box,
+    conic-gradient(from var(--ang),rgba(63,220,154,.18) 0 58%,var(--mint) 76%,#fff 80%,var(--mint) 84%,rgba(63,220,154,.18) 97%) border-box;
+  animation:spin 4.2s linear infinite,breathe 3.4s ease-in-out infinite}
+details.term summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:16px 16px}
+details.term summary::-webkit-details-marker{display:none}
+.tname{font-weight:700;font-size:18.5px;min-width:0;letter-spacing:-.01em}
+.tname mark{background:var(--golddim);color:var(--gold);border-radius:3px;padding:0 1px}
+.tags{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
+.tag{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 9px;border:1px solid var(--line2);color:var(--muted);white-space:nowrap}
+.tag.lv{color:var(--mint);border-color:rgba(63,220,154,.35)}
+.tag.cf{color:var(--gold);border-color:rgba(232,196,104,.45)}
+@media (max-width:560px){.tag.mk{display:none}}
+.tick{width:11px;height:11px;border-radius:50%;flex:none;border:1.5px solid var(--dim)}
+.tick.on{background:var(--mint);border-color:var(--mint);box-shadow:0 0 10px var(--mint)}
+.chev{width:18px;height:18px;color:var(--muted);flex:none;transition:transform .2s}
+details.term[open] .chev{transform:rotate(180deg);color:var(--mint)}
+.body{padding:0 16px 18px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.def{margin:0;font-size:20px;font-weight:600;line-height:1.5;max-width:62ch;letter-spacing:-.01em}
+.box{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:rgba(0,0,0,.2);min-width:0}
+.blab{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+.box p{margin:0;max-width:64ch;font-size:16.5px}
+.box p+p{margin-top:9px;padding-top:9px;border-top:1px dashed var(--line)}
+.box p b{color:var(--gold);font-weight:700;font-family:var(--mono);font-size:.88em;letter-spacing:.02em;margin-right:4px}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.cmp{grid-template-columns:1fr}}
+.cmp .box .blab{color:var(--mint)}
+.calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end}
+.calc label{display:flex;flex-direction:column;gap:5px;font-size:13.5px;color:var(--muted);font-weight:600}
+.calc input,.calc select{background:var(--bg);border:1px solid var(--line2);color:var(--fg);border-radius:11px;padding:11px 12px;font:inherit;font-family:var(--mono);font-size:16px;min-width:0;width:100%}
+.calc input:focus,.calc select:focus{outline:none;border-color:var(--mint);box-shadow:0 0 0 3px var(--mintdim)}
+.out{grid-column:1/-1;font-family:var(--mono);font-size:16px;color:var(--mint);background:var(--mintdim);border:1px solid rgba(63,220,154,.3);border-radius:12px;padding:12px 14px;text-shadow:0 0 14px var(--mintglow)}
+.calcbox{border-color:rgba(63,220,154,.25)}
+.calcbox .blab{color:var(--mint)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.vid{display:inline-flex;align-items:center;gap:11px;text-decoration:none;border:1px solid rgba(63,220,154,.5);background:var(--mintdim);color:var(--fg);border-radius:14px;padding:10px 16px 10px 10px;font-weight:600;font-size:15.5px}
+.vid:hover{box-shadow:0 0 20px -4px var(--mintglow)}
+.vid .play{width:30px;height:30px;border-radius:50%;background:var(--mint);display:grid;place-items:center;flex:none;box-shadow:0 0 12px var(--mintglow)}
+.vid .play svg{width:12px;height:12px}
+.vid small{color:var(--muted);font-weight:500}
+.soon{font-size:15px;color:var(--muted);border:1px dashed var(--line2);border-radius:14px;padding:10px 16px}
+.mod{font-size:15px;color:var(--fg);border:1px solid var(--line2);border-radius:14px;padding:10px 16px;background:var(--card)}
+.mod b{color:var(--mint)}
+.rel{display:flex;flex-wrap:wrap;gap:7px;align-items:center;font-size:14px;color:var(--muted)}
+.rel button{appearance:none;cursor:pointer;border:1px solid var(--line2);background:transparent;color:var(--fg);border-radius:999px;padding:5px 12px;font-size:14px;font-weight:600}
+.rel button:hover{border-color:rgba(63,220,154,.5)}
+.rel button.cf{border-color:rgba(232,196,104,.55);color:var(--gold)}
+.learn{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--muted);cursor:pointer;width:fit-content}
+.learn input{width:19px;height:19px;accent-color:var(--mint)}
+.empty{color:var(--muted);text-align:center;padding:28px 12px;border:1px dashed var(--line2);border-radius:16px;font-size:16px}
+.all{appearance:none;cursor:pointer;background:rgba(8,29,25,.7);border:1px solid var(--line2);color:var(--fg);border-radius:999px;padding:10px 18px;font-weight:700;font-size:15px;align-self:center}
+
+.candlelink{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--fg);border-radius:18px;padding:16px 18px;--delay:-2s}
+.cl-ico{width:42px;height:42px;border-radius:12px;background:var(--gold);display:grid;place-items:center;flex:none}
+.cl-ico svg{width:20px;height:20px}
+.cl-txt{flex:1;min-width:0}.cl-txt b{display:block;font-size:18px}.cl-txt span{display:block;font-size:14.5px;color:var(--muted)}
+.cl-go{font-size:22px;color:var(--gold)}
+/* ---------- suggest ---------- */
+.suggest{border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:12px;--delay:-2.6s}
+.suggest b{font-size:20px}
+.suggest p{margin:0;color:var(--muted);font-size:16px}
+.sform{display:flex;gap:10px;flex-wrap:wrap}
+.sform input{flex:1 1 230px;min-width:0;background:var(--bg);border:1px solid var(--line2);color:var(--fg);border-radius:13px;padding:13px 14px;font:inherit;font-size:16.5px}
+.sform input:focus{outline:none;border-color:var(--mint)}
+.sform button{appearance:none;border:0;cursor:pointer;background:var(--mint);color:#06211a;font-weight:800;font-size:16px;border-radius:13px;padding:13px 22px;box-shadow:0 0 22px -6px var(--mintglow)}
+.sform button:disabled{opacity:.45;cursor:default}
+.smsg{font-size:15px;color:var(--mint);min-height:1em}
+.foot{text-align:center;color:var(--dim);font-size:13.5px;max-width:62ch;margin:0 auto}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important}
+  .beam,.walk,details.term[open],.rail::after,.fx .track i{animation:none!important}
+  .fx .track i{display:none}
+}
+
+.sway{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--fg);border:1px solid rgba(244,196,88,.55);background:linear-gradient(135deg,rgba(244,196,88,.14),rgba(244,196,88,.04));border-radius:16px;padding:12px 14px;margin:14px 0}
+.sway .play{width:34px;height:34px;border-radius:50%;background:var(--gold);display:grid;place-items:center;flex:none;box-shadow:0 0 14px rgba(244,196,88,.45)}
+.sway .play svg{width:13px;height:13px}
+.sway>span:nth-child(2){display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.sway b{font-size:15.5px}.sway small{color:var(--muted);font-size:13.5px}
+.sway .sgo{color:var(--gold);font-weight:700;font-size:14px;white-space:nowrap}
+.sway.soonw{border-style:dashed;opacity:.85}.sway.soonw .play{background:var(--line2);box-shadow:none}
+/* ===== candle guide additions ===== */
+.home{display:flex;flex-direction:column;gap:20px}
+.card{border:1px solid var(--line);border-radius:20px;padding:20px;background:rgba(12,39,34,.72);display:flex;flex-direction:column;gap:12px}
+.card.beam{border:1.5px solid transparent}
+.h2{margin:0;font-size:clamp(22px,5vw,27px);font-weight:800;letter-spacing:-.02em;line-height:1.2;text-wrap:balance}
+.eyebrow.gold{color:var(--gold)}
+.path .prog{margin-top:-4px}
+.figbox{margin:0;border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.22);padding:12px 10px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;overflow-x:auto}
+.figbox figcaption{font-size:14px;color:var(--muted);text-align:center;max-width:60ch}
+svg.fig{width:100%;height:auto;display:block}
+svg.fig text{font-family:var(--sans)}
+svg.fig .nt{font-size:11.5px;fill:#eaf5f1;font-weight:600}
+svg.fig .lvt{font-size:10.5px;fill:var(--gold);font-weight:700}
+svg.fig .tg{font-size:10.5px;fill:var(--muted);font-family:var(--mono)}
+svg.fig .glowc{filter:drop-shadow(0 0 6px rgba(63,220,154,.45))}
+.walk .para{margin:0;font-size:16.5px;color:#cfe3dc;max-width:64ch}
+.builder{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center}
+@media (max-width:620px){.builder{grid-template-columns:1fr}}
+.sliders{display:flex;flex-direction:column;gap:12px}
+.sliders label{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;font-size:14px;font-weight:700;color:var(--muted)}
+.sliders .sv{margin-left:auto;font-family:var(--mono);color:var(--fg);font-weight:600}
+.sliders input{width:100%;accent-color:var(--mint)}
+.read{border:1px solid rgba(63,220,154,.35);background:var(--mintdim);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.read b{color:var(--mint);font-size:16px}
+.read span{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.presets{display:flex;flex-wrap:wrap;gap:7px;align-items:center;font-size:14px;color:var(--muted)}
+.presets button,.btn{appearance:none;cursor:pointer;border:1px solid var(--line2);background:transparent;color:var(--fg);border-radius:999px;padding:7px 13px;font-size:14px;font-weight:600}
+.presets button:hover,.btn:hover{border-color:rgba(63,220,154,.5)}
+.btn{align-self:center;padding:11px 20px;font-size:15px;font-weight:700;background:var(--mintdim);border-color:rgba(63,220,154,.5)}
+.libwrap{display:flex;flex-direction:column;gap:12px}
+.lib{display:flex;flex-direction:column;gap:10px}
+details.pat{border:1.5px solid var(--line);border-radius:16px;background:rgba(12,39,34,.72)}
+details.pat[open]{border-color:transparent;background:linear-gradient(var(--panel),var(--panel)) padding-box,conic-gradient(from var(--ang),rgba(63,220,154,.18) 0 58%,var(--mint) 76%,#fff 80%,var(--mint) 84%,rgba(63,220,154,.18) 97%) border-box;animation:spin 4.2s linear infinite,breathe 3.4s ease-in-out infinite}
+details.pat summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:10px 14px}
+details.pat summary::-webkit-details-marker{display:none}
+.pmini{width:62px;flex:none}
+.pmini{display:flex;justify-content:center}
+.pmini svg{height:52px!important;width:auto!important;max-width:none!important}
+.pinfo{flex:1;min-width:0}
+.pinfo b{display:block;font-size:17.5px}
+.pinfo span{display:block;font-size:13.5px;color:var(--muted)}
+details.pat .chev{width:18px;height:18px;color:var(--muted);flex:none;transition:transform .2s}
+details.pat[open] .chev{transform:rotate(180deg);color:var(--mint)}
+.pbody{padding:0 14px 16px;display:flex;flex-direction:column;gap:12px}
+.pdl{margin:0;display:grid;grid-template-columns:150px minmax(0,1fr);gap:8px 14px;font-size:15.5px}
+@media (max-width:560px){.pdl{grid-template-columns:1fr;gap:2px}.pdl dd{margin-bottom:8px}}
+.pdl dt{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mint);padding-top:3px}
+.pdl dt.trap{color:var(--coral)}
+.pdl dd{margin:0}
+.gl{align-items:flex-start}
+.gl b{font-size:18px}
+.glink{font-weight:700;text-decoration:none;border:1px solid rgba(63,220,154,.5);background:var(--mintdim);border-radius:999px;padding:9px 16px}
+@media (prefers-reduced-motion:reduce){details.pat[open]{animation:none}}
+svg.fig .nb{font-size:10px;font-weight:800;fill:#06211a;font-family:var(--mono)}
+ol.leg{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;font-size:14.5px;font-weight:600}
+ol.leg li{display:flex;align-items:center;gap:7px}
+ol.leg li span{width:20px;height:20px;border-radius:50%;background:#eaf5f1;color:#06211a;font-family:var(--mono);font-size:11px;font-weight:800;display:grid;place-items:center;flex:none}
+ol.leg li.lvl span{width:20px;height:0;border-radius:0;border-top:2px dashed var(--gold);background:none}
+ol.leg li.lvl{color:var(--gold)}
+svg.fig{max-height:300px}
+
+svg.fig .swl{font-size:11px;font-weight:800;font-family:var(--mono)}
+ol.leg li.bos span{background:none;color:var(--gold);font-size:14px}
+ol.leg li.vwl span{width:20px;height:0;border-radius:0;border-top:2px dotted #b9a7ff;background:none}
+ol.leg li.vwl{color:#b9a7ff}
+.dopts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-family:var(--mono);font-size:13.5px;color:var(--muted)}
+.dfoot .btn{align-self:auto}
+
+.sway{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--fg);border:1px solid rgba(244,196,88,.55);background:linear-gradient(135deg,rgba(244,196,88,.14),rgba(244,196,88,.04));border-radius:16px;padding:12px 14px;margin:14px 0}
+.sway .play{width:34px;height:34px;border-radius:50%;background:var(--gold);display:grid;place-items:center;flex:none;box-shadow:0 0 14px rgba(244,196,88,.45)}
+.sway .play svg{width:13px;height:13px}
+.sway>span:nth-child(2){display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.sway b{font-size:15.5px}.sway small{color:var(--muted);font-size:13.5px}
+.sway .sgo{color:var(--gold);font-weight:700;font-size:14px;white-space:nowrap}
+.sway.soonw{border-style:dashed;opacity:.85}.sway.soonw .play{background:var(--line2);box-shadow:none}
+
+.scen{border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.22);padding:18px 18px;font-size:16.5px;line-height:1.55;min-height:96px;display:flex;align-items:center}
+.box.fixb{border-color:rgba(63,220,154,.35);background:rgba(63,220,154,.07)}
+.box.fixb .blab{color:var(--mint)}
+
+/* ---------- business tools ---------- */
+.ck{display:flex;flex-direction:column;gap:8px}
+.ckrow{display:flex;align-items:center;gap:12px;padding:11px 14px;border:1px solid var(--line);border-radius:14px;background:rgba(0,0,0,.18);cursor:pointer;font-size:15.5px;line-height:1.35}
+.ckrow input{position:absolute;opacity:0;pointer-events:none}
+.ckrow .box2{width:24px;height:24px;border-radius:8px;border:1.5px solid var(--line2);flex:none;display:grid;place-items:center}
+.ckrow .box2 svg{width:15px;height:15px;opacity:0}
+.ckrow.on{border-color:rgba(63,220,154,.45);background:var(--mintdim)}
+.ckrow.on .box2{background:var(--mint);border-color:var(--mint)}.ckrow.on .box2 svg{opacity:1}
+.ckrow.on>span:last-child{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(143,184,172,.5)}
+.ckrow:has(input:focus-visible){outline:2px solid var(--mint);outline-offset:2px}
+.fld{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:var(--muted);min-width:0}
+.inp{display:flex;align-items:center;gap:4px;border:1px solid var(--line2);border-radius:12px;background:rgba(0,0,0,.25);padding:0 12px;min-width:0}
+.inp:focus-within{border-color:var(--mint);box-shadow:0 0 0 3px var(--mintdim)}
+.inp i{font-style:normal;color:var(--dim);font-family:var(--mono)}
+.inp input{all:unset;flex:1;min-width:0;width:100%;padding:11px 0;font-family:var(--mono);font-size:16px;color:var(--fg)}
+.fld.big .inp input{font-size:22px;font-weight:600}
+.buckets{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.bk{display:grid;grid-template-columns:minmax(0,1fr) 92px 100px;gap:6px 12px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:rgba(0,0,0,.18)}
+.bkt{display:flex;flex-direction:column;min-width:0}.bkt b{font-size:15.5px}.bkt small{color:var(--muted);font-size:13px;line-height:1.35}
+.bk .pct{padding:0 10px}.bk .pct input{padding:8px 0;text-align:right}
+.bkv{font-family:var(--mono);font-weight:600;font-size:17px;color:var(--mint);text-align:right}
+.bkbar{grid-column:1/-1;height:4px;border-radius:4px;background:rgba(255,255,255,.06);overflow:hidden}.bkbar i{display:block;height:100%;background:var(--mint);border-radius:4px;transition:width .25s}
+@media (max-width:480px){.bk{grid-template-columns:minmax(0,1fr) 86px}.bkv{grid-column:2;grid-row:2}.bkt{grid-row:1/3}.bkbar{grid-row:3}}
+.kgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:620px){.kgrid{grid-template-columns:1fr 1fr}}
+.kout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:6px}
+@media (max-width:620px){.kout{grid-template-columns:1fr 1fr}}
+.kt{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:rgba(0,0,0,.2);display:flex;flex-direction:column;gap:2px;min-width:0}
+.kt span{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.kt b{font-family:var(--mono);font-size:21px;font-weight:600;overflow-wrap:anywhere}
+.kt.up b{color:var(--mint)}.kt.dn b{color:var(--coral)}
+.rq{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px;font-size:15.5px}
+.rq li::marker{color:var(--mint);font-family:var(--mono);font-weight:600}
+</style>
+<div class="fx" aria-hidden="true">
+  <div class="glow"></div><div class="grid"></div>
+  <span class="track" style="left:7%"><i style="--d:8.5s;--w:-1s"></i></span>
+  <span class="track" style="left:23%"><i style="--d:11s;--w:-6s"></i></span>
+  <span class="track" style="left:41%"><i style="--d:9.5s;--w:-3.5s"></i></span>
+  <span class="track" style="left:62%"><i style="--d:12s;--w:-8s"></i></span>
+  <span class="track" style="left:80%"><i style="--d:7.5s;--w:-2.5s"></i></span>
+  <span class="track" style="left:94%"><i style="--d:10.5s;--w:-5s"></i></span>
+</div>
+
+<div class="wrap">
+  <header class="top">
+    <span class="mark" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.6" stroke="#06211a" stroke-width="1.9"/><path d="M5.4 8.4 7.2 10.2 10.8 6" stroke="#06211a" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="brand">FTA <span>Business Guide</span><small>Flow Trading Academy · Run It Like a Firm</small></span>
+    <span class="count" id="count"></span>
+  </header>
+  <div class="rail" aria-hidden="true"></div>
+
+  <section class="walk beam" id="walk" hidden aria-live="polite"></section>
+
+  <div class="home" id="home">
+    <section class="path beam" id="start">
+      <span class="eyebrow">Start here</span>
+      <h2 id="pathtitle">Run your trading like a business</h2>
+      <p class="sub">Set up and run your trading like a real business: LLC, business name, EIN, bank account, business card and bookkeeping, then your payout plan, expenses, taxes, routine, journal, weekly review and numbers. 14 lessons in 4 parts: the mindset, setting up the business, running it, and growing it. One lesson at a time: read it, see it in real life, do the action step, and answer the quick check to unlock the next one.</p>
+      <div class="prog"><span class="pbar"><span id="pfill"></span></span><span class="pnum" id="pnum"></span></div>
+      <button type="button" class="cont" id="cont"></button>
+      <ol class="stages" id="stages"></ol>
+    </section>
+
+    <section class="card beam gold" style="--delay:-1.2s">
+      <span class="eyebrow gold">Drill</span>
+      <h2 class="h2">Business or hobby?</h2>
+      <p class="sub">Eight real moments. Is this trader running a business or playing a hobby?</p>
+      <div class="scen" id="d_fig"></div>
+      <div class="dopts" id="d_opts">
+        <button type="button" class="ans" data-a="biz">Business move</button><button type="button" class="ans" data-a="hob">Hobby move</button>
+      </div>
+      <p class="fb" id="d_fb" aria-live="polite"></p>
+      <div class="dfoot"><span id="d_n"></span><button type="button" class="btn" id="d_next" hidden>Next scenario →</button></div>
+    </section>
+
+    <section class="card beam" style="--delay:-2.1s" id="setup">
+      <span class="eyebrow">Checklist</span>
+      <h2 class="h2">Business setup checklist</h2>
+      <p class="sub">Tick each one off as you finish it. Your progress saves on this device.</p>
+      <div class="ck" id="ck"></div>
+      <div class="prog"><span class="pbar"><span id="ckfill"></span></span><span class="pnum" id="cknum"></span></div>
+    </section>
+
+    <section class="card" id="split">
+      <span class="eyebrow gold">Tool</span>
+      <h2 class="h2">Payout splitter</h2>
+      <p class="sub">Type in a payout and every dollar gets a job. Change the percentages to fit your plan; they save on this device.</p>
+      <label class="fld big"><span>Payout amount</span><span class="inp"><i>$</i><input id="sp_amt" type="number" inputmode="decimal" min="0" step="any" value="3000"></span></label>
+      <div class="buckets" id="sp_rows"></div>
+      <p class="fb" id="sp_fb" aria-live="polite"></p>
+      <button type="button" class="link" id="sp_reset">Reset to default split</button>
+    </section>
+
+    <section class="card" id="kpi">
+      <span class="eyebrow">Tool</span>
+      <h2 class="h2">KPI calculator</h2>
+      <p class="sub">Fill this in from your journal at the end of each week.</p>
+      <div class="kgrid">
+        <label class="fld"><span>Trades taken</span><span class="inp"><input id="k_n" type="number" inputmode="numeric" min="0" value="10"></span></label>
+        <label class="fld"><span>Winning trades</span><span class="inp"><input id="k_w" type="number" inputmode="numeric" min="0" value="5"></span></label>
+        <label class="fld"><span>Average win</span><span class="inp"><i>$</i><input id="k_aw" type="number" inputmode="decimal" min="0" step="any" value="300"></span></label>
+        <label class="fld"><span>Average loss</span><span class="inp"><i>$</i><input id="k_al" type="number" inputmode="decimal" min="0" step="any" value="150"></span></label>
+        <label class="fld"><span>Trades with rules followed</span><span class="inp"><input id="k_r" type="number" inputmode="numeric" min="0" value="9"></span></label>
+        <label class="fld"><span>Costs this week</span><span class="inp"><i>$</i><input id="k_c" type="number" inputmode="decimal" min="0" step="any" value="200"></span></label>
+      </div>
+      <div class="kout" id="k_out"></div>
+      <p class="fb" id="k_fb" aria-live="polite"></p>
+    </section>
+
+    <section class="card" id="review">
+      <span class="eyebrow">Weekly review</span>
+      <h2 class="h2">Your weekly business meeting</h2>
+      <p class="sub">30 minutes, same time every week. Answer these with your journal open.</p>
+      <ol class="rq">
+        <li>Did I trade only inside my hours?</li>
+        <li>What was my rule-follow rate? Which rule did I break most?</li>
+        <li>What were my KPIs: win rate, expectancy, net after costs?</li>
+        <li>Which setup made the most money? Which one cost the most?</li>
+        <li>Did I stop when I hit my loss limits every time?</li>
+        <li>What did I spend this week, and is every receipt saved and categorized?</li>
+        <li>Did any payout get split by my plan?</li>
+        <li>Next week I will change one thing: ___</li>
+      </ol>
+      <button type="button" class="btn" id="rq_copy">Copy the questions</button>
+      <p class="fb" id="rq_fb" aria-live="polite"></p>
+    </section>
+
+    <section class="card gl">
+      <b>Keep going</b>
+      <p class="sub">The business protects the trading. The trading itself lives in the other guides.</p>
+      <div class="row"><a class="glink" href="../glossary/" target="_blank" rel="noopener">FTA Glossary →</a><a class="glink" href="../psychology/" target="_blank" rel="noopener">FTA Psychology Guide →</a><a class="glink" href="../prop-stack/" target="_blank" rel="noopener">FTA Prop Stack →</a></div>
+    </section>
+
+    <p class="foot">This guide is trading business education, not legal, tax or financial advice. Rules and costs differ by state and by person. Talk to a CPA or attorney before you set up your business or file taxes.</p>
+  </div>
+</div>
+<script>
+/* ================= FTA BUSINESS GUIDE v2 — CONTENT =================
+   Each step: t = title, p = [main idea, more], ex = real life, fix = do this, q = [question, answers, right index, why]. */
+
+var VIDEOS={
+  casino:{u:"https://www.youtube.com/watch?v=mPrNlyK2J5I",t:"Mark Douglas: the trader's edge, think like a casino",src:"Trading Mind Unlocked"},
+  ein:{u:"https://www.youtube.com/watch?v=1rer1EGlCSY",t:"How to get an EIN online for free (official IRS steps)",src:"Paper Trail Guide"},
+  payout:{u:"https://www.youtube.com/watch?v=6-LSmnQNFDw",t:"What to avoid after your first prop firm payout",src:"KyleX"},
+  esttax:{u:"https://www.youtube.com/watch?v=sQnShUMBrcU",t:"How to make quarterly estimated tax payments on IRS.gov",src:"Boyer Robinson CPA"},
+  ev:{u:"https://www.youtube.com/watch?v=qafPcWNUiM8",t:"Expected value, explained",src:"Khan Academy"}
+};
+
+var STAGES=[
+/* PART 1 — THE MINDSET */
+{t:"Why Treat Trading Like a Business",mod:"Part 1 · The Mindset · Lesson 1",v:"casino",steps:[
+ {t:"Business or hobby?",
+  p:["A hobby is something you do when you feel like it. A business has hours, a budget, records and goals. Most traders lose because they treat trading like a hobby with real money.",
+     "Funded traders who last run their trading the way a small company runs: they track money in and money out, follow a schedule, and review results every week."],
+  ex:"Hobby trader: trades whenever he's bored and has no idea what he spent on evals this year. Business trader: trades set hours and knows every expense and every payout to the dollar.",
+  fix:"Decide today that trading is your business. The rest of this module is how a business owner sets it up and runs it.",
+  q:["What separates a trading business from a trading hobby?",["Hours, a budget, records and goals","A bigger account","Trading more often"],0,"A business runs on structure, not mood."]},
+ {t:"Think like a firm",
+  p:["A real trading firm doesn't care about one trade. It cares about the process: are the rules followed, are costs under control, is the edge still working?",
+     "When you think like a firm, a losing day is a cost of doing business, not a personal failure. You look at the numbers and adjust the process."],
+  ex:"You lose on a clean A+ setup. A hobby trader gets angry. A firm logs it, checks the rules were followed, and moves on.",
+  fix:"Judge each day by one question: did I follow my business rules? Not: did I make money?",
+  q:["A firm judges a trading day mainly by…",["Whether the process and rules were followed","Whether it was green","How many trades were taken"],0,"Process first. Results follow the process over time."]},
+ {t:"Revenue, costs and profit",
+  p:["Your revenue is the payouts you receive. Your costs are evals, resets, data, software, courses and equipment. Profit is what's left after costs.",
+     "Many traders celebrate a payout without counting what they spent to get it. A business always knows its real profit."],
+  ex:"You get a $2,000 payout but spent $1,400 on evals and resets this month. Your real profit is $600, not $2,000.",
+  fix:"From today, count every dollar that goes into trading and every dollar that comes out.",
+  q:["$2,000 payout, $1,400 in evals and resets. What's the real profit?",["$600","$2,000","$3,400"],0,"Revenue minus costs: 2,000 − 1,400 = 600."]}
+]},
+
+/* PART 2 — SET UP THE BUSINESS */
+{t:"Why Open an LLC (and How)",mod:"Part 2 · Set Up the Business · Lesson 2",steps:[
+ {t:"What an LLC is",
+  p:["An LLC (limited liability company) is a simple business structure that puts your trading business in its own name, separate from you as a person on paper.",
+     "Most solo traders start with a single-member LLC. It's cheap to form, simple to run, and it's the foundation for everything else in this module: the EIN, the bank account and clean books."],
+  ex:"Instead of payouts going to 'John Smith,' they go to 'Smith Capital LLC,' with its own bank account and records.",
+  fix:"Decide now: you're forming a single-member LLC for your trading business.",
+  q:["What does an LLC do for a trader?",["Puts the trading business in its own name, separate from you on paper","Guarantees you pass evals","Removes all taxes"],0,"It's a structure that keeps the business separate. It doesn't remove taxes."]},
+ {t:"Why it's worth it",
+  p:["It makes you look and act like a real business, keeps business money separate, makes bookkeeping and taxes cleaner, and lets you open business bank accounts and build business credit later.",
+     "It does not make your profits tax-free, and it won't protect you if you mix personal and business money. Separation only works if you keep it separate."],
+  ex:"Two traders both earn $40,000 in payouts. The one with an LLC, a business account and clean books hands his CPA one tidy report. The other spends a week digging through bank statements.",
+  fix:"Write down your 'why': clean books, separation, and a real foundation to scale from.",
+  q:["Does an LLC make your trading profits tax-free?",["No, it organizes the business but taxes still apply","Yes, LLCs pay no tax","Only in your first year"],0,"An LLC is structure, not a tax loophole."]},
+ {t:"How to open one",
+  p:["You file it yourself on your state's business filing website, usually run by the Secretary of State. You'll pick a name, list a registered agent (a person or service with an address in your state who receives legal mail), and pay a state filing fee.",
+     "Approval can take minutes to a few weeks. Most states also require an annual report or renewal fee to keep the LLC active."],
+  ex:"You go to your state's Secretary of State site, search the name, file the Articles of Organization online, pay the fee, and save the approval PDF.",
+  fix:"Find your state's filing page and the current fee. Save every document from the filing in one 'Business' folder.",
+  q:["Where do you usually file an LLC?",["Your state's Secretary of State website","The IRS","Your prop firm"],0,"LLCs are formed at the state level."]}
+]},
+{t:"How to Pick a Business Name",mod:"Part 2 · Set Up the Business · Lesson 3",steps:[
+ {t:"What makes a good name",
+  p:["Keep it simple, easy to spell and professional. It should still make sense when the business is bigger than it is today.",
+     "Many traders use words like Capital, Trading, Holdings or Ventures. Your name doesn't need to say 'trading' at all."],
+  ex:"'Merrick Capital LLC' is clean and grows with you. 'GoldSniperFX420 LLC' looks bad on a bank application.",
+  fix:"Write down 5 name ideas. Cross out any that are hard to spell or you'd be embarrassed to say to a banker.",
+  q:["Which is the stronger business name?",["Merrick Capital LLC","GoldSniperFX420 LLC","Trades R Us LLC"],0,"Simple and professional scales with you."]},
+ {t:"Check it's available",
+  p:["Search your state's business name database. If another business already has the name (or one too close to it), the state can reject your filing.",
+     "Also check that the domain name and social handles are free, so everything matches."],
+  ex:"Your first pick is taken in your state, but your second is free, and so are the .com and the Instagram handle. You go with the second.",
+  fix:"Search your top 3 names in your state's database, then check the domain and socials. Pick the first one that's free everywhere.",
+  q:["Where do you check if a name is available for your LLC?",["Your state's business name database","Google only","Your bank"],0,"The state decides whether the name can be registered."]},
+ {t:"Lock it in",
+  p:["Once you file the LLC, the name is yours in your state. Grab the domain and social handles the same day so nobody takes them.",
+     "Use the exact legal name, including 'LLC,' on bank accounts, tax forms and prop firm paperwork."],
+  ex:"You file 'Merrick Capital LLC,' buy the domain and claim the handle the same afternoon.",
+  fix:"File, then secure the domain and handles the same day. Use the exact legal name everywhere.",
+  q:["What name goes on your bank account and tax forms?",["The exact legal LLC name","A nickname","Your trading handle"],0,"Exact legal name everywhere keeps paperwork clean."]}
+]},
+{t:"How to Get Your EIN",mod:"Part 2 · Set Up the Business · Lesson 4",v:"ein",steps:[
+ {t:"What an EIN is",
+  p:["An EIN (Employer Identification Number) is like a Social Security number for your business. You need it to open a business bank account and for business tax forms.",
+     "It also lets you give your business number on forms instead of your personal SSN."],
+  ex:"When a bank or firm asks for business tax info, you give your LLC name and EIN.",
+  fix:"Get your EIN right after your LLC is approved.",
+  q:["What is an EIN?",["A tax ID number for your business","A prop firm account number","A credit score"],0,"It's your business's tax ID."]},
+ {t:"Get it free from the IRS",
+  p:["Apply on IRS.gov. It's free, and the online application usually gives you the number right away when you finish.",
+     "Many websites charge to 'file your EIN.' You never need to pay for it."],
+  ex:"You open IRS.gov, search 'apply for an EIN online,' answer the questions for a single-member LLC, and download your confirmation letter.",
+  fix:"Apply only on IRS.gov. Download and save the confirmation letter (CP 575) in your Business folder.",
+  q:["How much does an EIN cost from the IRS?",["Nothing, it's free","$99","$300"],0,"The IRS never charges for an EIN."]}
+]},
+{t:"Why Open a Business Bank Account",mod:"Part 2 · Set Up the Business · Lesson 5",steps:[
+ {t:"Why separate accounts matter",
+  p:["One account for the business, one for your life. All payouts go into the business account and all trading costs come out of it.",
+     "Mixing money hides your real results, makes taxes harder, and weakens the separation your LLC is supposed to give you."],
+  ex:"Payouts land in the business account. Evals, data and software are paid from it. Your personal account only gets what you pay yourself.",
+  fix:"Commit: no trading money touches your personal account except your planned pay.",
+  q:["Where should prop firm payouts go?",["The business bank account","Your personal savings","Whatever's easiest that day"],0,"One business account keeps everything clean."]},
+ {t:"How to open one",
+  p:["Bring your LLC approval documents, your EIN letter and your ID. Many banks and online business banks let you apply online in a day.",
+     "Compare monthly fees, minimum balances and whether it connects to bookkeeping software."],
+  ex:"You apply online with your Articles of Organization, EIN letter and driver's license, and the account is open in two days.",
+  fix:"Pick a business checking account with no or low monthly fees that connects to bookkeeping software, and open it.",
+  q:["What do you usually need to open a business bank account?",["LLC documents, EIN letter and ID","Only your trading screenshots","A prop firm certificate"],0,"The bank needs proof the business exists and who owns it."]}
+]},
+{t:"A Business Card for Trading Costs",mod:"Part 2 · Set Up the Business · Lesson 6",steps:[
+ {t:"One card for every business cost",
+  p:["Use one business debit or credit card for every trading cost: evals, resets, data, platforms, software and equipment.",
+     "When every cost is on one card, your expenses track themselves and nothing gets lost."],
+  ex:"At the end of the month you open one statement and see every eval, reset and subscription in one place.",
+  fix:"Move every trading subscription and eval purchase to the business card.",
+  q:["Why use one card for all trading costs?",["Every expense is in one place and easy to track","It looks cool","To get more evals"],0,"One card, one clean record."]},
+ {t:"Use credit carefully",
+  p:["A business credit card can help build business credit over time, but only if you pay it off. Carrying a balance on evals is debt on a bet.",
+     "If you're not sure you'll pay it in full each month, start with the business debit card."],
+  ex:"You put evals on the business card and pay the full balance every month from payouts. No interest, clean history.",
+  fix:"Only use credit for costs you can pay off in full that month.",
+  q:["When is a business credit card a good idea?",["When you pay it off in full every month","When you're short on cash for evals","Never under any condition"],0,"Paid in full, it helps. Carried, it costs you."]}
+]},
+{t:"Set Up Your Bookkeeping",mod:"Part 2 · Set Up the Business · Lesson 7",steps:[
+ {t:"Software does the heavy lifting",
+  p:["Accounting software like QuickBooks connects to your business bank and card and pulls in every transaction automatically.",
+     "You sort each one into a category, and the software builds your profit and loss report for you."],
+  ex:"You connect your business checking and card. Every eval, payout and subscription shows up automatically.",
+  fix:"Choose bookkeeping software and connect your business bank and card.",
+  q:["What does bookkeeping software do for you?",["Pulls in transactions and builds your profit and loss","Trades for you","Pays your taxes automatically"],0,"It organizes the money so you can see the business clearly."]},
+ {t:"Set up your categories",
+  p:["Create simple categories that match your business: Payouts (income), Evals and Resets, Market Data, Software and Platforms, Education, Equipment, and Owner Pay.",
+     "Simple categories make your monthly numbers and your tax prep easy."],
+  ex:"Your P&L shows: Payouts $5,000, Evals $900, Data $120, Software $200. You know your real profit instantly.",
+  fix:"Create these categories now, and spend 10 minutes every week sorting new transactions.",
+  q:["How often should you categorize transactions?",["Weekly, a few minutes at a time","Once at tax time","Never"],0,"Small and often beats a giant pile in April."]}
+]},
+
+/* PART 3 — RUN THE BUSINESS */
+{t:"Your Payout Plan",mod:"Part 3 · Run the Business · Lesson 8",v:"payout",steps:[
+ {t:"Decide before the money arrives",
+  p:["A payout plan is a set split for every dollar that comes in. You decide it once, before the money arrives, so emotion never decides where it goes.",
+     "Without a plan, payouts disappear into spending and the business never grows."],
+  ex:"A $3,000 payout lands. Without a plan it's gone in two weeks. With a plan, every dollar has a job the same day.",
+  fix:"Write down your split now and use the payout splitter below on every payout.",
+  q:["When should you decide where a payout goes?",["Before it arrives, with a set plan","After you see how much it is","When you feel like it"],0,"Deciding ahead removes emotion."]},
+ {t:"A simple split",
+  p:["A common starting split: set aside for taxes, reinvest in the business, build an emergency fund, invest for the long term, and reward yourself.",
+     "The exact percentages are yours to choose. Taxes always come out first, and the business always keeps money to keep running."],
+  ex:"$3,000 payout: $900 taxes, $900 back into the business, $600 emergency fund, $300 investing, $300 reward.",
+  fix:"Use the splitter below. Change the percentages to fit you, but always keep a tax bucket.",
+  q:["Which bucket should always come out first?",["Taxes","Reward","New equipment"],0,"Tax money isn't yours to spend."]},
+ {t:"Pay yourself on purpose",
+  p:["Your business pays you, not the other way around. Move a set amount from the business account to your personal account on a schedule.",
+     "In your books, this is 'Owner Pay.' It keeps your life bills steady through good and bad trading months."],
+  ex:"On the 1st and 15th you move your set pay from business to personal, whether the month was big or small.",
+  fix:"Pick a set pay amount and schedule. Leave the rest in the business.",
+  q:["How should you pay yourself from the business?",["A set amount on a schedule","Whatever's left after a big day","Withdraw everything each payout"],0,"A set paycheck keeps life calm when trading isn't."]}
+]},
+{t:"Track Expenses and Keep Receipts",mod:"Part 3 · Run the Business · Lesson 9",steps:[
+ {t:"What counts as a trading expense",
+  p:["Evals, resets, activation fees, market data, platforms, charting software, journals, courses, a trading computer and monitors, and part of your internet can all be business costs.",
+     "Ask your CPA what's deductible in your situation. Your job is to make sure every cost is recorded."],
+  ex:"This month: 4 evals, 2 resets, a data feed, a journal subscription and a new monitor, all on the business card.",
+  fix:"List every trading cost you paid in the last 3 months. That's your real monthly cost of doing business.",
+  q:["Who decides what's deductible for your situation?",["Your CPA or tax professional","Your prop firm","A Discord group"],0,"Track everything, and let a pro decide what's deductible."]},
+ {t:"Keep every receipt",
+  p:["An expense you can't prove is an expense you can't use. Save the email receipt or snap a photo the day you pay.",
+     "Many bookkeeping apps let you attach the receipt straight to the transaction."],
+  ex:"You buy an eval, forward the receipt email to a 'Receipts' folder, and attach it in your bookkeeping app.",
+  fix:"Make a Receipts folder today. Save every receipt the day you pay.",
+  q:["When should you save a receipt?",["The day you pay","At tax time","Only for big purchases"],0,"Same day, every time."]}
+]},
+{t:"Taxes 101",mod:"Part 3 · Run the Business · Lesson 10",v:"esttax",steps:[
+ {t:"Nobody is holding taxes for you",
+  p:["Prop firm payouts are usually treated as income, and firms usually don't withhold taxes. That means it's on you to set money aside.",
+     "That's why the tax bucket in your payout plan comes out first, every time."],
+  ex:"You move your tax percentage into a separate tax savings account the day every payout lands.",
+  fix:"Open a separate savings account just for taxes and fund it from every payout.",
+  q:["Do prop firms usually withhold taxes from payouts?",["No, you're responsible for setting it aside","Yes, always","Only on weekends"],0,"Plan for taxes yourself."]},
+ {t:"Quarterly estimated payments",
+  p:["When no taxes are withheld, the IRS generally expects you to pay during the year through quarterly estimated payments, not all at once in April.",
+     "Your state may want estimated payments too. Missing them can mean penalties."],
+  ex:"Your CPA gives you a quarterly amount. You pay it on IRS.gov from your tax savings account.",
+  fix:"Ask your CPA whether you need quarterly payments and put the due dates on your calendar.",
+  q:["How are taxes usually paid when none are withheld?",["Quarterly estimated payments during the year","Only once, years later","Never"],0,"Pay as you go to avoid surprises and penalties."]},
+ {t:"Find a CPA who knows traders",
+  p:["Every situation is different. A CPA or tax professional who works with traders or small businesses can tell you exactly what to set aside, what's deductible, and how to file.",
+     "Bring clean books. A good CPA costs less when your records are organized."],
+  ex:"You book a call before your first big payout season and hand over your bookkeeping report.",
+  fix:"Find a CPA who works with traders or small businesses and book a call before your first big payout season.",
+  q:["When should you talk to a CPA?",["Before your first big payout season","After you get a penalty letter","Never, just guess"],0,"Getting advice early saves money."]}
+]},
+{t:"Your Trading Hours and Daily Routine",mod:"Part 3 · Run the Business · Lesson 11",steps:[
+ {t:"Set fixed hours",
+  p:["A business opens and closes at set times. Pick the window you trade, put it on your calendar, and don't trade outside it.",
+     "Fixed hours stop boredom trades and protect your focus for the moves that matter."],
+  ex:"Your window: 9:00 to 11:30 AM New York time. At 11:30 you close the platform even if you're bored or behind.",
+  fix:"Write your trading hours down and set a calendar alarm for open and close.",
+  q:["Why set fixed trading hours?",["To stop boredom trades and protect your focus","To trade more","Because the market closes at noon"],0,"Structure protects you from your worst trades."]},
+ {t:"Prepare before the open",
+  p:["Your pre-market routine is how the business opens: check the news, mark your key levels, write today's plan.",
+     "Part of prep is checking the trader. If you slept badly or you're stressed, the business decision is to trade smaller or sit out."],
+  ex:"News check, mark the levels, write the plan, ask 'Am I fit to trade today?'",
+  fix:"Build a short pre-market checklist and run it every trading day.",
+  q:["You're exhausted and stressed. What's the business move?",["Sit out or trade smaller","Trade bigger to finish early","Skip prep and jump in"],0,"Protecting the account includes protecting the trader."]},
+ {t:"Clock out",
+  p:["When your window closes, log the day, close the platform and walk away. The business is closed.",
+     "Rest is part of running a business you can keep running for years."],
+  ex:"At 11:30 you log your trades, close the charts and go live your life.",
+  fix:"Make a close routine: log the day, close the platform, walk away.",
+  q:["What happens when your trading window closes?",["Log the day and close the platform","Keep one eye on the chart","Take one last trade"],0,"Closed means closed."]}
+]},
+{t:"Journal Every Trade",mod:"Part 3 · Run the Business · Lesson 12",steps:[
+ {t:"Your trade records",
+  p:["A journal is the business's record of every trade: date, setup, entry, stop, target, result, and whether you followed your rules.",
+     "Without records you can't measure anything. With them you can see exactly what works."],
+  ex:"Trade #42: gold, pullback to key level, followed plan, +2R. Trade #43: chased a breakout, broke rules, −1R.",
+  fix:"Log every trade the moment it closes. Screenshot the chart before and after.",
+  q:["When should you log a trade?",["Right after it closes","At the end of the month","Only when it wins"],0,"Fresh memory, honest records."]},
+ {t:"Log the why",
+  p:["The most useful line in a journal is why you took the trade and how you felt. That's where patterns show up.",
+     "A losing trade with rules followed is a good trade. A winning trade with rules broken is a warning."],
+  ex:"Your journal shows most of your losses come after 11:00 AM and right after a loss. Now you know what to fix.",
+  fix:"Add two fields to every entry: 'Why I took it' and 'Did I follow my rules? Y/N.'",
+  q:["A trade broke your rules but won. How should you see it?",["As a warning, not a success","As proof the rules don't matter","As a reason to size up"],0,"Rewarding broken rules builds bad habits."]}
+]},
+{t:"The Weekly Review and Your Numbers",mod:"Part 3 · Run the Business · Lesson 13",v:"ev",steps:[
+ {t:"The weekly business meeting",
+  p:["Once a week, hold a meeting with yourself. Go through your journal, your numbers and your expenses.",
+     "End every review with one change to test next week. Changing everything at once means you never know what helped."],
+  ex:"Friday after the close: 30 minutes, journal open, KPIs calculated, one change written down.",
+  fix:"Put a 30-minute weekly review on your calendar. Use the review questions below.",
+  q:["After a bad week, how many things should you change?",["One, and test it","Everything","Nothing ever"],0,"One change at a time shows you what works."]},
+ {t:"Know your KPIs",
+  p:["KPIs (key performance indicators) are the numbers that show how the business is doing: win rate, average win, average loss, expectancy, rule-follow rate, and profit after costs.",
+     "Win rate alone lies. A 40% win rate can be very profitable if wins are much bigger than losses. Expectancy shows what you make on average per trade."],
+  ex:"40% win rate, average win $300, average loss $100. Expectancy = 0.4×300 − 0.6×100 = $60 per trade.",
+  fix:"Run the KPI calculator below every week and write the numbers in your review.",
+  q:["40% win rate, avg win $300, avg loss $100. Expectancy per trade?",["+$60","−$60","+$120"],0,"0.4 × 300 − 0.6 × 100 = 120 − 60 = 60."]},
+ {t:"Rule-follow rate comes first",
+  p:["Rule-follow rate is the percent of trades where you followed every rule. It's the one number you control 100%.",
+     "If rule-follow is high and results are bad, the strategy needs work. If rule-follow is low, the trader needs work."],
+  ex:"You followed rules on 6 of 10 trades: 60%. Before touching the strategy, fix the discipline.",
+  fix:"Track Y/N on every trade and aim to raise this number every week.",
+  q:["Rule-follow is low and results are bad. What needs fixing first?",["Your discipline","The strategy","The broker"],0,"You can't judge a strategy you didn't follow."]}
+]},
+
+/* PART 4 — GROW THE BUSINESS */
+{t:"Scaling Up",mod:"Part 4 · Grow the Business · Lesson 14",steps:[
+ {t:"When an S-corp might make sense",
+  p:["As profits grow, some traders have their LLC taxed as an S-corporation. It can lower some taxes, but it adds payroll, extra filings and accounting costs.",
+     "It only makes sense once profit is consistently high enough to cover those extra costs. That's a decision to make with your CPA, not on your own."],
+  ex:"After a year of steady payouts, your CPA runs the numbers and tells you whether the S-corp election saves more than it costs.",
+  fix:"Bring this up with your CPA once your profits are consistent. Don't elect it on your own.",
+  q:["Who should help you decide on an S-corp?",["Your CPA","A YouTube comment","Your prop firm"],0,"It's a numbers decision. Get a pro to run them."]},
+ {t:"Paying yourself like a business owner",
+  p:["As the business grows, your owner pay can grow with it, but only from proven profit, never from one big month.",
+     "Raise your pay when the business has shown it can support it for several months in a row."],
+  ex:"Three strong months in a row, emergency fund full, tax account funded. Now you raise your owner pay.",
+  fix:"Set a rule: raise your pay only after 3 strong months with taxes and the emergency fund covered.",
+  q:["When should you raise your owner pay?",["After several strong months with taxes and savings covered","After one big payout","Whenever you want something new"],0,"Raises come from proven profit."]},
+ {t:"Build business credit",
+  p:["A business with an EIN, a business bank account and a history of paying bills on time can start building its own credit profile.",
+     "Over time that can help the business get better accounts, cards and terms. It starts with paying everything on time."],
+  ex:"Your LLC pays its card in full every month for a year and starts building a credit history of its own.",
+  fix:"Pay every business bill on time and keep your business info (name, address, phone) the same everywhere.",
+  q:["What builds business credit over time?",["Paying business bills on time, every time","Opening as many cards as possible","Buying more evals"],0,"Consistency builds credit."]}
+]}
+];
+
+/* Drill: business move or hobby move */
+var DRILL=[
+ {s:"Every payout goes straight into a business checking account under your LLC.",a:"biz"},
+ {s:"You buy three evals on your personal debit card and don't save the receipts.",a:"hob"},
+ {s:"You trade at 2 AM because you couldn't sleep and the chart was open.",a:"hob"},
+ {s:"Every Friday you spend 30 minutes reviewing your journal and KPIs.",a:"biz"},
+ {s:"A $2,500 payout lands and you spend it all that weekend.",a:"hob"},
+ {s:"You move your tax percentage into a separate savings account the day a payout hits.",a:"biz"},
+ {s:"You pay a website $250 to get your EIN.",a:"hob"},
+ {s:"You check your business name is free in your state before filing the LLC.",a:"biz"}
+];
+var DRILL_WHY={
+ biz:"That's a business move: records, structure and money with a plan.",
+ hob:"That's a hobby move: no structure, no records, no plan for the money."
+};
+
+(function(){
+"use strict";
+function $(id){return document.getElementById(id);}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function fmt(v){return Number(v).toLocaleString("en-US",{minimumFractionDigits:0,maximumFractionDigits:2});}
+
+/* ---------- state ---------- */
+var K="fta.business.v1", S={passed:{}};
+try{var raw=localStorage.getItem(K); if(raw){var ob=JSON.parse(raw); if(ob&&ob.passed) S.passed=ob.passed;}}catch(e){}
+function save(){try{localStorage.setItem(K,JSON.stringify(S));}catch(e){}}
+function sid(s,k){return s+"."+k;}
+function stageDone(s){return STAGES[s].steps.every(function(_,k){return S.passed[sid(s,k)];});}
+function stageOpen(s){return s===0||stageDone(s-1);}
+function nextStep(){for(var s=0;s<STAGES.length;s++)for(var k=0;k<STAGES[s].steps.length;k++)if(!S.passed[sid(s,k)])return {s:s,k:k};return null;}
+var TOTAL=0; STAGES.forEach(function(st){TOTAL+=st.steps.length;});
+
+var LOCK='<svg class="lock" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>';
+var ARROW='<svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#06211a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+var CHECK='<svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#06211a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function paintPath(){
+  var nx=nextStep(), done=Object.keys(S.passed).length;
+  $("pfill").style.width=(done/TOTAL*100)+"%";
+  $("pnum").textContent=done+" of "+TOTAL+" steps";
+  if(nx){
+    var st=STAGES[nx.s].steps[nx.k];
+    $("cont").innerHTML='<span class="ci"><small>'+(done?'Stage '+(nx.s+1)+' · Step '+(nx.k+1)+' of '+STAGES[nx.s].steps.length:'Step 1 · Stage 1 of '+STAGES.length)+'</small><b>'+esc(st.t)+'</b></span><span class="arrow">'+ARROW+'</span>';
+    $("cont").setAttribute("data-s",nx.s); $("cont").setAttribute("data-k",nx.k); $("cont").hidden=false;
+    $("pathtitle").textContent=done?"Pick up where you left off":"Run your trading like a business";
+  } else { $("cont").hidden=true; $("pathtitle").textContent="Guide complete. You run a trading business."; }
+  $("stages").innerHTML=STAGES.map(function(st,i){
+    var n=st.steps.filter(function(_,k){return S.passed[sid(i,k)];}).length, open=stageOpen(i), dn=n===st.steps.length, cur=nx&&nx.s===i;
+    return '<li><button type="button" class="stage'+(dn?' done':'')+(cur?' cur':'')+'" data-stage="'+i+'"'+(open?'':' disabled')+'>'+
+      '<span class="snum">'+(dn?'✓':(i+1))+'</span><span class="sinfo"><b>'+esc(st.t)+'</b><span>'+esc(st.mod)+' · '+
+      (open?(dn?'Done · tap to review':n+' of '+st.steps.length+' steps'):'Finish stage '+i+' to unlock')+'</span>'+
+      (open?'<span class="sbar2"><i style="width:'+(n/st.steps.length*100)+'%"></i></span>':'')+'</span>'+(open?'':LOCK)+'</button></li>';
+  }).join("");
+}
+
+/* ---------- walk-through ---------- */
+var W={s:0,k:0,wrong:0};
+function shuffled(n,seed){var a=[];for(var i=0;i<n;i++)a.push(i);var x=seed;for(var j=n-1;j>0;j--){x=(x*9301+49297)%233280;var r=Math.floor(x/233280*(j+1));var t=a[j];a[j]=a[r];a[r]=t;}return a;}
+function vidHTML(key){
+  var keys=Array.isArray(key)?key:(key?[key]:[]), vs=keys.map(function(k){return VIDEOS[k];}).filter(Boolean);
+  if(!vs.length) return '<span class="soon">Sway\'s walkthrough clip for this lesson is coming soon</span>';
+  return vs.map(function(v){ return '<a class="vid" href="'+v.u+'" target="_blank" rel="noopener"><span class="play"><svg viewBox="0 0 12 12"><path d="M3 1.8v8.4L10 6z" fill="#06211a"/></svg></span><span>Watch: '+esc(v.t)+' <small>· '+esc(v.src)+'</small></span></a>'; }).join("");
+}
+/* ---------- Sway's two videos per section (Whop course). Paste each Whop lesson link into r (rundown) or w (walkthrough). ---------- */
+function swayHTML(i,kind){
+  var v=(SWAY[i]||{})[kind], r=kind==="r";
+  var lab=r?"Video 1 · Quick rundown":"Video 2 · Full walkthrough", sub=r?"Sway explains what you'll learn in this section":"Watch Sway do it start to finish";
+  var ico='<span class="play"><svg viewBox="0 0 12 12"><path d="M3 1.8v8.4L10 6z" fill="#1a1405"/></svg></span>';
+  return v?'<a class="sway" href="'+v+'" target="_blank" rel="noopener">'+ico+'<span><b>'+lab+'</b><small>'+sub+'</small></span><span class="sgo">Watch on Whop →</span></a>'
+          :'<div class="sway soonw">'+ico+'<span><b>'+lab+'</b><small>'+sub+' · in the Whop course soon</small></span></div>';
+}
+function openWalk(s,k){W.s=s;W.k=k;W.wrong=0;$("home").hidden=true;$("walk").hidden=false;paintWalk();window.scrollTo({top:0});}
+function closeWalk(){$("walk").hidden=true;$("home").hidden=false;paintPath();window.scrollTo({top:0});}
+function paintWalk(){
+  var stg=STAGES[W.s], st=stg.steps[W.k], id=sid(W.s,W.k), passed=!!S.passed[id], q=st.q;
+  var seed=0; for(var c=0;c<st.t.length;c++) seed+=st.t.charCodeAt(c)*(c+1);
+  var order=shuffled(q[1].length,seed);
+  var dots=stg.steps.map(function(_,i){return '<i class="'+(S.passed[sid(W.s,i)]?'ok':(i===W.k?'now':''))+'"></i>';}).join("");
+  $("walk").innerHTML=
+    '<div class="wtop"><button type="button" class="link" id="wback">← Back to the guide</button><span class="wstage">Stage '+(W.s+1)+' · '+esc(stg.t)+'</span></div>'+
+    '<div class="dots" aria-hidden="true">'+dots+'</div>'+
+    '<span class="wstep">STEP '+(W.k+1)+' OF '+stg.steps.length+'</span>'+
+    '<h2>'+esc(st.t)+'</h2>'+
+    st.p.map(function(p,i){return '<p class="'+(i===0?'def':'para')+'">'+esc(p)+'</p>';}).join("")+
+    '<div class="box"><div class="blab">In real life</div><p>'+esc(st.ex)+'</p></div>'+
+    '<div class="box fixb"><div class="blab">Do this</div><p>'+esc(st.fix)+'</p></div>'+
+    (W.k===0?'<div class="row">'+vidHTML(stg.v)+'<span class="mod"><b>'+esc(stg.mod)+'</b></span></div>':'')+
+    '<div class="check"><div class="blab">Quick check</div><p class="cq">'+esc(q[0])+'</p>'+
+      order.map(function(oi,pos){return '<button type="button" class="ans'+(passed&&oi===q[2]?' right':'')+'" data-a="'+oi+'"'+(passed?' disabled':'')+'><span class="k">'+"ABCD"[pos]+'</span>'+esc(q[1][oi])+'</button>';}).join("")+
+      '<p class="fb'+(passed?' ok':'')+'" id="fb">'+(passed?esc(q[3]):'')+'</p></div>'+
+    '<div class="wnav">'+(W.k>0?'<button type="button" class="prev" id="wprev">Back</button>':'')+
+      '<button type="button" class="next" id="wnext"'+(passed?'':' disabled')+'>'+(W.k===stg.steps.length-1?'Finish stage':'Next step')+' →</button></div>';
+}
+function paintDone(){
+  var nxt=W.s+1<STAGES.length?W.s+1:null;
+  $("walk").innerHTML='<div class="done-card"><span class="big">'+CHECK+'</span><span class="eyebrow">Stage '+(W.s+1)+' complete</span><h2>'+esc(STAGES[W.s].t)+'</h2>'+
+    '<p>'+(nxt===null?'That\'s the whole guide. Now use the checklist, payout splitter and KPI calculator below every week.':'Next up: '+esc(STAGES[nxt].t)+'.')+'</p>'+
+    (nxt!==null?'<button type="button" class="next" id="wnextstage" style="margin:6px auto 0">Start stage '+(nxt+1)+' →</button>':'')+
+    '<button type="button" class="link" id="wback">Back to the guide</button></div>';
+  if(window.ftaCelebrate) ftaCelebrate();
+}
+$("walk").addEventListener("click",function(e){
+  var t=e.target.closest("button"); if(!t) return;
+  if(t.id==="wback"){closeWalk();return;}
+  if(t.id==="wprev"){W.k--;W.wrong=0;paintWalk();window.scrollTo({top:0});return;}
+  if(t.id==="wnext"){ if(W.k<STAGES[W.s].steps.length-1){W.k++;W.wrong=0;paintWalk();}else paintDone(); window.scrollTo({top:0}); return; }
+  if(t.id==="wnextstage"){openWalk(W.s+1,0);return;}
+  if(t.classList.contains("ans")){
+    var q=STAGES[W.s].steps[W.k].q, a=+t.getAttribute("data-a"), fb=$("fb");
+    if(a===q[2]){
+      Array.prototype.forEach.call($("walk").querySelectorAll(".ans"),function(b){b.disabled=true;});
+      t.classList.add("right"); fb.className="fb ok"; fb.textContent="Right. "+q[3];
+      S.passed[sid(W.s,W.k)]=1; save(); $("wnext").disabled=false;
+      var d=$("walk").querySelectorAll(".dots i"); if(d[W.k]) d[W.k].className="ok";
+    } else {
+      W.wrong++; t.classList.add("wrong"); t.disabled=true; fb.className="fb no";
+      fb.textContent=W.wrong>1?"Not quite. Reread the first paragraph and the Do this box.":"Not quite. Try again.";
+    }
+  }
+});
+$("cont").addEventListener("click",function(){openWalk(+this.getAttribute("data-s"),+this.getAttribute("data-k"));});
+$("stages").addEventListener("click",function(e){
+  var b=e.target.closest(".stage"); if(!b||b.disabled) return;
+  var i=+b.getAttribute("data-stage"), k=0;
+  for(var j=0;j<STAGES[i].steps.length;j++){ if(!S.passed[sid(i,j)]){k=j;break;} }
+  openWalk(i,k);
+});
+
+/* ---------- drill: name that structure ---------- */
+var D={i:0,score:0,done:0,answered:false};
+function paintDrill(){
+  var d=DRILL[D.i];
+  $("d_fig").textContent=d.s;
+  $("d_n").textContent="Scenario "+(D.i+1)+" of "+DRILL.length+" · score "+D.score+"/"+D.done;
+  $("d_fb").textContent=""; $("d_fb").className="fb"; D.answered=false;
+  Array.prototype.forEach.call($("d_opts").querySelectorAll("button"),function(b){b.disabled=false;b.className="ans";});
+  $("d_next").hidden=true;
+}
+$("d_opts").addEventListener("click",function(e){
+  var b=e.target.closest("button"); if(!b||D.answered) return;
+  var d=DRILL[D.i], pick=b.getAttribute("data-a"); D.answered=true; D.done++;
+  Array.prototype.forEach.call($("d_opts").querySelectorAll("button"),function(x){x.disabled=true; if(x.getAttribute("data-a")===d.a) x.classList.add("right");});
+  if(pick===d.a){ D.score++; $("d_fb").className="fb ok"; $("d_fb").textContent="Right. "+DRILL_WHY[d.a]; }
+  else { b.classList.add("wrong"); $("d_fb").className="fb no"; $("d_fb").textContent="Not this time. "+DRILL_WHY[d.a]; }
+  $("d_n").textContent="Scenario "+(D.i+1)+" of "+DRILL.length+" · score "+D.score+"/"+D.done;
+  $("d_next").hidden=false; $("d_next").textContent=D.i<DRILL.length-1?"Next scenario →":"Start again ↺";
+});
+$("d_next").addEventListener("click",function(){ if(D.i<DRILL.length-1) D.i++; else {D.i=0;D.score=0;D.done=0;} paintDrill(); });
+
+$("count").textContent=TOTAL+" steps · "+STAGES.length+" lessons";
+paintPath(); paintDrill();
+
+/* ---------- tools: setup checklist, payout splitter, KPI calculator ---------- */
+var TK="fta.business.tools.v1", T={ck:{},split:null};
+try{var tr=localStorage.getItem(TK); if(tr){var to=JSON.parse(tr); if(to&&to.ck) T.ck=to.ck; if(to&&to.split) T.split=to.split;}}catch(e){}
+function tsave(){try{localStorage.setItem(TK,JSON.stringify(T));}catch(e){}}
+var CK=["Pick your business name and check it's free in your state","Form your LLC","Get your free EIN on IRS.gov","Open a business bank account","Get a business card and move every trading cost to it","Secure the domain and social handles","Connect accounting software (QuickBooks or similar)","Make a receipts folder","Open a separate tax savings account","Book a call with a CPA","Write your payout split","Set your trading hours on your calendar","Write your pre-market checklist","Set up your trade journal","Put a weekly review on your calendar"];
+function paintCk(){
+  $("ck").innerHTML=CK.map(function(c,i){return '<label class="ckrow'+(T.ck[i]?' on':'')+'"><input type="checkbox" data-i="'+i+'"'+(T.ck[i]?' checked':'')+'><span class="box2">'+CHECK+'</span><span>'+esc(c)+'</span></label>';}).join("");
+  var n=CK.filter(function(_,i){return T.ck[i];}).length;
+  $("ckfill").style.width=(n/CK.length*100)+"%"; $("cknum").textContent=n+" of "+CK.length+" done";
+}
+$("ck").addEventListener("change",function(e){var t=e.target; if(!t.matches("input"))return; var i=t.getAttribute("data-i"); if(t.checked)T.ck[i]=1; else delete T.ck[i]; tsave(); paintCk(); if(t.checked&&CK.every(function(_,j){return T.ck[j];})&&window.ftaCelebrate) ftaCelebrate();});
+
+var SPLIT0=[["Taxes",30,"Separate savings account. Not yours to spend."],["Reinvest in the business",30,"Evals, resets, data, tools."],["Emergency fund",20,"Covers slow months and life."],["Long-term investing",10,"Money that grows outside trading."],["Reward yourself",10,"You earned it. Enjoy it on purpose."]];
+function split(){return T.split||SPLIT0.map(function(r){return r[1];});}
+function money(v){return "$"+Number(v).toLocaleString("en-US",{minimumFractionDigits:0,maximumFractionDigits:2});}
+function paintSplitRows(){
+  var s=split();
+  $("sp_rows").innerHTML=SPLIT0.map(function(r,i){return '<div class="bk"><div class="bkt"><b>'+esc(r[0])+'</b><small>'+esc(r[2])+'</small></div><span class="inp pct"><input type="number" inputmode="decimal" min="0" max="100" step="any" data-i="'+i+'" value="'+s[i]+'"><i>%</i></span><span class="bkv" id="spv'+i+'"></span><span class="bkbar"><i id="spb'+i+'"></i></span></div>';}).join("");
+  calcSplit();
+}
+function calcSplit(){
+  var amt=Math.max(0,parseFloat($("sp_amt").value)||0), s=split(), tot=0;
+  s.forEach(function(p,i){p=Math.max(0,+p||0); tot+=p; $("spv"+i).textContent=money(Math.round(amt*p)/100); $("spb"+i).style.width=Math.min(100,p)+"%";});
+  var fb=$("sp_fb"); tot=Math.round(tot*100)/100;
+  if(tot===100){fb.className="fb ok";fb.textContent="Every dollar has a job.";}
+  else {fb.className="fb no";fb.textContent="Your split adds up to "+tot+"%. Make it 100%"+(tot<100?" ("+money(Math.round(amt*(100-tot))/100)+" has no job yet).":".");}
+}
+$("sp_amt").addEventListener("input",calcSplit);
+$("sp_rows").addEventListener("input",function(e){var t=e.target; if(!t.matches("input"))return; var s=split().slice(); s[+t.getAttribute("data-i")]=parseFloat(t.value)||0; T.split=s; tsave(); calcSplit();});
+$("sp_reset").addEventListener("click",function(){T.split=null; tsave(); paintSplitRows();});
+
+function calcKpi(){
+  function v(id){return Math.max(0,parseFloat($(id).value)||0);}
+  var n=v("k_n"), w=Math.min(v("k_w"),n), aw=v("k_aw"), al=v("k_al"), r=Math.min(v("k_r"),n), c=v("k_c");
+  var wr=n?w/n:0, exp=n?wr*aw-(1-wr)*al:0, gross=w*aw-(n-w)*al, net=gross-c, rf=n?r/n:0, pf=(n-w)*al>0?(w*aw)/((n-w)*al):null;
+  function tile(lab,val,cls){return '<div class="kt'+(cls?' '+cls:'')+'"><span>'+lab+'</span><b>'+val+'</b></div>';}
+  $("k_out").innerHTML=
+    tile("Win rate",Math.round(wr*100)+"%")+
+    tile("Expectancy / trade",(exp<0?"−":"")+money(Math.abs(Math.round(exp*100)/100)),exp>0?"up":(exp<0?"dn":""))+
+    tile("Profit factor",pf===null?(w?"No losses":"—"):(Math.round(pf*100)/100).toString())+
+    tile("Rule-follow rate",Math.round(rf*100)+"%",rf>=.9?"up":(rf<.7?"dn":""))+
+    tile("Gross P&amp;L",(gross<0?"−":"")+money(Math.abs(Math.round(gross))),gross>0?"up":(gross<0?"dn":""))+
+    tile("Net after costs",(net<0?"−":"")+money(Math.abs(Math.round(net))),net>0?"up":(net<0?"dn":""));
+  var fb=$("k_fb");
+  if(!n){fb.className="fb";fb.textContent="";return;}
+  if(rf<.8){fb.className="fb no";fb.textContent="Rule-follow is under 80%. Fix discipline before you judge the strategy.";}
+  else if(exp<=0){fb.className="fb no";fb.textContent="Rules followed but expectancy isn't positive. Review your setups in the journal.";}
+  else if(net<=0){fb.className="fb no";fb.textContent="The edge works, but costs ate the profit. Look at your spending.";}
+  else {fb.className="fb ok";fb.textContent="Positive edge, rules followed, profit after costs. Keep running the business.";}
+}
+["k_n","k_w","k_aw","k_al","k_r","k_c"].forEach(function(id){$(id).addEventListener("input",calcKpi);});
+
+$("rq_copy").addEventListener("click",function(){
+  var txt="FTA Weekly Review\n"+Array.prototype.map.call(document.querySelectorAll(".rq li"),function(li,i){return (i+1)+". "+li.textContent;}).join("\n");
+  function ok(){$("rq_fb").className="fb ok";$("rq_fb").textContent="Copied. Paste it into your journal.";}
+  try{navigator.clipboard.writeText(txt).then(ok,function(){$("rq_fb").textContent=txt;});}catch(e){$("rq_fb").textContent=txt;}
+});
+paintCk(); paintSplitRows(); calcKpi();
+
+
+/* ---------- deep link: #stage-N opens that stage (used by the Whop lessons) ---------- */
+function stageFromHash(){var m=/^#stage-(\d+)$/.exec(location.hash||"");if(!m)return -1;var i=+m[1]-1;return (i>=0&&i<STAGES.length)?i:-1;}
+function openStageHash(){var i=stageFromHash();if(i<0)return;var k=0;for(var j=0;j<STAGES[i].steps.length;j++){if(!S.passed[sid(i,j)]){k=j;break;}}openWalk(i,k);}
+openStageHash();window.addEventListener("hashchange",openStageHash);
+})();
+
+</script>
+<!-- FTA celebrate: confetti + rotating message when a stage is completed -->
+<style>
+.cheer{margin:6px auto 14px;max-width:34ch;font-size:1.05rem;font-weight:700;line-height:1.45;color:var(--fg,#eaf5f1);
+  background:linear-gradient(90deg,rgba(63,220,154,.12),rgba(63,220,154,.04));border:1px solid rgba(63,220,154,.3);border-radius:14px;padding:12px 16px;
+  animation:cheerIn .6s cubic-bezier(.2,.8,.2,1.2) both}
+.cheer b{color:var(--mint,#3fdc9a)}
+@keyframes cheerIn{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
+#ftaConfetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999}
+</style>
+<script>
+(function(){
+  var LINES=[
+    "Look how far you've come. One more section mastered. Keep going.",
+    "Section complete. This is what showing up looks like. On to the next.",
+    "You're building something real. Be proud of this one, then keep moving.",
+    "Another piece of the foundation, locked in. Take a breath, then keep climbing.",
+    "Remember when this felt new? Now you know it. On to the next.",
+    "Steady progress beats fast progress. You're doing it. Keep moving."
+  ];
+  var COLORS=["#3fdc9a","#ffd166","#ef476f","#4cc9f0","#b388ff","#ff9f1c","#ffffff","#06d6a0"];
+  function nextLine(){
+    var i=0; try{ i=(+localStorage.getItem("fta-cheer-i")||0); localStorage.setItem("fta-cheer-i",String((i+1)%LINES.length)); }catch(e){ i=Math.floor(Math.random()*LINES.length); }
+    return LINES[i%LINES.length];
+  }
+  function confetti(){
+    if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var old=document.getElementById("ftaConfetti"); if(old) old.remove();
+    var c=document.createElement("canvas"); c.id="ftaConfetti"; document.body.appendChild(c);
+    var x=c.getContext("2d"), dpr=Math.min(window.devicePixelRatio||1,2), W=innerWidth, H=innerHeight;
+    c.width=W*dpr; c.height=H*dpr; x.scale(dpr,dpr);
+    var P=[], n=W<600?110:180;
+    for(var i=0;i<n;i++){
+      var fromLeft=i%2===0;
+      P.push({x:fromLeft?-10:W+10, y:H*0.75+Math.random()*H*0.2,
+        vx:(fromLeft?1:-1)*(4+Math.random()*7), vy:-(9+Math.random()*9),
+        w:6+Math.random()*7, h:8+Math.random()*10, r:Math.random()*6.28, vr:(Math.random()-.5)*.35,
+        col:COLORS[i%COLORS.length], round:Math.random()<.3});
+    }
+    var t0=performance.now();
+    (function frame(t){
+      var age=(t-t0)/1000; x.clearRect(0,0,W,H);
+      P.forEach(function(p){
+        p.vy+=0.32; p.vx*=0.985; p.vy*=0.985; p.x+=p.vx; p.y+=p.vy; p.r+=p.vr;
+        x.save(); x.globalAlpha=Math.max(0,1-Math.max(0,age-2.6)/0.8); x.translate(p.x,p.y); x.rotate(p.r); x.fillStyle=p.col;
+        if(p.round){x.beginPath();x.arc(0,0,p.w/2,0,6.28);x.fill();} else x.fillRect(-p.w/2,-p.h/2,p.w,p.h*Math.abs(Math.cos(p.r*1.3)));
+        x.restore();
+      });
+      if(age<3.4) requestAnimationFrame(frame); else c.remove();
+    })(t0);
+  }
+  window.ftaCelebrate=function(){
+    var card=document.querySelector(".done-card");
+    if(card && !card.querySelector(".cheer")){
+      var p=document.createElement("p"); p.className="cheer"; p.textContent=nextLine();
+      var h=card.querySelector("h2"); if(h) h.insertAdjacentElement("afterend",p); else card.prepend(p);
+    }
+    confetti();
+  };
+})();
+</script>
+</body></html>

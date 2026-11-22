@@ -405,18 +405,6 @@ ol.leg li.vwl{color:#b9a7ff}
       <ol class="stages" id="stages"></ol>
     </section>
 
-    <section class="card beam gold" style="--delay:-1.2s">
-      <span class="eyebrow gold">Drill</span>
-      <h2 class="h2">Business or hobby?</h2>
-      <p class="sub">Eight real moments. Is this trader running a business or playing a hobby?</p>
-      <div class="scen" id="d_fig"></div>
-      <div class="dopts" id="d_opts">
-        <button type="button" class="ans" data-a="biz">Business move</button><button type="button" class="ans" data-a="hob">Hobby move</button>
-      </div>
-      <p class="fb" id="d_fb" aria-live="polite"></p>
-      <div class="dfoot"><span id="d_n"></span><button type="button" class="btn" id="d_next" hidden>Next scenario →</button></div>
-    </section>
-
     <section class="card beam" style="--delay:-2.1s" id="setup">
       <span class="eyebrow">Checklist</span>
       <h2 class="h2">Business setup checklist</h2>
@@ -732,21 +720,7 @@ var STAGES=[
 ]}
 ];
 
-/* Drill: business move or hobby move */
-var DRILL=[
- {s:"Every payout goes straight into a business checking account under your LLC.",a:"biz"},
- {s:"You buy three evals on your personal debit card and don't save the receipts.",a:"hob"},
- {s:"You trade at 2 AM because you couldn't sleep and the chart was open.",a:"hob"},
- {s:"Every Friday you spend 30 minutes reviewing your journal and KPIs.",a:"biz"},
- {s:"A $2,500 payout lands and you spend it all that weekend.",a:"hob"},
- {s:"You move your tax percentage into a separate savings account the day a payout hits.",a:"biz"},
- {s:"You pay a website $250 to get your EIN.",a:"hob"},
- {s:"You check your business name is free in your state before filing the LLC.",a:"biz"}
-];
-var DRILL_WHY={
- biz:"That's a business move: records, structure and money with a plan.",
- hob:"That's a hobby move: no structure, no records, no plan for the money."
-};
+
 
 (function(){
 "use strict";
@@ -862,29 +836,8 @@ $("stages").addEventListener("click",function(e){
   openWalk(i,k);
 });
 
-/* ---------- drill: name that structure ---------- */
-var D={i:0,score:0,done:0,answered:false};
-function paintDrill(){
-  var d=DRILL[D.i];
-  $("d_fig").textContent=d.s;
-  $("d_n").textContent="Scenario "+(D.i+1)+" of "+DRILL.length+" · score "+D.score+"/"+D.done;
-  $("d_fb").textContent=""; $("d_fb").className="fb"; D.answered=false;
-  Array.prototype.forEach.call($("d_opts").querySelectorAll("button"),function(b){b.disabled=false;b.className="ans";});
-  $("d_next").hidden=true;
-}
-$("d_opts").addEventListener("click",function(e){
-  var b=e.target.closest("button"); if(!b||D.answered) return;
-  var d=DRILL[D.i], pick=b.getAttribute("data-a"); D.answered=true; D.done++;
-  Array.prototype.forEach.call($("d_opts").querySelectorAll("button"),function(x){x.disabled=true; if(x.getAttribute("data-a")===d.a) x.classList.add("right");});
-  if(pick===d.a){ D.score++; $("d_fb").className="fb ok"; $("d_fb").textContent="Right. "+DRILL_WHY[d.a]; }
-  else { b.classList.add("wrong"); $("d_fb").className="fb no"; $("d_fb").textContent="Not this time. "+DRILL_WHY[d.a]; }
-  $("d_n").textContent="Scenario "+(D.i+1)+" of "+DRILL.length+" · score "+D.score+"/"+D.done;
-  $("d_next").hidden=false; $("d_next").textContent=D.i<DRILL.length-1?"Next scenario →":"Start again ↺";
-});
-$("d_next").addEventListener("click",function(){ if(D.i<DRILL.length-1) D.i++; else {D.i=0;D.score=0;D.done=0;} paintDrill(); });
-
 $("count").textContent=TOTAL+" steps · "+STAGES.length+" lessons";
-paintPath(); paintDrill();
+paintPath();
 
 /* ---------- tools: setup checklist, payout splitter, KPI calculator ---------- */
 var TK="fta.business.tools.v1", T={ck:{},split:null};
